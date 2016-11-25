@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true
+    username: root
+    password:
+
+
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+
+
+
+logging:
+  level:
+    ROOT: INFO
+    org.springframework: INFO
+    org.springframework.data.mongodb: DEBUG
+    java.sql.Connection: DEBUG
+    java.sql.Statement: DEBUG
+    org.apache: INFO
+    org.mongodb.driver: INFO
+    com.example: DEBUG
