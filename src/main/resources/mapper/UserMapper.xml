@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dmc.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.dmc.model.User">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
+        <result column="createdatetime" property="createdatetime" jdbcType="TIMESTAMP"/>
+        <result column="modifydatetime" property="modifydatetime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--注册用户-->
+    <insert id="save" parameterType="com.dmc.model.User">
+        INSERT INTO user (ID, CREATEDATETIME, MODIFYDATETIME, NAME, PWD) VALUES (#{id}, now(), now(), #{name}, #{pwd})
+    </insert>
+
+    <!--保存角色-->
+    <insert id="saveRoles" parameterType="map">
+        INSERT INTO user_role (USER_ID, ROLE_ID) VALUES
+        <foreach collection="roleIds" separator="," item="item">
+            (#{id},#{item})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.dmc.model.User">
+        UPDATE user
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="pwd !=null">
+                pwd = #{pwd},
+            </if>
+            modifydatetime = #{modifydatetime},
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="deleteById">
+        DELETE FROM user
+        WHERE ID = #{id}
+    </delete>
+
+    <delete id="deleteRoles">
+        DELETE FROM user_role
+        WHERE USER_ID = #{id}
+    </delete>
+
+    <!--登录-->
+    <select id="login" resultMap="BaseResultMap">
+        SELECT *
+        FROM user
+        WHERE NAME = #{name} AND pwd = #{pwd}
+    </select>
+
+    <!--统计用户名-->
+    <select id="countUserName" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM user
+        WHERE NAME = #{name}
+    </select>
+
+    <!--查询用户-->
+    <select id="findUser" resultMap="BaseResultMap" parameterType="map">
+        SELECT * FROM user
+        <where>
+            <if test="name != null">
+                and name like CONCAT('%',#{name},'%')
+            </if>
+            <if test="createdatetimeStart != null">
+                and createdatetime &gt;= #{createdatetimeStart}
+            </if>
+            <if test="createdatetimeEnd != null">
+                and createdatetime &lt;= #{createdatetimeEnd}
+            </if>
+            <if test="modifydatetimeStart != null">
+                and modifydatetime &gt;= #{createdatetimeStart}
+            </if>
+            <if test="modifydatetimeEnd != null">
+                and modifydatetime &lt;= #{modifydatetimeEnd}
+            </if>
+        </where>
+        <if test="order != null">
+            order by ${sort} ${order}
+        </if>
+
+    </select>
+
+    <!--用户的角色-->
+    <select id="getUserRoleIds" resultType="java.lang.String">
+        SELECT ROLE_ID
+        FROM user_role
+        WHERE USER_ID = #{id}
+    </select>
+
+    <!-- 用户的角色名称-->
+    <select id="getUserRoleNames" resultType="java.lang.String">
+        SELECT r.name
+        FROM role r INNER JOIN user_role ur ON r.ID = ur.ROLE_ID
+        WHERE ur.USER_ID = #{id}
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        SELECT *
+        FROM user
+        WHERE id = #{id}
+    </select>
+    <select id="loginCombobox" resultType="com.dmc.model.User">
+        SELECT name,CREATEDATETIME,MODIFYDATETIME FROM user WHERE NAME LIKE CONCAT('%',#{q},'%' )
+        <if test="order != null">
+            order by ${sort} ${order}
+        </if>
+    </select>
+    <select id="countsUserCreateDatetime" resultType="java.lang.Long">
+        select count(1) from user t where HOUR(t.createdatetime) &gt;= #{s} and HOUR(t.createdatetime) &lt; #{e}
+    </select>
+
+
+</mapper>

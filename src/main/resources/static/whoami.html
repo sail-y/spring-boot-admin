@@ -2,20 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Haha</title>
+    <title>whoami</title>
 </head>
 <body>
-123123
+who am i
 </body>
 <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
 <script>
     $(function() {
-        $.post('user/login', {
-            name : 'admin',
-            pwd:'123456'
+        $.post('/user/printSession', {
+            name:"123"
         }, function(result) {
             if (result.success) {
-                console.log(result.obj)
+                console.log(result);
             }
         }, 'JSON');
     });

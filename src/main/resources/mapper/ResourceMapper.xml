@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dmc.mapper.ResourceMapper">
+    <resultMap id="BaseResultMap" type="com.dmc.model.Resource">
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="resourceType_Id" property="typeId" jdbcType="VARCHAR"/>
+        <result column="icon" property="iconCls" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="seq" property="seq" jdbcType="INTEGER"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="PID" property="pid" jdbcType="VARCHAR"/>
+        <result column="pname" property="pname" jdbcType="VARCHAR"/>
+        <result column="typeName" property="typeName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="save" parameterType="com.dmc.model.Resource">
+        INSERT INTO resource (ID, ICON, NAME, REMARK, SEQ, URL, PID, RESOURCETYPE_ID)
+        VALUES (#{id}, #{iconCls}, #{name}, #{remark},
+                #{seq}, #{url}, #{pid}, #{typeId})
+    </insert>
+    <update id="update" parameterType="com.dmc.model.Resource">
+        UPDATE resource
+        <set>
+            <if test="iconCls != null">
+                icon = #{iconCls},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="seq != null">
+                seq = #{seq},
+            </if>
+            <if test="url != null">
+                url = #{url},
+            </if>
+            <if test="typeId != null">
+                resourceType_Id = #{typeId},
+            </if>
+            pid = #{pid},
+        </set>
+
+        WHERE ID = #{id}
+    </update>
+
+
+    <delete id="deleteById">
+        DELETE FROM resource
+        WHERE ID = #{id}
+    </delete>
+
+    <select id="getResourceList" resultMap="BaseResultMap">
+
+        SELECT r.*,
+               (select rt.name FROM resourcetype rt WHERE rt.id = r.RESOURCETYPE_ID) typeName
+        FROM resource r
+        <where>
+            <if test="userId != null">
+                and exists(select 1 from role_resource rr INNER JOIN role role ON rr.ROLE_ID = role.ID
+                INNER JOIN user_role ur ON ur.ROLE_ID = role.ID INNER JOIN user u ON u.ID = ur.USER_ID
+                WHERE u.ID = #{userId} AND rr.RESOURCE_ID = r.ID)
+            </if>
+            <if test="resourceTypeId != null">
+                and r.RESOURCETYPE_ID = #{resourceTypeId}
+            </if>
+        </where>
+
+        order by r.seq
+    </select>
+    <select id="getById" resultMap="BaseResultMap">
+        SELECT
+            r.*,
+            (SELECT rt.name
+             FROM resourcetype rt
+             WHERE rt.id = r.RESOURCETYPE_ID) typeName,
+            (SELECT p.name
+             FROM resource p
+             WHERE r.PID = p.ID)              pname
+        FROM
+            resource r
+        WHERE r.ID = #{id}
+    </select>
+
+    <select id="getRoleResourceIds" resultType="java.lang.String">
+        SELECT r.id FROM resource r INNER JOIN role_resource rr ON r.ID = rr.RESOURCE_ID
+        WHERE rr.ROLE_ID = #{roleId}
+    </select>
+
+    <select id="getRoleResourceNames" resultType="java.lang.String">
+        SELECT r.name FROM resource r INNER JOIN role_resource rr ON r.ID = rr.RESOURCE_ID
+        WHERE rr.ROLE_ID = #{roleId}
+    </select>
+</mapper>

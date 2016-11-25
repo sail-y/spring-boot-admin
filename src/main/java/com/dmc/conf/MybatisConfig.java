@@ -2,7 +2,7 @@
  * Copyright (c) 2016 xiaomaihd and/or its affiliates.All Rights Reserved.
  *            http://www.xiaomaihd.com
  */
-package com.ddff.conf;
+package com.dmc.conf;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.beans.factory.annotation.Autowired;

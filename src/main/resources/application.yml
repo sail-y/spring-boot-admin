@@ -4,7 +4,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/test?useUnicode=true
+    url: jdbc:mysql://localhost:3306/dmc?useUnicode=true
     username: root
     password:
 
