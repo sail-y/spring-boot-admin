@@ -29,7 +29,7 @@ public interface UserService {
 	 *            里面包含登录名和密码
 	 * @throws Exception
 	 */
-	public void reg(User user) throws Exception;
+	public void reg(User user);
 
 
 	/**
@@ -37,7 +37,7 @@ public interface UserService {
 	 * 
 	 * @param user
 	 */
-	public void add(User user) throws Exception;
+	public void add(User user);
 
 	/**
 	 * 获得用户对象
@@ -52,7 +52,7 @@ public interface UserService {
 	 * 
 	 * @param user
 	 */
-	public void edit(User user) throws Exception;
+	public void edit(User user);
 
 	/**
 	 * 删除用户

@@ -1,37 +1,34 @@
 package com.dmc.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.dmc.model.*;
+import com.dmc.model.RestResponse;
+import com.dmc.model.SessionInfo;
+import com.dmc.model.User;
 import com.dmc.service.ResourceService;
 import com.dmc.service.RoleService;
 import com.dmc.service.UserService;
 import com.dmc.util.AppConst;
 import com.dmc.util.IpUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
  * 用户控制器
- *
  */
-@Controller
+@RestController
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private RoleService roleService;
-
-    @Autowired
-    private ResourceService resourceService;
 
     /**
      * 用户登录
@@ -41,14 +38,12 @@ public class UserController {
      * @param request
      * @return
      */
-    @ResponseBody
-    @RequestMapping("/login")
-    public JsonModel login(User user, HttpSession session, HttpServletRequest request) {
-        JsonModel j = new JsonModel();
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public RestResponse login(User user, HttpSession session, HttpServletRequest request) {
+        RestResponse resp = new RestResponse();
         User u = userService.login(user);
         if (u != null) {
-            j.setSuccess(true);
-            j.setMsg("登陆成功！");
+            resp.setMsg("登陆成功！");
 
             SessionInfo sessionInfo = new SessionInfo();
             BeanUtils.copyProperties(u, sessionInfo);
@@ -56,11 +51,11 @@ public class UserController {
             sessionInfo.setResourceList(userService.resourceList(u.getId()));
             session.setAttribute(AppConst.SESSION_NAME, sessionInfo);
 
-            j.setObj(sessionInfo);
+            resp.setData(sessionInfo);
         } else {
-            j.setMsg("用户名或密码错误！");
+            resp.setMsg("用户名或密码错误！");
         }
-        return j;
+        return resp;
     }
 
     /**
@@ -69,20 +64,13 @@ public class UserController {
      * @param user 用户对象
      * @return
      */
-    @ResponseBody
-    @RequestMapping("/reg")
-    public JsonModel reg(User user) {
-        JsonModel j = new JsonModel();
-        try {
-            userService.reg(user);
-            j.setSuccess(true);
-            j.setMsg("注册成功！新注册的用户没有任何权限，请让管理员赋予权限后再使用本系统！");
-            j.setObj(user);
-        } catch (Exception e) {
-            // e.printStackTrace();
-            j.setMsg(e.getMessage());
-        }
-        return j;
+    @RequestMapping(value = "/reg", method = RequestMethod.POST)
+    public RestResponse reg(User user) {
+        RestResponse response = new RestResponse();
+        userService.reg(user);
+        response.setMsg("注册成功！新注册的用户没有任何权限，请让管理员赋予权限后再使用本系统！");
+        response.setData(user);
+        return response;
     }
 
     /**
@@ -92,15 +80,14 @@ public class UserController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/logout")
-    public JsonModel logout(HttpSession session) {
-        JsonModel j = new JsonModel();
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public RestResponse logout(HttpSession session) {
+        RestResponse resp = new RestResponse();
         if (session != null) {
             session.invalidate();
         }
-        j.setSuccess(true);
-        j.setMsg("注销成功！");
-        return j;
+        resp.setMsg("注销成功！");
+        return resp;
     }
 
 
@@ -109,20 +96,14 @@ public class UserController {
      *
      * @return
      */
-    @RequestMapping("/add")
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public JsonModel add(User user) {
-        JsonModel j = new JsonModel();
-        try {
-            userService.add(user);
-            j.setSuccess(true);
-            j.setMsg("添加成功！");
-            j.setObj(user);
-        } catch (Exception e) {
-            // e.printStackTrace();
-            j.setMsg(e.getMessage());
-        }
-        return j;
+    public RestResponse add(User user) {
+        RestResponse resp = new RestResponse();
+        userService.add(user);
+        resp.setMsg("添加成功！");
+        resp.setData(user);
+        return resp;
     }
 
 
@@ -132,20 +113,14 @@ public class UserController {
      * @param user
      * @return
      */
-    @RequestMapping("/edit")
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
-    public JsonModel edit(User user) {
-        JsonModel j = new JsonModel();
-        try {
-            userService.edit(user);
-            j.setSuccess(true);
-            j.setMsg("编辑成功！");
-            j.setObj(user);
-        } catch (Exception e) {
-            // e.printStackTrace();
-            j.setMsg(e.getMessage());
-        }
-        return j;
+    public RestResponse edit(User user) {
+        RestResponse resp = new RestResponse();
+        userService.edit(user);
+        resp.setMsg("编辑成功！");
+        resp.setData(user);
+        return resp;
     }
 
     /**
@@ -156,15 +131,15 @@ public class UserController {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    public JsonModel delete(String id, HttpSession session) {
+    public RestResponse delete(String id, HttpSession session) {
         SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-        JsonModel j = new JsonModel();
+        RestResponse resp = new RestResponse();
         if (id != null && !id.equalsIgnoreCase(sessionInfo.getId())) {// 不能删除自己
             userService.delete(id);
         }
-        j.setMsg("删除成功！");
-        j.setSuccess(true);
-        return j;
+        resp.setMsg("删除成功！");
+
+        return resp;
     }
 
     /**
@@ -175,8 +150,8 @@ public class UserController {
      */
     @RequestMapping("/batchDelete")
     @ResponseBody
-    public JsonModel batchDelete(String ids, HttpSession session) {
-        JsonModel j = new JsonModel();
+    public RestResponse batchDelete(String ids, HttpSession session) {
+        RestResponse resp = new RestResponse();
         if (ids != null && ids.length() > 0) {
             for (String id : ids.split(",")) {
                 if (id != null) {
@@ -184,9 +159,9 @@ public class UserController {
                 }
             }
         }
-        j.setMsg("批量删除成功！");
-        j.setSuccess(true);
-        return j;
+        resp.setMsg("批量删除成功！");
+
+        return resp;
     }
 
     /**
@@ -197,12 +172,12 @@ public class UserController {
      */
     @RequestMapping("/grant")
     @ResponseBody
-    public JsonModel grant(String ids, User user) {
-        JsonModel j = new JsonModel();
+    public RestResponse grant(String ids, User user) {
+        RestResponse resp = new RestResponse();
         userService.grant(ids, user);
-        j.setSuccess(true);
-        j.setMsg("授权成功！");
-        return j;
+
+        resp.setMsg("授权成功！");
+        return resp;
     }
 
 
@@ -214,12 +189,12 @@ public class UserController {
      */
     @RequestMapping("/editPwd")
     @ResponseBody
-    public JsonModel editPwd(User user) {
-        JsonModel j = new JsonModel();
+    public RestResponse editPwd(User user) {
+        RestResponse resp = new RestResponse();
         userService.editPwd(user);
-        j.setSuccess(true);
-        j.setMsg("编辑成功！");
-        return j;
+
+        resp.setMsg("编辑成功！");
+        return resp;
     }
 
 
@@ -232,36 +207,25 @@ public class UserController {
      */
     @RequestMapping("/editCurrentUserPwd")
     @ResponseBody
-    public JsonModel editCurrentUserPwd(HttpSession session, String oldPwd, String pwd) {
-        JsonModel j = new JsonModel();
+    public RestResponse editCurrentUserPwd(HttpSession session, String oldPwd, String pwd) {
+        RestResponse resp = new RestResponse();
         if (session != null) {
             SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
             if (sessionInfo != null) {
                 if (userService.editCurrentUserPwd(sessionInfo, oldPwd, pwd)) {
-                    j.setSuccess(true);
-                    j.setMsg("编辑密码成功，下次登录生效！");
+
+                    resp.setMsg("编辑密码成功，下次登录生效！");
                 } else {
-                    j.setMsg("原密码错误！");
+                    resp.setMsg("原密码错误！");
                 }
             } else {
-                j.setMsg("登录超时，请重新登录！");
+                resp.setMsg("登录超时，请重新登录！");
             }
         } else {
-            j.setMsg("登录超时，请重新登录！");
+            resp.setMsg("登录超时，请重新登录！");
         }
-        return j;
+        return resp;
     }
 
 
-
-    @RequestMapping("/printSession")
-    @ResponseBody
-    public JsonModel printSession(String name, HttpSession session) {
-        System.out.println("fuck");
-        SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-        JsonModel j = new JsonModel();
-        j.setMsg(JSON.toJSONString(sessionInfo));
-        j.setSuccess(true);
-        return j;
-    }
 }

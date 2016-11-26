@@ -39,7 +39,6 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
     compile('com.google.guava:guava:20.0')
     compile('com.alibaba:druid:0.2.9')
-	compile('com.alibaba:fastjson:1.2.21')
 	compile('org.apache.commons:commons-lang3:3.5')
 	compile('commons-codec:commons-codec:1.10')
 	compile('com.github.pagehelper:pagehelper:4.1.6')

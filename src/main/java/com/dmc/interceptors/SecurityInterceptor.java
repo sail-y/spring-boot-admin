@@ -1,9 +1,9 @@
 package com.dmc.interceptors;
 
-import com.alibaba.fastjson.JSON;
-import com.dmc.model.JsonModel;
+import com.dmc.model.RestResponse;
 import com.dmc.model.SessionInfo;
 import com.dmc.util.AppConst;
+import com.dmc.util.JsonUtil;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -66,10 +66,13 @@ public class SecurityInterceptor implements HandlerInterceptor {
             return false;
         }
         if (!sessionInfo.getResourceList().contains(url)) {// 如果当前用户没有访问此资源的权限
-            JsonModel json = new JsonModel();
-            json.setSuccess(false);
-            json.setMsg("没有权限！");
-            response.getWriter().println(JSON.toJSONString(json));
+            RestResponse resp = new RestResponse();
+            resp.setStatus(AppConst.NO_PERMESSION);
+            resp.setMsg("没有权限！");
+
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("contentType", "application/json; charset=utf-8");
+            response.getWriter().println(JsonUtil.toJsonString(resp));
             return false;
         }
 

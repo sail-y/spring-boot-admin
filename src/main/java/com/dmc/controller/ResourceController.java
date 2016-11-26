@@ -1,6 +1,6 @@
 package com.dmc.controller;
 
-import com.dmc.model.JsonModel;
+import com.dmc.model.RestResponse;
 import com.dmc.model.Resource;
 import com.dmc.model.SessionInfo;
 import com.dmc.model.Tree;
@@ -77,11 +77,11 @@ public class ResourceController {
      */
     @RequestMapping("/add")
     @ResponseBody
-    public JsonModel add(Resource resource, HttpSession session) {
+    public RestResponse add(Resource resource, HttpSession session) {
         SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-        JsonModel j = new JsonModel();
+        RestResponse j = new RestResponse();
         resourceService.add(resource, sessionInfo);
-        j.setSuccess(true);
+
         j.setMsg("添加成功！");
         return j;
     }
@@ -94,10 +94,10 @@ public class ResourceController {
      */
     @RequestMapping("/edit")
     @ResponseBody
-    public JsonModel edit(Resource resource) {
-        JsonModel j = new JsonModel();
+    public RestResponse edit(Resource resource) {
+        RestResponse j = new RestResponse();
         resourceService.edit(resource);
-        j.setSuccess(true);
+
         j.setMsg("编辑成功！");
         return j;
     }
@@ -124,11 +124,11 @@ public class ResourceController {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    public JsonModel delete(String id) {
-        JsonModel j = new JsonModel();
+    public RestResponse delete(String id) {
+        RestResponse j = new RestResponse();
         resourceService.delete(id);
         j.setMsg("删除成功！");
-        j.setSuccess(true);
+
         return j;
     }
 

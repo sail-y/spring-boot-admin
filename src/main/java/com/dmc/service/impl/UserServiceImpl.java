@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    synchronized public void reg(User user) throws Exception {
+    synchronized public void reg(User user) {
         if (userMapper.countUserName(user.getName()) > 0) {
             throw new RuntimeException("登录名已存在！");
         } else {
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    synchronized public void add(User user) throws Exception {
+    synchronized public void add(User user) {
         if (userMapper.countUserName(user.getName()) > 0) {
             throw new RuntimeException("登录名已存在！");
         } else {
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    synchronized public void edit(User user) throws Exception {
+    synchronized public void edit(User user) {
         if (userMapper.countUserName(user.getName()) > 0) {
             throw new RuntimeException("登录名已存在！");
         } else {
