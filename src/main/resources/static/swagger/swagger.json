@@ -1,0 +1,148 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "DMC API",
+    "description": "Move your app forward with the DMC API",
+    "version": "1.0.0"
+  },
+  "host": "api.dmc.com",
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/user/login": {
+      "post": {
+        "description": "用户登录接口",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "用户名",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "密码",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "登录结果",
+            "schema": {
+              "$ref": "#/definitions/SessionInfo"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/logout": {
+      "post": {
+        "summary": "退出登录",
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "唯一ID"
+        },
+        "name": {
+          "type": "string",
+          "description": "用户的昵称"
+        },
+        "username": {
+          "type": "string",
+          "description": "用户名"
+        },
+        "password": {
+          "type": "string",
+          "format": "password",
+          "description": "密码"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "data-time",
+          "description": "创建时间"
+        },
+        "modifyTime": {
+          "type": "string",
+          "format": "data-time",
+          "description": "修改时间"
+        },
+        "roleIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "拥有的权限"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "msg": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
+        }
+      }
+    },
+    "SessionInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "唯一ID"
+        },
+        "name": {
+          "type": "string",
+          "description": "用户的昵称"
+        },
+        "resourceList": {
+          "type": "array",
+          "items": {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}

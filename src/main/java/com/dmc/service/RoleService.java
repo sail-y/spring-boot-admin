@@ -2,7 +2,7 @@ package com.dmc.service;
 
 import com.dmc.model.Role;
 import com.dmc.model.SessionInfo;
-import com.dmc.model.Tree;
+import com.dmc.model.Menu;
 
 import java.util.List;
 
@@ -55,14 +55,14 @@ public interface RoleService {
 	 * 
 	 * @return
 	 */
-	public List<Tree> tree(SessionInfo sessionInfo);
+	public List<Menu> tree(SessionInfo sessionInfo);
 
 	/**
 	 * 获得角色树
 	 * 
 	 * @return
 	 */
-	public List<Tree> allTree();
+	public List<Menu> allTree();
 
 	/**
 	 * 为角色授权

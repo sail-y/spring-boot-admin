@@ -1,9 +1,9 @@
 package com.dmc.controller;
 
-import com.dmc.model.RestResponse;
+import com.dmc.model.RestResp;
 import com.dmc.model.Role;
 import com.dmc.model.SessionInfo;
-import com.dmc.model.Tree;
+import com.dmc.model.Menu;
 import com.dmc.service.RoleService;
 import com.dmc.util.AppConst;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +35,9 @@ public class RoleController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
-	public RestResponse add(Role role, HttpSession session) {
+	public RestResp add(Role role, HttpSession session) {
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-		RestResponse j = new RestResponse();
+		RestResp j = new RestResp();
 		roleService.add(role, sessionInfo);
 
 		j.setMsg("添加成功！");
@@ -52,8 +52,8 @@ public class RoleController {
 	 */
 	@RequestMapping("/edit")
 	@ResponseBody
-	public RestResponse edit(Role role) {
-		RestResponse j = new RestResponse();
+	public RestResp edit(Role role) {
+		RestResp j = new RestResp();
 		roleService.edit(role);
 
 		j.setMsg("编辑成功！");
@@ -79,7 +79,7 @@ public class RoleController {
 	 */
 	@RequestMapping("/tree")
 	@ResponseBody
-	public List<Tree> tree(HttpSession session) {
+	public List<Menu> tree(HttpSession session) {
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
 		return roleService.tree(sessionInfo);
 	}
@@ -91,7 +91,7 @@ public class RoleController {
 	 */
 	@RequestMapping("/allTree")
 	@ResponseBody
-	public List<Tree> allTree() {
+	public List<Menu> allTree() {
 		return roleService.allTree();
 	}
 
@@ -103,8 +103,8 @@ public class RoleController {
 	 */
 	@RequestMapping("/delete")
 	@ResponseBody
-	public RestResponse delete(String id) {
-		RestResponse j = new RestResponse();
+	public RestResp delete(String id) {
+		RestResp j = new RestResp();
 		roleService.delete(id);
 		j.setMsg("删除成功！");
 
@@ -120,8 +120,8 @@ public class RoleController {
 	 */
 	@RequestMapping("/grant")
 	@ResponseBody
-	public RestResponse grant(Role role) {
-		RestResponse j = new RestResponse();
+	public RestResp grant(Role role) {
+		RestResp j = new RestResp();
 		roleService.grant(role);
 		j.setMsg("授权成功！");
 

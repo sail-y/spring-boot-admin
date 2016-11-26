@@ -1,10 +1,9 @@
 package com.dmc.interceptors;
 
-import com.dmc.model.RestResponse;
+import com.dmc.model.RestResp;
 import com.dmc.model.SessionInfo;
 import com.dmc.util.AppConst;
 import com.dmc.util.JsonUtil;
-import com.google.common.base.CharMatcher;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -73,10 +72,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
             return false;
         }
         if (!sessionInfo.getResourceList().contains(url)) {// 如果当前用户没有访问此资源的权限
-            RestResponse resp = new RestResponse();
-            resp.setStatus(AppConst.NO_PERMESSION);
-            resp.setMsg("没有权限！");
-
+            RestResp resp = new RestResp(AppConst.NO_PERMESSION, "没有权限！");
             response.setCharacterEncoding("utf-8");
             response.setHeader("contentType", "application/json; charset=utf-8");
             response.getWriter().println(JsonUtil.toJsonString(resp));

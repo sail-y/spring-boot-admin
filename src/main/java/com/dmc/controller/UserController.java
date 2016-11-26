@@ -1,6 +1,5 @@
 package com.dmc.controller;
 
-import com.dmc.model.RestResponse;
 import com.dmc.model.SessionInfo;
 import com.dmc.model.User;
 import com.dmc.service.UserService;
@@ -37,23 +36,20 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public RestResponse login( User user, HttpSession session, HttpServletRequest request) {
-        RestResponse resp = new RestResponse();
+    public SessionInfo login(User user, HttpSession session, HttpServletRequest request) {
         User u = userService.login(user);
         if (u != null) {
-            resp.setMsg("登陆成功！");
 
             SessionInfo sessionInfo = new SessionInfo();
             BeanUtils.copyProperties(u, sessionInfo);
             sessionInfo.setIp(IpUtil.getIpAddr(request));
             sessionInfo.setResourceList(userService.resourceList(u.getId()));
             session.setAttribute(AppConst.SESSION_NAME, sessionInfo);
-
-            resp.setData(sessionInfo);
+            return sessionInfo;
         } else {
-            resp.setMsg("用户名或密码错误！");
+            throw new RuntimeException("用户名或密码错误");
         }
-        return resp;
+
     }
 
     /**
@@ -63,12 +59,9 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/reg", method = RequestMethod.POST)
-    public RestResponse reg(User user) {
-        RestResponse response = new RestResponse();
+    public User reg(User user) {
         userService.reg(user);
-        response.setMsg("注册成功！新注册的用户没有任何权限，请让管理员赋予权限后再使用本系统！");
-        response.setData(user);
-        return response;
+        return user;
     }
 
     /**
@@ -77,15 +70,11 @@ public class UserController {
      * @param session
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public RestResponse logout(HttpSession session) {
-        RestResponse resp = new RestResponse();
+    public void logout(HttpSession session) {
         if (session != null) {
             session.invalidate();
         }
-        resp.setMsg("注销成功！");
-        return resp;
     }
 
 
@@ -96,12 +85,9 @@ public class UserController {
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public RestResponse add(User user) {
-        RestResponse resp = new RestResponse();
+    public User add(User user) {
         userService.add(user);
-        resp.setMsg("添加成功！");
-        resp.setData(user);
-        return resp;
+        return user;
     }
 
 
@@ -113,12 +99,9 @@ public class UserController {
      */
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
-    public RestResponse edit(User user) {
-        RestResponse resp = new RestResponse();
+    public User edit(User user) {
         userService.edit(user);
-        resp.setMsg("编辑成功！");
-        resp.setData(user);
-        return resp;
+        return user;
     }
 
     /**
@@ -128,16 +111,11 @@ public class UserController {
      * @return
      */
     @RequestMapping("/delete")
-    @ResponseBody
-    public RestResponse delete(String id, HttpSession session) {
+    public void delete(String id, HttpSession session) {
         SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-        RestResponse resp = new RestResponse();
         if (id != null && !id.equalsIgnoreCase(sessionInfo.getId())) {// 不能删除自己
             userService.delete(id);
         }
-        resp.setMsg("删除成功！");
-
-        return resp;
     }
 
     /**
@@ -148,8 +126,7 @@ public class UserController {
      */
     @RequestMapping(value = "/batchDelete", method = RequestMethod.POST)
     @ResponseBody
-    public RestResponse batchDelete(String ids, HttpSession session) {
-        RestResponse resp = new RestResponse();
+    public void batchDelete(String ids, HttpSession session) {
         if (ids != null && ids.length() > 0) {
             for (String id : ids.split(",")) {
                 if (id != null) {
@@ -157,9 +134,6 @@ public class UserController {
                 }
             }
         }
-        resp.setMsg("批量删除成功！");
-
-        return resp;
     }
 
     /**
@@ -170,12 +144,8 @@ public class UserController {
      */
     @RequestMapping("/grant")
     @ResponseBody
-    public RestResponse grant(String ids, User user) {
-        RestResponse resp = new RestResponse();
+    public void grant(String ids, User user) {
         userService.grant(ids, user);
-
-        resp.setMsg("授权成功！");
-        return resp;
     }
 
 
@@ -187,12 +157,8 @@ public class UserController {
      */
     @RequestMapping("/editPwd")
     @ResponseBody
-    public RestResponse editPwd(User user) {
-        RestResponse resp = new RestResponse();
+    public void editPwd(User user) {
         userService.editPwd(user);
-
-        resp.setMsg("编辑成功！");
-        return resp;
     }
 
 
@@ -205,24 +171,19 @@ public class UserController {
      */
     @RequestMapping("/editCurrentUserPwd")
     @ResponseBody
-    public RestResponse editCurrentUserPwd(HttpSession session, String oldPwd, String pwd) {
-        RestResponse resp = new RestResponse();
+    public void editCurrentUserPwd(HttpSession session, String oldPwd, String pwd) {
         if (session != null) {
             SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
             if (sessionInfo != null) {
-                if (userService.editCurrentUserPwd(sessionInfo, oldPwd, pwd)) {
-
-                    resp.setMsg("编辑密码成功，下次登录生效！");
-                } else {
-                    resp.setMsg("原密码错误！");
+                if (!userService.editCurrentUserPwd(sessionInfo, oldPwd, pwd)) {
+                    throw new RuntimeException("原密码错误！");
                 }
             } else {
-                resp.setMsg("登录超时，请重新登录！");
+                throw new RuntimeException("登录超时，请重新登录！");
             }
         } else {
-            resp.setMsg("登录超时，请重新登录！");
+            throw new RuntimeException("登录超时，请重新登录！");
         }
-        return resp;
     }
 
 

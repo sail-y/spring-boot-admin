@@ -6,7 +6,7 @@ import com.dmc.mapper.RoleMapper;
 import com.dmc.mapper.UserMapper;
 import com.dmc.model.Resource;
 import com.dmc.model.SessionInfo;
-import com.dmc.model.Tree;
+import com.dmc.model.Menu;
 import com.dmc.service.ResourceService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,34 +30,42 @@ public class ResourceServiceImpl implements ResourceService {
     private RoleMapper roleMapper;
 
     @Override
-    public List<Tree> tree(SessionInfo sessionInfo) {
+    public List<Menu> menus(SessionInfo sessionInfo) {
 
-        List<Tree> lt = new ArrayList<Tree>();
+        List<Menu> menuList = new ArrayList<>();
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("resourceTypeId", "0");// 菜单类型的资源
 
         if (sessionInfo != null) {
-            params.put("userId", sessionInfo.getId());// 自查自己有权限的资源
+            params.put("userId", sessionInfo.getId());// 只查自己有权限的资源
         }
 
         List<Resource> resourceList = resourceMapper.getResourceList(params);
 
         for (Resource r : resourceList) {
-            Tree tree = new Tree();
-            BeanUtils.copyProperties(r, tree);
-            tree.setText(r.getName());
-            Map<String, Object> attr = new HashMap<String, Object>();
-            attr.put("url", r.getUrl());
-            tree.setAttributes(attr);
-            lt.add(tree);
+            if(r.getPid() == null) {
+                Menu menu = new Menu();
+                BeanUtils.copyProperties(r, menu);
+                menu.setText(r.getName());
+                List<Menu> children = new ArrayList<>();
+                for (Resource r1 : resourceList) {
+
+                    Menu child = new Menu();
+                    BeanUtils.copyProperties(r1, child);
+                    child.setText(r1.getName());
+                    children.add(child);
+                }
+                menu.setChildren(children);
+                menuList.add(menu);
+            }
         }
-        return lt;
+        return menuList;
     }
 
     @Override
-    public List<Tree> allTree(SessionInfo sessionInfo) {
-        List<Tree> lt = new ArrayList<Tree>();
+    public List<Menu> allTree(SessionInfo sessionInfo) {
+        List<Menu> lt = new ArrayList<Menu>();
 
         Map<String, Object> params = new HashMap<String, Object>();
         if (sessionInfo != null) {
@@ -67,13 +75,13 @@ public class ResourceServiceImpl implements ResourceService {
         List<Resource> resourceList = resourceMapper.getResourceList(params);
 
         for (Resource r : resourceList) {
-            Tree tree = new Tree();
-            BeanUtils.copyProperties(r, tree);
-            tree.setText(r.getName());
+            Menu menu = new Menu();
+            BeanUtils.copyProperties(r, menu);
+            menu.setText(r.getName());
             Map<String, Object> attr = new HashMap<String, Object>();
             attr.put("url", r.getUrl());
-            tree.setAttributes(attr);
-            lt.add(tree);
+            menu.setAttributes(attr);
+            lt.add(menu);
         }
         return lt;
     }

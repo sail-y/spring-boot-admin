@@ -2,7 +2,7 @@ package com.dmc.service;
 
 import com.dmc.model.Resource;
 import com.dmc.model.SessionInfo;
-import com.dmc.model.Tree;
+import com.dmc.model.Menu;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public interface ResourceService {
 	 * @param sessionInfo
 	 * @return
 	 */
-	public List<Tree> tree(SessionInfo sessionInfo);
+	public List<Menu> menus(SessionInfo sessionInfo);
 
 	/**
 	 * 获得资源树(包括所有资源类型)
@@ -32,7 +32,7 @@ public interface ResourceService {
 	 * @param sessionInfo
 	 * @return
 	 */
-	public List<Tree> allTree(SessionInfo sessionInfo);
+	public List<Menu> allTree(SessionInfo sessionInfo);
 
 	/**
 	 * 获得资源列表

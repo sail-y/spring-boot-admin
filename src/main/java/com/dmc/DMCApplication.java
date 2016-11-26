@@ -17,7 +17,7 @@ public class DMCApplication extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SecurityInterceptor()
-                .ignore("/resource/tree")
+                .ignore("/resource/menus")
                 .ignore("/user/login")
                 .ignore("/user/logout")
                 .ignore("/api-docs/*"));

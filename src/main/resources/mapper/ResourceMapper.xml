@@ -13,6 +13,7 @@
         <result column="pname" property="pname" jdbcType="VARCHAR"/>
         <result column="typeName" property="typeName" jdbcType="VARCHAR"/>
     </resultMap>
+
     <insert id="save" parameterType="com.dmc.model.Resource">
         INSERT INTO resource (ID, ICON, NAME, REMARK, SEQ, URL, PID, RESOURCETYPE_ID)
         VALUES (#{id}, #{iconCls}, #{name}, #{remark},

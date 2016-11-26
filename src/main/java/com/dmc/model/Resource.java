@@ -14,7 +14,6 @@ public class Resource implements java.io.Serializable {
 	private String remark;
 	private Integer seq;
 	private String url;
-	private String iconCls;
 	private String roleId;
 	private String roleName;
 

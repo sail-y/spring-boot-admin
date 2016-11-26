@@ -1,9 +1,9 @@
 package com.dmc.controller;
 
-import com.dmc.model.RestResponse;
+import com.dmc.model.RestResp;
 import com.dmc.model.Resource;
 import com.dmc.model.SessionInfo;
-import com.dmc.model.Tree;
+import com.dmc.model.Menu;
 import com.dmc.service.ResourceService;
 import com.dmc.service.ResourceTypeService;
 import com.dmc.util.AppConst;
@@ -31,18 +31,18 @@ public class ResourceController {
     private ResourceTypeService resourceTypeService;
 
     /**
-     * 获得资源树(资源类型为菜单类型)
+     * 获得菜单
      * <p>
-     * 通过用户ID判断，他能看到的资源
+     * 通过用户ID判断，他能看到的菜单
      *
      * @param session
      * @return
      */
-    @RequestMapping("/tree")
+    @RequestMapping("/menus")
     @ResponseBody
-    public List<Tree> tree(HttpSession session) {
+    public List<Menu> menus(HttpSession session) {
         SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-        return resourceService.tree(sessionInfo);
+        return resourceService.menus(sessionInfo);
     }
 
     /**
@@ -55,7 +55,7 @@ public class ResourceController {
      */
     @RequestMapping("/allTree")
     @ResponseBody
-    public List<Tree> allTree(HttpSession session) {
+    public List<Menu> allTree(HttpSession session) {
         SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
         return resourceService.allTree(sessionInfo);
     }
@@ -77,13 +77,9 @@ public class ResourceController {
      */
     @RequestMapping("/add")
     @ResponseBody
-    public RestResponse add(Resource resource, HttpSession session) {
+    public void add(Resource resource, HttpSession session) {
         SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-        RestResponse j = new RestResponse();
         resourceService.add(resource, sessionInfo);
-
-        j.setMsg("添加成功！");
-        return j;
     }
 
     /**
@@ -94,8 +90,8 @@ public class ResourceController {
      */
     @RequestMapping("/edit")
     @ResponseBody
-    public RestResponse edit(Resource resource) {
-        RestResponse j = new RestResponse();
+    public RestResp edit(Resource resource) {
+        RestResp j = new RestResp();
         resourceService.edit(resource);
 
         j.setMsg("编辑成功！");
@@ -124,8 +120,8 @@ public class ResourceController {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    public RestResponse delete(String id) {
-        RestResponse j = new RestResponse();
+    public RestResp delete(String id) {
+        RestResp j = new RestResp();
         resourceService.delete(id);
         j.setMsg("删除成功！");
 
