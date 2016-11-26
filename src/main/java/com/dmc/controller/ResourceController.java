@@ -5,7 +5,6 @@ import com.dmc.model.Resource;
 import com.dmc.model.SessionInfo;
 import com.dmc.model.Menu;
 import com.dmc.service.ResourceService;
-import com.dmc.service.ResourceTypeService;
 import com.dmc.util.AppConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,8 +26,6 @@ public class ResourceController {
     @Autowired
     private ResourceService resourceService;
 
-    @Autowired
-    private ResourceTypeService resourceTypeService;
 
     /**
      * 获得菜单

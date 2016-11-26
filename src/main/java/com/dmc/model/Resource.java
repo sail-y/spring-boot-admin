@@ -6,8 +6,7 @@ import lombok.Data;
 public class Resource implements java.io.Serializable {
 
 	private String id;
-	private String typeId;
-	private String typeName;
+	private String type;
 	private String pid;
 	private String pname;
 	private String name;

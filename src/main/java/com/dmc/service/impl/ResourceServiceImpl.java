@@ -1,5 +1,6 @@
 package com.dmc.service.impl;
 
+import com.dmc.util.AppConst;
 import com.google.common.base.Strings;
 import com.dmc.mapper.ResourceMapper;
 import com.dmc.mapper.RoleMapper;
@@ -13,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("resourceService")
 @Transactional
@@ -35,7 +33,7 @@ public class ResourceServiceImpl implements ResourceService {
         List<Menu> menuList = new ArrayList<>();
 
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("resourceTypeId", "0");// 菜单类型的资源
+        params.put("type", AppConst.RESOURCE_TYPE_MENU);// 菜单类型的资源
 
         if (sessionInfo != null) {
             params.put("userId", sessionInfo.getId());// 只查自己有权限的资源
@@ -55,11 +53,12 @@ public class ResourceServiceImpl implements ResourceService {
                 menu.setText(r.getName());
                 List<Menu> children = new ArrayList<>();
                 for (Resource r1 : resourceList) {
-
-                    Menu child = new Menu();
-                    BeanUtils.copyProperties(r1, child);
-                    child.setText(r1.getName());
-                    children.add(child);
+                    if(Objects.equals(r1.getPid(), r.getId())) {
+                        Menu child = new Menu();
+                        BeanUtils.copyProperties(r1, child);
+                        child.setText(r1.getName());
+                        children.add(child);
+                    }
                 }
                 menu.setChildren(children);
                 menuList.add(menu);

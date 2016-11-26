@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dmc.mapper.ResourceMapper">
-    <resultMap id="BaseResultMap" type="com.dmc.model.Resource">
-        <id column="ID" property="id" jdbcType="VARCHAR"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="resourceType_Id" property="typeId" jdbcType="VARCHAR"/>
-        <result column="remark" property="remark" jdbcType="VARCHAR"/>
-        <result column="seq" property="seq" jdbcType="INTEGER"/>
-        <result column="url" property="url" jdbcType="VARCHAR"/>
-        <result column="PID" property="pid" jdbcType="VARCHAR"/>
-        <result column="pname" property="pname" jdbcType="VARCHAR"/>
-        <result column="typeName" property="typeName" jdbcType="VARCHAR"/>
-    </resultMap>
+
 
     <insert id="save" parameterType="com.dmc.model.Resource">
-        INSERT INTO resource (ID, ICON, NAME, REMARK, SEQ, URL, PID, RESOURCETYPE_ID)
+        INSERT INTO resource (ID, ICON, NAME, REMARK, SEQ, URL, PID, type)
         VALUES (#{id}, #{iconCls}, #{name}, #{remark},
-                #{seq}, #{url}, #{pid}, #{typeId})
+                #{seq}, #{url}, #{pid}, #{type})
     </insert>
     <update id="update" parameterType="com.dmc.model.Resource">
         UPDATE resource
@@ -36,8 +26,8 @@
             <if test="url != null">
                 url = #{url},
             </if>
-            <if test="typeId != null">
-                resourceType_Id = #{typeId},
+            <if test="type != null">
+                type = #{type},
             </if>
             pid = #{pid},
         </set>
@@ -51,11 +41,10 @@
         WHERE ID = #{id}
     </delete>
 
-    <select id="getResourceList" resultMap="BaseResultMap">
+    <select id="getResourceList" resultType="com.dmc.model.Resource">
 
-        SELECT r.*,
-               (select rt.name FROM resourcetype rt WHERE rt.id = r.RESOURCETYPE_ID) typeName
-        FROM resource r
+        SELECT r.*
+        FROM dmc.resource r
         <where>
             <if test="userId != null">
                 and exists(select 1 from role_resource rr INNER JOIN role role ON rr.ROLE_ID = role.ID
@@ -63,18 +52,15 @@
                 WHERE u.ID = #{userId} AND rr.RESOURCE_ID = r.ID)
             </if>
             <if test="resourceTypeId != null">
-                and r.RESOURCETYPE_ID = #{resourceTypeId}
+                and r.type = #{type}
             </if>
         </where>
 
         order by r.seq
     </select>
-    <select id="getById" resultMap="BaseResultMap">
+    <select id="getById" resultType="com.dmc.model.Resource">
         SELECT
             r.*,
-            (SELECT rt.name
-             FROM resourcetype rt
-             WHERE rt.id = r.RESOURCETYPE_ID) typeName,
             (SELECT p.name
              FROM resource p
              WHERE r.PID = p.ID)              pname
