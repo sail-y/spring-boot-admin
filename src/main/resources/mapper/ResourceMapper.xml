@@ -5,7 +5,6 @@
         <id column="ID" property="id" jdbcType="VARCHAR"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="resourceType_Id" property="typeId" jdbcType="VARCHAR"/>
-        <result column="icon" property="iconCls" jdbcType="VARCHAR"/>
         <result column="remark" property="remark" jdbcType="VARCHAR"/>
         <result column="seq" property="seq" jdbcType="INTEGER"/>
         <result column="url" property="url" jdbcType="VARCHAR"/>

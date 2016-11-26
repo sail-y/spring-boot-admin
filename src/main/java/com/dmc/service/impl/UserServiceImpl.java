@@ -29,8 +29,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(User user) {
         Map<String, Object> params = new HashMap<>();
-        params.put("name", user.getName());
-        params.put("pwd", DigestUtils.md5Hex(user.getPassword()));
+        params.put("username", user.getUsername());
+        params.put("password", DigestUtils.md5Hex(user.getPassword()));
 
         user = userMapper.login(params);
 

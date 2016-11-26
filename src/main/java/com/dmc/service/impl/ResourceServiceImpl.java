@@ -43,6 +43,11 @@ public class ResourceServiceImpl implements ResourceService {
 
         List<Resource> resourceList = resourceMapper.getResourceList(params);
 
+        assembleMenu(menuList, resourceList);
+        return menuList;
+    }
+
+    private void assembleMenu(List<Menu> menuList, List<Resource> resourceList) {
         for (Resource r : resourceList) {
             if(r.getPid() == null) {
                 Menu menu = new Menu();
@@ -60,30 +65,16 @@ public class ResourceServiceImpl implements ResourceService {
                 menuList.add(menu);
             }
         }
-        return menuList;
     }
 
     @Override
     public List<Menu> allTree(SessionInfo sessionInfo) {
-        List<Menu> lt = new ArrayList<Menu>();
+        List<Menu> menuList = new ArrayList<Menu>();
 
-        Map<String, Object> params = new HashMap<String, Object>();
-        if (sessionInfo != null) {
-            params.put("userId", sessionInfo.getId());// 自查自己有权限的资源
-        }
-
+        Map<String, Object> params = new HashMap<>();
         List<Resource> resourceList = resourceMapper.getResourceList(params);
-
-        for (Resource r : resourceList) {
-            Menu menu = new Menu();
-            BeanUtils.copyProperties(r, menu);
-            menu.setText(r.getName());
-            Map<String, Object> attr = new HashMap<String, Object>();
-            attr.put("url", r.getUrl());
-            menu.setAttributes(attr);
-            lt.add(menu);
-        }
-        return lt;
+        assembleMenu(menuList, resourceList);
+        return menuList;
     }
 
     @Override

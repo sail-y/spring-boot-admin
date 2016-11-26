@@ -15,21 +15,34 @@
   "paths": {
     "/user/login": {
       "post": {
+        "summary": "登录",
         "description": "用户登录接口",
         "parameters": [
           {
-            "name": "username",
-            "in": "query",
-            "description": "用户名",
+            "name": "user",
+            "in": "body",
+            "description": "用户名和密码登录",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "description": "密码",
-            "required": true,
-            "type": "string"
+            "schema": {
+              "required": [
+                "username",
+                "password"
+              ],
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "description": "用户名",
+                  "example": "admin1"
+                },
+                "password": {
+                  "type": "string",
+                  "format": "password",
+                  "description": "密码",
+                  "example": "123456"
+                }
+              }
+            }
           }
         ],
         "tags": [
@@ -54,11 +67,35 @@
     "/user/logout": {
       "post": {
         "summary": "退出登录",
+        "description": "退出登录",
         "tags": [
           "User"
         ],
         "responses": {
           "200": {
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/resource/menus": {
+      "post": {
+        "summary": "获取菜单",
+        "description": "获得用户菜单",
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "菜单",
+            "schema": {
+              "$ref": "#/definitions/Resource"
+            }
           },
           "default": {
             "description": "Unexpected error",
@@ -115,10 +152,12 @@
       "properties": {
         "code": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "example": "403"
         },
         "msg": {
-          "type": "string"
+          "type": "string",
+          "example": "没有权限进行操作！"
         },
         "data": {
           "type": "string"
@@ -130,17 +169,64 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "唯一ID"
+          "description": "唯一ID",
+          "example": "1"
         },
         "name": {
           "type": "string",
-          "description": "用户的昵称"
+          "description": "用户的昵称",
+          "example": "BOSS"
         },
         "resourceList": {
           "type": "array",
           "items": {
-            "type" : "string"
-          }
+            "type": "string"
+          },
+          "description": "可以访问的资源",
+          "example": [
+            "/resource/add",
+            "/resource/edit",
+            "/resource/delete"
+          ]
+        }
+      }
+    },
+    "Resource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "菜单id",
+          "example": "1"
+        },
+        "text": {
+          "type": "string",
+          "description": "菜单名",
+          "example": "系统管理"
+        },
+        "url": {
+          "type": "string",
+          "description": "路径"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Resource"
+          },
+          "description": "下级菜单",
+          "example": [
+            {
+              "id": "zygl",
+              "text": "资源管理",
+              "url": "/resource/manager"
+            },
+            {
+              "id": "userCreateDatetimeChart",
+              "text": "用户图表",
+              "url": "/chartController/userCreateDatetimeChart"
+            }
+          ]
+
         }
       }
     }

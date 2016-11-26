@@ -1,9 +1,8 @@
 package com.dmc.controller;
 
-import com.dmc.model.RestResp;
+import com.dmc.model.Error;
 import com.dmc.model.Role;
 import com.dmc.model.SessionInfo;
-import com.dmc.model.Menu;
 import com.dmc.service.RoleService;
 import com.dmc.util.AppConst;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +34,9 @@ public class RoleController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
-	public RestResp add(Role role, HttpSession session) {
+	public Error add(Role role, HttpSession session) {
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-		RestResp j = new RestResp();
+		Error j = new Error();
 		roleService.add(role, sessionInfo);
 
 		j.setMsg("添加成功！");
@@ -52,8 +51,8 @@ public class RoleController {
 	 */
 	@RequestMapping("/edit")
 	@ResponseBody
-	public RestResp edit(Role role) {
-		RestResp j = new RestResp();
+	public Error edit(Role role) {
+		Error j = new Error();
 		roleService.edit(role);
 
 		j.setMsg("编辑成功！");
@@ -73,25 +72,25 @@ public class RoleController {
 	}
 
 	/**
-	 * 角色树(只能看到自己拥有的角色)
+	 * 角色(只能看到自己拥有的角色)
 	 * 
 	 * @return
 	 */
 	@RequestMapping("/tree")
 	@ResponseBody
-	public List<Menu> tree(HttpSession session) {
+	public List<Role> tree(HttpSession session) {
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
 		return roleService.tree(sessionInfo);
 	}
 
 	/**
-	 * 角色树
+	 * 角色
 	 * 
 	 * @return
 	 */
 	@RequestMapping("/allTree")
 	@ResponseBody
-	public List<Menu> allTree() {
+	public List<Role> allTree() {
 		return roleService.allTree();
 	}
 
@@ -103,8 +102,8 @@ public class RoleController {
 	 */
 	@RequestMapping("/delete")
 	@ResponseBody
-	public RestResp delete(String id) {
-		RestResp j = new RestResp();
+	public Error delete(String id) {
+		Error j = new Error();
 		roleService.delete(id);
 		j.setMsg("删除成功！");
 
@@ -120,8 +119,8 @@ public class RoleController {
 	 */
 	@RequestMapping("/grant")
 	@ResponseBody
-	public RestResp grant(Role role) {
-		RestResp j = new RestResp();
+	public Error grant(Role role) {
+		Error j = new Error();
 		roleService.grant(role);
 		j.setMsg("授权成功！");
 

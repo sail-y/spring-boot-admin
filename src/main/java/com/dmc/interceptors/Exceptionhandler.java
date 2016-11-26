@@ -1,6 +1,6 @@
 package com.dmc.interceptors;
 
-import com.dmc.model.RestResp;
+import com.dmc.model.Error;
 import com.dmc.util.AppConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,8 +20,8 @@ public class Exceptionhandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public RestResp processUnauthenticatedException(NativeWebRequest request, Exception e) {
-        RestResp response = new RestResp();
+    public Error processUnauthenticatedException(NativeWebRequest request, Exception e) {
+        Error response = new Error();
         response.setCode(AppConst.ERROR);
         response.setMsg(e.getMessage());
         log.error(e.getMessage(), e);

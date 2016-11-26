@@ -85,8 +85,8 @@ public class RoleServiceImpl implements RoleService {
 
 
     @Override
-    public List<Menu> tree(SessionInfo sessionInfo) {
-        List<Menu> menus = new ArrayList<>();
+    public List<Role> tree(SessionInfo sessionInfo) {
+        List<Role> list = new ArrayList<>();
 
         Map<String, Object> params = new HashMap<String, Object>();
         if (sessionInfo != null) {
@@ -95,19 +95,12 @@ public class RoleServiceImpl implements RoleService {
 
         List<Role> roles = roleMapper.getRoleList(params);
 
-        for (Role role : roles) {
-            Menu menu = new Menu();
-            BeanUtils.copyProperties(role, menu);
-            menu.setText(role.getName());
-            menu.setIconCls("status_online");
-            menus.add(menu);
-        }
 
-        return menus;
+        return list;
     }
 
     @Override
-    public List<Menu> allTree() {
+    public List<Role> allTree() {
         return this.tree(null);
     }
 

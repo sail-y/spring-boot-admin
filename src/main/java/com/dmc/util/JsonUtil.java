@@ -42,6 +42,10 @@ public class JsonUtil {
         objectMapper.configure(com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
     }
 
+    public static ObjectMapper getObjectMapper() {
+        return objectMapper;
+    }
+
     public static <T> T toObject(String json, Class<T> clazz) {
         try {
             return objectMapper.readValue(json, clazz);

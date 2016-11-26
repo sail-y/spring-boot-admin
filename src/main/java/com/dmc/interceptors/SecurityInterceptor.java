@@ -1,6 +1,6 @@
 package com.dmc.interceptors;
 
-import com.dmc.model.RestResp;
+import com.dmc.model.Error;
 import com.dmc.model.SessionInfo;
 import com.dmc.util.AppConst;
 import com.dmc.util.JsonUtil;
@@ -71,8 +71,17 @@ public class SecurityInterceptor implements HandlerInterceptor {
             request.getRequestDispatcher("/error/noSession.html").forward(request, response);
             return false;
         }
-        if (!sessionInfo.getResourceList().contains(url)) {// 如果当前用户没有访问此资源的权限
-            RestResp resp = new RestResp(AppConst.NO_PERMESSION, "没有权限！");
+
+        boolean hasPermission = false;
+        // 如果当前用户没有访问此资源的权限
+        for (String pattern : sessionInfo.getResourceList()) {
+            Pattern p = Pattern.compile(pattern);
+            if(p.matcher(url).find())
+                hasPermission = true;
+        }
+
+        if (!hasPermission) {
+            Error resp = new Error(AppConst.NO_PERMISSION, "没有权限！");
             response.setCharacterEncoding("utf-8");
             response.setHeader("contentType", "application/json; charset=utf-8");
             response.getWriter().println(JsonUtil.toJsonString(resp));

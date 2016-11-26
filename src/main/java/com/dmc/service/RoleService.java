@@ -51,18 +51,18 @@ public interface RoleService {
 	public void delete(String id);
 
 	/**
-	 * 获得角色树(只能看到自己拥有的角色)
+	 * 获得角色(只能看到自己拥有的角色)
 	 * 
 	 * @return
 	 */
-	public List<Menu> tree(SessionInfo sessionInfo);
+	public List<Role> tree(SessionInfo sessionInfo);
 
 	/**
-	 * 获得角色树
+	 * 获得角色
 	 * 
 	 * @return
 	 */
-	public List<Menu> allTree();
+	public List<Role> allTree();
 
 	/**
 	 * 为角色授权

@@ -8,10 +8,7 @@ import com.dmc.util.IpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -36,10 +33,9 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public SessionInfo login(User user, HttpSession session, HttpServletRequest request) {
+    public SessionInfo login(@RequestBody User user, HttpSession session, HttpServletRequest request) {
         User u = userService.login(user);
         if (u != null) {
-
             SessionInfo sessionInfo = new SessionInfo();
             BeanUtils.copyProperties(u, sessionInfo);
             sessionInfo.setIp(IpUtil.getIpAddr(request));
@@ -52,17 +48,6 @@ public class UserController {
 
     }
 
-    /**
-     * 用户注册
-     *
-     * @param user 用户对象
-     * @return
-     */
-    @RequestMapping(value = "/reg", method = RequestMethod.POST)
-    public User reg(User user) {
-        userService.reg(user);
-        return user;
-    }
 
     /**
      * 退出登录
@@ -77,6 +62,19 @@ public class UserController {
         }
     }
 
+
+
+    /**
+     * 用户注册
+     *
+     * @param user 用户对象
+     * @return
+     */
+    @RequestMapping(value = "/reg", method = RequestMethod.POST)
+    public User reg(User user) {
+        userService.reg(user);
+        return user;
+    }
 
     /**
      * 添加用户
