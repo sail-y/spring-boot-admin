@@ -20,6 +20,6 @@ public class DMCApplication extends WebMvcConfigurerAdapter {
                 .ignore("/resource/tree")
                 .ignore("/user/login")
                 .ignore("/user/logout")
-                .ignore("/user/printSession"));
+                .ignore("/api-docs/*"));
     }
 }

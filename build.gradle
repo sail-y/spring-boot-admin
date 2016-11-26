@@ -42,6 +42,7 @@ dependencies {
 	compile('org.apache.commons:commons-lang3:3.5')
 	compile('commons-codec:commons-codec:1.10')
 	compile('com.github.pagehelper:pagehelper:4.1.6')
+
 	runtime('mysql:mysql-connector-java')
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')

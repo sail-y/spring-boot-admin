@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     public User login(User user) {
         Map<String, Object> params = new HashMap<>();
         params.put("name", user.getName());
-        params.put("pwd", DigestUtils.md5Hex(user.getPwd()));
+        params.put("pwd", DigestUtils.md5Hex(user.getPassword()));
 
         user = userMapper.login(params);
 
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("登录名已存在！");
         } else {
             user.setId(UUID.randomUUID().toString());
-            user.setPwd(DigestUtils.md5Hex(user.getPwd()));
+            user.setPassword(DigestUtils.md5Hex(user.getPassword()));
             userMapper.save(user);
         }
     }
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
         if (userMapper.countUserName(user.getName()) > 0) {
             throw new RuntimeException("登录名已存在！");
         } else {
-            user.setPwd(DigestUtils.md5Hex(user.getPwd()));
+            user.setPassword(DigestUtils.md5Hex(user.getPassword()));
             userMapper.save(user);
         }
     }
@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<String> resourceList(String id) {
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put("userId", id);
         List<Resource> resources = resourceMapper.getResourceList(params);
         return resources.stream().map(Resource::getUrl).collect(Collectors.toList());
@@ -108,35 +108,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public void editPwd(User user) {
         Assert.notNull(user, "user can not be null");
-        Assert.hasText(user.getPwd(), "pwd mush have value");
+        Assert.hasText(user.getPassword(), "pwd mush have value");
 
-        user.setPwd(DigestUtils.md5Hex(user.getPwd()));
+        user.setPassword(DigestUtils.md5Hex(user.getPassword()));
         userMapper.update(user);
     }
 
     @Override
     public boolean editCurrentUserPwd(SessionInfo sessionInfo, String oldPwd, String pwd) {
         User user = userMapper.getById(sessionInfo.getId());
-        if (user.getPwd().equalsIgnoreCase(DigestUtils.md5Hex(oldPwd))) {// 说明原密码输入正确
-            user.setPwd(DigestUtils.md5Hex(pwd));
+        if (user.getPassword().equalsIgnoreCase(DigestUtils.md5Hex(oldPwd))) {// 说明原密码输入正确
+            user.setPassword(DigestUtils.md5Hex(pwd));
             userMapper.update(user);
             return true;
         }
         return false;
-    }
-
-    @Override
-    public List<Long> userCreateDatetimeChart() {
-        List<Long> numbers = new ArrayList<Long>();
-        int k = 0;
-        for (int i = 0; i < 12; i++) {
-            Map<String, Object> params = new HashMap<String, Object>();
-            params.put("s", k);
-            params.put("e", k + 2);
-            k = k + 2;
-            numbers.add(userMapper.countsUserCreateDatetime(params));
-        }
-        return numbers;
     }
 
 }

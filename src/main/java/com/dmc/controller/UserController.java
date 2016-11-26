@@ -3,8 +3,6 @@ package com.dmc.controller;
 import com.dmc.model.RestResponse;
 import com.dmc.model.SessionInfo;
 import com.dmc.model.User;
-import com.dmc.service.ResourceService;
-import com.dmc.service.RoleService;
 import com.dmc.service.UserService;
 import com.dmc.util.AppConst;
 import com.dmc.util.IpUtil;
@@ -39,7 +37,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public RestResponse login(User user, HttpSession session, HttpServletRequest request) {
+    public RestResponse login( User user, HttpSession session, HttpServletRequest request) {
         RestResponse resp = new RestResponse();
         User u = userService.login(user);
         if (u != null) {
@@ -148,7 +146,7 @@ public class UserController {
      * @param ids ('0','1','2')
      * @return
      */
-    @RequestMapping("/batchDelete")
+    @RequestMapping(value = "/batchDelete", method = RequestMethod.POST)
     @ResponseBody
     public RestResponse batchDelete(String ids, HttpSession session) {
         RestResponse resp = new RestResponse();
