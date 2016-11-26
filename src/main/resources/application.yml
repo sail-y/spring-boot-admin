@@ -21,7 +21,7 @@ spring:
 logging:
   level:
     ROOT: INFO
-    org.springframework: INFOu
+    org.springframework: INFO
     org.springframework.data.mongodb: DEBUG
     java.sql.Connection: DEBUG
     java.sql.Statement: DEBUG
