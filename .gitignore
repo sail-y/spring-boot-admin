@@ -25,3 +25,7 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+._.DS_Store
+.DS_Store
+node_modules/
+bower_components/
