@@ -1,9 +1,8 @@
 package com.dmc.controller;
 
-import com.dmc.model.JsonModel;
+import com.dmc.model.Error;
 import com.dmc.model.Role;
 import com.dmc.model.SessionInfo;
-import com.dmc.model.Tree;
 import com.dmc.service.RoleService;
 import com.dmc.util.AppConst;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +34,11 @@ public class RoleController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
-	public JsonModel add(Role role, HttpSession session) {
+	public Error add(Role role, HttpSession session) {
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-		JsonModel j = new JsonModel();
+		Error j = new Error();
 		roleService.add(role, sessionInfo);
-		j.setSuccess(true);
+
 		j.setMsg("添加成功！");
 		return j;
 	}
@@ -52,10 +51,10 @@ public class RoleController {
 	 */
 	@RequestMapping("/edit")
 	@ResponseBody
-	public JsonModel edit(Role role) {
-		JsonModel j = new JsonModel();
+	public Error edit(Role role) {
+		Error j = new Error();
 		roleService.edit(role);
-		j.setSuccess(true);
+
 		j.setMsg("编辑成功！");
 		return j;
 	}
@@ -73,25 +72,25 @@ public class RoleController {
 	}
 
 	/**
-	 * 角色树(只能看到自己拥有的角色)
+	 * 角色(只能看到自己拥有的角色)
 	 * 
 	 * @return
 	 */
 	@RequestMapping("/tree")
 	@ResponseBody
-	public List<Tree> tree(HttpSession session) {
+	public List<Role> tree(HttpSession session) {
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
 		return roleService.tree(sessionInfo);
 	}
 
 	/**
-	 * 角色树
+	 * 角色
 	 * 
 	 * @return
 	 */
 	@RequestMapping("/allTree")
 	@ResponseBody
-	public List<Tree> allTree() {
+	public List<Role> allTree() {
 		return roleService.allTree();
 	}
 
@@ -103,11 +102,11 @@ public class RoleController {
 	 */
 	@RequestMapping("/delete")
 	@ResponseBody
-	public JsonModel delete(String id) {
-		JsonModel j = new JsonModel();
+	public Error delete(String id) {
+		Error j = new Error();
 		roleService.delete(id);
 		j.setMsg("删除成功！");
-		j.setSuccess(true);
+
 		return j;
 	}
 
@@ -120,11 +119,11 @@ public class RoleController {
 	 */
 	@RequestMapping("/grant")
 	@ResponseBody
-	public JsonModel grant(Role role) {
-		JsonModel j = new JsonModel();
+	public Error grant(Role role) {
+		Error j = new Error();
 		roleService.grant(role);
 		j.setMsg("授权成功！");
-		j.setSuccess(true);
+
 		return j;
 	}
 

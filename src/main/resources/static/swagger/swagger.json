@@ -1,0 +1,234 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "DMC API",
+    "description": "Move your app forward with the DMC API",
+    "version": "1.0.0"
+  },
+  "host": "api.dmc.com",
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/user/login": {
+      "post": {
+        "summary": "登录",
+        "description": "用户登录接口",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "用户名和密码登录",
+            "required": true,
+            "schema": {
+              "required": [
+                "username",
+                "password"
+              ],
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "description": "用户名",
+                  "example": "admin1"
+                },
+                "password": {
+                  "type": "string",
+                  "format": "password",
+                  "description": "密码",
+                  "example": "123456"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "登录结果",
+            "schema": {
+              "$ref": "#/definitions/SessionInfo"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/logout": {
+      "post": {
+        "summary": "退出登录",
+        "description": "退出登录",
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/resource/menus": {
+      "post": {
+        "summary": "获取菜单",
+        "description": "获得用户菜单",
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "菜单",
+            "schema": {
+              "$ref": "#/definitions/Resource"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "唯一ID"
+        },
+        "name": {
+          "type": "string",
+          "description": "用户的昵称"
+        },
+        "username": {
+          "type": "string",
+          "description": "用户名"
+        },
+        "password": {
+          "type": "string",
+          "format": "password",
+          "description": "密码"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "data-time",
+          "description": "创建时间"
+        },
+        "modifyTime": {
+          "type": "string",
+          "format": "data-time",
+          "description": "修改时间"
+        },
+        "roleIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "拥有的权限"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "example": "403"
+        },
+        "msg": {
+          "type": "string",
+          "example": "没有权限进行操作！"
+        },
+        "data": {
+          "type": "string"
+        }
+      }
+    },
+    "SessionInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "唯一ID",
+          "example": "1"
+        },
+        "name": {
+          "type": "string",
+          "description": "用户的昵称",
+          "example": "BOSS"
+        },
+        "resourceList": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "可以访问的资源",
+          "example": [
+            "/resource/add",
+            "/resource/edit",
+            "/resource/delete"
+          ]
+        }
+      }
+    },
+    "Resource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "菜单id",
+          "example": "1"
+        },
+        "text": {
+          "type": "string",
+          "description": "菜单名",
+          "example": "系统管理"
+        },
+        "url": {
+          "type": "string",
+          "description": "路径"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Resource"
+          },
+          "description": "下级菜单",
+          "example": [
+            {
+              "id": "zygl",
+              "text": "资源管理",
+              "url": "/resource/manager"
+            },
+            {
+              "id": "userCreateDatetimeChart",
+              "text": "用户图表",
+              "url": "/chartController/userCreateDatetimeChart"
+            }
+          ]
+
+        }
+      }
+    }
+  }
+}

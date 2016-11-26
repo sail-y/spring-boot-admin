@@ -1,17 +1,20 @@
 package com.dmc.interceptors;
 
-import com.alibaba.fastjson.JSON;
-import com.dmc.model.JsonModel;
+import com.dmc.model.Error;
 import com.dmc.model.SessionInfo;
 import com.dmc.util.AppConst;
+import com.dmc.util.JsonUtil;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * 权限拦截器
@@ -20,14 +23,14 @@ import java.util.List;
 public class SecurityInterceptor implements HandlerInterceptor {
 
 
-    private List<String> excludeUrls = new ArrayList<>();// 不需要拦截的资源
+    private List<String> patterns = new ArrayList<>();// 不需要拦截的资源
 
-    public List<String> getExcludeUrls() {
-        return excludeUrls;
+    public List<String> getPatterns() {
+        return patterns;
     }
 
-    public void setExcludeUrls(List<String> excludeUrls) {
-        this.excludeUrls = excludeUrls;
+    public void setPatterns(List<String> patterns) {
+        this.patterns = patterns;
     }
 
     /**
@@ -50,14 +53,17 @@ public class SecurityInterceptor implements HandlerInterceptor {
      * 在调用controller具体方法前拦截
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws ServletException, IOException {
         String requestUri = request.getRequestURI();
         String contextPath = request.getContextPath();
         String url = requestUri.substring(contextPath.length());
-        // logger.info(url);
 
-        if (excludeUrls.contains(url)) {// 如果要访问的资源是不需要验证的
-            return true;
+        // 如果要访问的资源是不需要验证的
+        for (String pattern : patterns) {
+            Pattern p = Pattern.compile(pattern);
+            if(p.matcher(url).find()) {
+                return true;
+            }
         }
 
         SessionInfo sessionInfo = (SessionInfo) request.getSession().getAttribute(AppConst.SESSION_NAME);
@@ -65,11 +71,20 @@ public class SecurityInterceptor implements HandlerInterceptor {
             request.getRequestDispatcher("/error/noSession.html").forward(request, response);
             return false;
         }
-        if (!sessionInfo.getResourceList().contains(url)) {// 如果当前用户没有访问此资源的权限
-            JsonModel json = new JsonModel();
-            json.setSuccess(false);
-            json.setMsg("没有权限！");
-            response.getWriter().println(JSON.toJSONString(json));
+
+        boolean hasPermission = false;
+        // 如果当前用户没有访问此资源的权限
+        for (String pattern : sessionInfo.getResourceList()) {
+            Pattern p = Pattern.compile(pattern);
+            if(p.matcher(url).find())
+                hasPermission = true;
+        }
+
+        if (!hasPermission) {
+            Error resp = new Error(AppConst.NO_PERMISSION, "没有权限！");
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("contentType", "application/json; charset=utf-8");
+            response.getWriter().println(JsonUtil.toJsonString(resp));
             return false;
         }
 
@@ -77,7 +92,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
     }
 
     public SecurityInterceptor ignore(String url) {
-        excludeUrls.add(url);
+        patterns.add(url);
         return this;
     }
 }

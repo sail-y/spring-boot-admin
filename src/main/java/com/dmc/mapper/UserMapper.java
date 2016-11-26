@@ -87,18 +87,5 @@ public interface UserMapper {
      */
     void saveRoles(@Param("id") String id, @Param("roleIds") String[] roleIds);
 
-    /**
-     * 登录自动补齐下拉框
-     * @param params 查询字符串
-     * @return 用户列表
-     */
-    List<User> loginCombobox(Map<String, Object> params);
-
-    /**
-     * 统计用户注册时间
-     * @param params 参数
-     * @return 数量
-     */
-    Long countsUserCreateDatetime(Map<String, Object> params);
 
 }

@@ -1,6 +1,6 @@
 package com.dmc.service.impl;
 
-import com.dmc.model.Tree;
+import com.dmc.model.Menu;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.dmc.mapper.ResourceMapper;
@@ -85,8 +85,8 @@ public class RoleServiceImpl implements RoleService {
 
 
     @Override
-    public List<Tree> tree(SessionInfo sessionInfo) {
-        List<Tree> trees = new ArrayList<>();
+    public List<Role> tree(SessionInfo sessionInfo) {
+        List<Role> list = new ArrayList<>();
 
         Map<String, Object> params = new HashMap<String, Object>();
         if (sessionInfo != null) {
@@ -95,19 +95,12 @@ public class RoleServiceImpl implements RoleService {
 
         List<Role> roles = roleMapper.getRoleList(params);
 
-        for (Role role : roles) {
-            Tree tree = new Tree();
-            BeanUtils.copyProperties(role, tree);
-            tree.setText(role.getName());
-            tree.setIconCls("status_online");
-            trees.add(tree);
-        }
 
-        return trees;
+        return list;
     }
 
     @Override
-    public List<Tree> allTree() {
+    public List<Role> allTree() {
         return this.tree(null);
     }
 
