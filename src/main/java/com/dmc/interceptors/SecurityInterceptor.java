@@ -47,6 +47,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object object, ModelAndView modelAndView) throws Exception {
 
+
     }
 
     /**
@@ -57,9 +58,6 @@ public class SecurityInterceptor implements HandlerInterceptor {
         String requestUri = request.getRequestURI();
         String contextPath = request.getContextPath();
         String url = requestUri.substring(contextPath.length());
-        response.setCharacterEncoding("utf-8");
-        response.setHeader("Content-Type", "application/json;charset=UTF-8");
-
         // 如果要访问的资源是不需要验证的
         for (String pattern : patterns) {
             Pattern p = Pattern.compile(pattern);
@@ -72,6 +70,9 @@ public class SecurityInterceptor implements HandlerInterceptor {
         if (sessionInfo == null || sessionInfo.getId().equalsIgnoreCase("")) {// 如果没有登录或登录超时
 
             RestResp resp = new RestResp(AppConst.NO_SESSION, "没有登录或登录超时！");
+
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-Type", "application/json;charset=UTF-8");
             response.getWriter().println(JsonUtil.toJsonString(resp));
             return false;
         }
@@ -86,6 +87,8 @@ public class SecurityInterceptor implements HandlerInterceptor {
 
         if (!hasPermission) {
             RestResp resp = new RestResp(AppConst.NO_PERMISSION, "没有权限！");
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-Type", "application/json;charset=UTF-8");
             response.getWriter().println(JsonUtil.toJsonString(resp));
             return false;
         }
