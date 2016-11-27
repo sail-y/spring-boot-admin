@@ -20,14 +20,6 @@ public interface UserService {
      */
     User login(User user);
 
-    /**
-     * 用户注册
-     *
-     * @param user 里面包含登录名和密码
-     * @throws Exception
-     */
-    void reg(User user);
-
 
     /**
      * 添加用户

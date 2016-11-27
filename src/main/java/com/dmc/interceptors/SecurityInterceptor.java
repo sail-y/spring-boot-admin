@@ -1,6 +1,6 @@
 package com.dmc.interceptors;
 
-import com.dmc.model.Error;
+import com.dmc.model.RestResp;
 import com.dmc.model.SessionInfo;
 import com.dmc.util.AppConst;
 import com.dmc.util.JsonUtil;
@@ -57,6 +57,8 @@ public class SecurityInterceptor implements HandlerInterceptor {
         String requestUri = request.getRequestURI();
         String contextPath = request.getContextPath();
         String url = requestUri.substring(contextPath.length());
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-Type", "application/json;charset=UTF-8");
 
         // 如果要访问的资源是不需要验证的
         for (String pattern : patterns) {
@@ -68,7 +70,9 @@ public class SecurityInterceptor implements HandlerInterceptor {
 
         SessionInfo sessionInfo = (SessionInfo) request.getSession().getAttribute(AppConst.SESSION_NAME);
         if (sessionInfo == null || sessionInfo.getId().equalsIgnoreCase("")) {// 如果没有登录或登录超时
-            request.getRequestDispatcher("/error/noSession.html").forward(request, response);
+
+            RestResp resp = new RestResp(AppConst.NO_SESSION, "没有登录或登录超时！");
+            response.getWriter().println(JsonUtil.toJsonString(resp));
             return false;
         }
 
@@ -81,9 +85,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
         }
 
         if (!hasPermission) {
-            Error resp = new Error(AppConst.NO_PERMISSION, "没有权限！");
-            response.setCharacterEncoding("utf-8");
-            response.setHeader("contentType", "application/json; charset=utf-8");
+            RestResp resp = new RestResp(AppConst.NO_PERMISSION, "没有权限！");
             response.getWriter().println(JsonUtil.toJsonString(resp));
             return false;
         }

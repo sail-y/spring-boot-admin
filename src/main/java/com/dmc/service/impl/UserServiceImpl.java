@@ -6,6 +6,7 @@ import com.dmc.model.Resource;
 import com.dmc.model.SessionInfo;
 import com.dmc.model.User;
 import com.dmc.service.UserService;
+import com.dmc.util.AppConst;
 import com.google.common.base.Joiner;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service("userService")
@@ -37,20 +40,9 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    @Override
-    synchronized public void reg(User user) {
-        if (userMapper.countUserName(user.getName()) > 0) {
-            throw new RuntimeException("登录名已存在！");
-        } else {
-            user.setId(UUID.randomUUID().toString());
-            user.setPassword(DigestUtils.md5Hex(user.getPassword()));
-            userMapper.save(user);
-        }
-    }
-
 
     @Override
-    synchronized public void add(User user) {
+    public void add(User user) {
         if (userMapper.countUserName(user.getName()) > 0) {
             throw new RuntimeException("登录名已存在！");
         } else {
@@ -70,7 +62,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    synchronized public void edit(User user) {
+    public void edit(User user) {
         if (userMapper.countUserName(user.getName()) > 0) {
             throw new RuntimeException("登录名已存在！");
         } else {
@@ -101,6 +93,7 @@ public class UserServiceImpl implements UserService {
     public List<String> resourceList(String id) {
         Map<String, Object> params = new HashMap<>();
         params.put("userId", id);
+        params.put("type", AppConst.RESOURCE_TYPE_METHOD);
         List<Resource> resources = resourceMapper.getResourceList(params);
         return resources.stream().map(Resource::getUrl).collect(Collectors.toList());
     }

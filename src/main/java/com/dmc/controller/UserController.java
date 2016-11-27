@@ -1,5 +1,6 @@
 package com.dmc.controller;
 
+import com.dmc.model.RestResp;
 import com.dmc.model.SessionInfo;
 import com.dmc.model.User;
 import com.dmc.service.UserService;
@@ -24,16 +25,18 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private HttpSession session;
+
     /**
      * 用户登录
      *
      * @param user    用户对象
-     * @param session
      * @param request
      * @return
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public SessionInfo login(@RequestBody User user, HttpSession session, HttpServletRequest request) {
+    public SessionInfo login(@RequestBody User user, HttpServletRequest request) {
         User u = userService.login(user);
         if (u != null) {
             SessionInfo sessionInfo = new SessionInfo();
@@ -56,25 +59,14 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public void logout(HttpSession session) {
+    public RestResp logout(HttpSession session) {
         if (session != null) {
             session.invalidate();
         }
+
+        return new RestResp();
     }
 
-
-
-    /**
-     * 用户注册
-     *
-     * @param user 用户对象
-     * @return
-     */
-    @RequestMapping(value = "/reg", method = RequestMethod.POST)
-    public User reg(User user) {
-        userService.reg(user);
-        return user;
-    }
 
     /**
      * 添加用户
@@ -163,17 +155,16 @@ public class UserController {
     /**
      * 修改自己的密码
      *
-     * @param session
-     * @param pwd
+     * @param user
      * @return
      */
-    @RequestMapping("/editCurrentUserPwd")
+    @RequestMapping(value = "/editCurrentUserPwd", method = RequestMethod.POST)
     @ResponseBody
-    public void editCurrentUserPwd(HttpSession session, String oldPwd, String pwd) {
+    public RestResp editCurrentUserPwd(@RequestBody User user) {
         if (session != null) {
             SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
             if (sessionInfo != null) {
-                if (!userService.editCurrentUserPwd(sessionInfo, oldPwd, pwd)) {
+                if (!userService.editCurrentUserPwd(sessionInfo, user.getOldPassword(), user.getPassword())) {
                     throw new RuntimeException("原密码错误！");
                 }
             } else {
@@ -182,6 +173,8 @@ public class UserController {
         } else {
             throw new RuntimeException("登录超时，请重新登录！");
         }
+
+        return new RestResp();
     }
 
 

@@ -1,6 +1,6 @@
 package com.dmc.controller;
 
-import com.dmc.model.Error;
+import com.dmc.model.RestResp;
 import com.dmc.model.Role;
 import com.dmc.model.SessionInfo;
 import com.dmc.service.RoleService;
@@ -34,9 +34,9 @@ public class RoleController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
-	public Error add(Role role, HttpSession session) {
+	public RestResp add(Role role, HttpSession session) {
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-		Error j = new Error();
+		RestResp j = new RestResp();
 		roleService.add(role, sessionInfo);
 
 		j.setMsg("添加成功！");
@@ -51,8 +51,8 @@ public class RoleController {
 	 */
 	@RequestMapping("/edit")
 	@ResponseBody
-	public Error edit(Role role) {
-		Error j = new Error();
+	public RestResp edit(Role role) {
+		RestResp j = new RestResp();
 		roleService.edit(role);
 
 		j.setMsg("编辑成功！");
@@ -102,8 +102,8 @@ public class RoleController {
 	 */
 	@RequestMapping("/delete")
 	@ResponseBody
-	public Error delete(String id) {
-		Error j = new Error();
+	public RestResp delete(String id) {
+		RestResp j = new RestResp();
 		roleService.delete(id);
 		j.setMsg("删除成功！");
 
@@ -119,8 +119,8 @@ public class RoleController {
 	 */
 	@RequestMapping("/grant")
 	@ResponseBody
-	public Error grant(Role role) {
-		Error j = new Error();
+	public RestResp grant(Role role) {
+		RestResp j = new RestResp();
 		roleService.grant(role);
 		j.setMsg("授权成功！");
 

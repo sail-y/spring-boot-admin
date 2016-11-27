@@ -51,7 +51,7 @@
                 INNER JOIN user_role ur ON ur.ROLE_ID = role.ID INNER JOIN user u ON u.ID = ur.USER_ID
                 WHERE u.ID = #{userId} AND rr.RESOURCE_ID = r.ID)
             </if>
-            <if test="resourceTypeId != null">
+            <if test="type != null">
                 and r.type = #{type}
             </if>
         </where>

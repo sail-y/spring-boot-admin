@@ -83,6 +83,48 @@
         }
       }
     },
+    "/user/editCurrentUserPwd": {
+      "post": {
+        "summary": "修改密码",
+        "description": "修改密码",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "老密码和新密码",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "oldPassword": {
+                  "type": "string",
+                  "description": "老密码"
+                },
+                "password": {
+                  "type": "string",
+                  "format": "password",
+                  "description": "密码"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+
+        "responses": {
+          "200": {
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/resource/menus": {
       "post": {
         "summary": "获取菜单",
