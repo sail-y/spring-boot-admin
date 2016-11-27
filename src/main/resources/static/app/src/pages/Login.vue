@@ -1,5 +1,4 @@
 
-import Vue from 'vue'
 
 <template>
   <div id="main">
@@ -7,15 +6,15 @@ import Vue from 'vue'
      <div class="box">
          <div class="mao-box">
               <img src="../assets/images/tou.png" class="tou-img">
-              <span id="left" v-bind:class="{ 'left-img': isActive, 'active': hasActive }"></span>
-              <span class="right-img active"></span>
+              <span id="left" class="left-img" v-bind:class="{ active: isActive}"></span>
+              <span class="right-img"  v-bind:class="{ active: isActive}"></span>
          </div>
          <div class="title">欢迎使用贝斯系统</div>
          <div class="line">
-             <input type="text" name="name" class="user-name" placeholder="用户名">
+             <input type="text" v-model="name" name="name" class="user-name" placeholder="用户名">
          </div>
          <div class="line">
-             <input type="password" v-on:focus="hanlderPwd" v-on:blur="hanlderMove" class="pwd" name="pwd" placeholder="密码">
+             <input type="password" v-model="password" v-on:focus="hanlderPwd" v-on:blur="hanlderMove" class="pwd" name="pwd" placeholder="密码">
          </div>
          <div class="text-center">
              <button  v-on:click="hanlderSubmit" class="login-btn">登录</button>
@@ -29,20 +28,25 @@ export default {
   name: 'Login',
   data () {
     return {
-      "isActive" : true,
-      "hasActive" : false
+      "isActive" : false,
+      "name" : "",
+      "password" : ""
     }
+  },
+  created:function() {
+    console.log(5555);
+
   },
   methods: {
     hanlderPwd: function () {
-      console.log(this);
       this.isActive = true;
     },
-    hanlderMove:function () {
-        
+    hanlderMove: function () {
+      this.isActive = false;  
     },
     hanlderSubmit: function () {
-      console.log(2222);
+      console.log(this.name);
+      console.log(this.password);
     }
   }
 }
@@ -102,36 +106,36 @@ html,body{
  }
  .mao-box{
   position: absolute;
-  top: -106px;
+  top: -87px;
   left: 50%;
   width: 100%;
   margin-left: -50%;
   text-align: center;
  }
  .tou-img{
-    width: 120px;
+    width: 100px;
  }
  .left-img{
     position: absolute;
-    left: 22%;
+    left: 25%;
     bottom: 0;
-    width: 35px;
+    width: 28px;
     display: inline-block;
     background-image: url(../assets/images/hand.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    height: 25px;
+    height: 18px;
  }
 .right-img{
     position: absolute;
-    right: 22%;
+    right: 25%;
     bottom: 0;
-    width: 35px;
+    width: 28px;
     display: inline-block;
     background-image: url(../assets/images/hand.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    height: 25px;
+    height: 18px;
  }
   .left-img.active{
     animation: left 0.5s linear;
@@ -145,24 +149,24 @@ html,body{
   }
  @keyframes left {
   0%{
-    left: 22%;  
+    left: 25%;  
     background-image: url(../assets/images/hand.png);
   }
-  90%,100%{
-    left: 41%;
-    height: 50px;
+  60%,100%{
+    left: 42.5%;
+    height: 40px;
     bottom: 10px;
     background-image: url(../assets/images/left-hand.png);
   }
  }
   @-webkit-keyframes left {
   0%{
-    left: 22%;  
+    left: 25%;  
     background-image: url(../assets/images/hand.png);
   }
-  90%,100%{
-    left: 41%;
-    height: 50px;
+  60%,100%{
+    left: 42.5%;
+    height: 40px;
     bottom: 10px;
     background-image: url(../assets/images/left-hand.png);
   }
@@ -170,26 +174,26 @@ html,body{
 
   @keyframes right {
   0%{
-    right: 22%;
+    right: 25%;
     bottom: 0;  
     background-image: url(../assets/images/hand.png);
   }
-  90%,100%{
-    right: 41%;
-    height: 50px;
+  60%,100%{
+    right: 42.5%;
+    height: 40px;
     bottom: 10px;
     background-image: url(../assets/images/right-hand.png);
   }
  }
   @-webkit-keyframes right {
   0%{
-    right: 22%;
+    right: 25%;
     bottom: 0;  
     background-image: url(../assets/images/hand.png);
   }
-  90%,100%{
-    right: 41%;
-    height: 50px;
+  60%,100%{
+    right: 42.5%;
+    height: 40px;
     bottom: 10px;
     background-image: url(../assets/images/right-hand.png);
   }
