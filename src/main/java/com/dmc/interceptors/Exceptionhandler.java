@@ -1,7 +1,8 @@
 package com.dmc.interceptors;
 
-import com.dmc.model.Error;
+import com.dmc.model.RestResp;
 import com.dmc.util.AppConst;
+import com.google.common.base.Throwables;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,10 +21,14 @@ public class Exceptionhandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Error processUnauthenticatedException(NativeWebRequest request, Exception e) {
-        Error response = new Error();
+    public RestResp processUnauthenticatedException(NativeWebRequest request, Exception e) {
+        RestResp response = new RestResp();
         response.setCode(AppConst.ERROR);
-        response.setMsg(e.getMessage());
+        if(e.getMessage() != null) {
+            response.setMsg(e.getMessage());
+        }else {
+            response.setMsg(Throwables.getStackTraceAsString(e));
+        }
         log.error(e.getMessage(), e);
         return response;
     }

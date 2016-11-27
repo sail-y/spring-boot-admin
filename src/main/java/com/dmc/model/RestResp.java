@@ -11,24 +11,24 @@ import lombok.Data;
  * @author yangfan
  */
 @Data
-public class Error implements java.io.Serializable {
+public class RestResp implements java.io.Serializable {
 
     // 默认成功
-    private Integer code = 0;
+    private Integer code = AppConst.OK;
 
     private String msg;
 
     private Object data;
 
-    public Error() {
+    public RestResp() {
 
     }
 
-    public Error(Object data) {
+    public RestResp(Object data) {
         this.data = data;
     }
 
-    public Error(Integer code, String msg) {
+    public RestResp(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }

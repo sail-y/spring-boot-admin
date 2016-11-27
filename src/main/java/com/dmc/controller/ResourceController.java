@@ -1,6 +1,6 @@
 package com.dmc.controller;
 
-import com.dmc.model.Error;
+import com.dmc.model.RestResp;
 import com.dmc.model.Resource;
 import com.dmc.model.SessionInfo;
 import com.dmc.model.Menu;
@@ -87,8 +87,8 @@ public class ResourceController {
      */
     @RequestMapping("/edit")
     @ResponseBody
-    public Error edit(Resource resource) {
-        Error j = new Error();
+    public RestResp edit(Resource resource) {
+        RestResp j = new RestResp();
         resourceService.edit(resource);
 
         j.setMsg("编辑成功！");
@@ -117,8 +117,8 @@ public class ResourceController {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    public Error delete(String id) {
-        Error j = new Error();
+    public RestResp delete(String id) {
+        RestResp j = new RestResp();
         resourceService.delete(id);
         j.setMsg("删除成功！");
 

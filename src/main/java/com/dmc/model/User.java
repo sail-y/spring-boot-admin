@@ -16,4 +16,6 @@ public class User implements java.io.Serializable {
     private String roleIds;
     private String roleNames;
 
+    private String oldPassword;
+
 }

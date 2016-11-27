@@ -11,7 +11,7 @@
 
     <!--保存角色-->
     <insert id="saveRoles" parameterType="map">
-        INSERT INTO user_role (USER_ID, ROLE_ID) VALUES
+        INSERT INTO dmc.user_role (USER_ID, ROLE_ID) VALUES
         <foreach collection="roleIds" separator="," item="item">
             (#{id},#{item})
         </foreach>
@@ -26,7 +26,7 @@
             <if test="password !=null">
                 password = #{password},
             </if>
-            modifydatetime = #{modifydatetime},
+            modify_time = #{modifyTime},
         </set>
         where id = #{id}
     </update>
