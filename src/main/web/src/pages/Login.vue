@@ -24,6 +24,9 @@
 </template>
 
 <script>
+
+import Server from '../common/server.js'
+
 export default {
   name: 'Login',
   data () {
@@ -34,8 +37,7 @@ export default {
     }
   },
   created:function() {
-    console.log(server);
-
+     console.log(Server);
   },
   methods: {
     hanlderPwd: function () {
@@ -106,7 +108,7 @@ html,body{
  }
  .mao-box{
   position: absolute;
-  top: -87px;
+  top: -89px;
   left: 50%;
   width: 100%;
   margin-left: -50%;
