@@ -10,6 +10,9 @@
 
 import Vue from 'vue'
 import routes from './routes'
+import Server from './common/server.js'
+
+var server = new Server();
 
 const app = new Vue({
   el: '#app',

@@ -34,7 +34,7 @@ export default {
     }
   },
   created:function() {
-    console.log(5555);
+    console.log(server);
 
   },
   methods: {
