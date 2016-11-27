@@ -18,13 +18,6 @@
 
 rebel.xml
 
-### NetBeans ###
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
 ._.DS_Store
 .DS_Store
 node_modules/
