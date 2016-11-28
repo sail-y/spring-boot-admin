@@ -20,7 +20,7 @@ public class DMCApplication extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**").allowedOrigins("http://www.dmc.com");
+//        registry.addMapping("/**").allowedOrigins("http://dmc.com");
     }
 
     @Bean
