@@ -41,6 +41,7 @@ public class DMCSecurityInterceptor extends AbstractSecurityInterceptor
         super.setAuthenticationManager(authenticationManager);
     }
 
+
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
@@ -49,9 +50,6 @@ public class DMCSecurityInterceptor extends AbstractSecurityInterceptor
 
     }
 
-    public FilterInvocationSecurityMetadataSource getSecurityMetadataSource() {
-        return this.securityMetadataSource;
-    }
 
     public Class<? extends Object> getSecureObjectClass() {
         return FilterInvocation.class;
@@ -77,9 +75,6 @@ public class DMCSecurityInterceptor extends AbstractSecurityInterceptor
     }
 
 
-    public void setSecurityMetadataSource(FilterInvocationSecurityMetadataSource securityMetadataSource) {
-        this.securityMetadataSource = securityMetadataSource;
-    }
 
 
     public void destroy() {
