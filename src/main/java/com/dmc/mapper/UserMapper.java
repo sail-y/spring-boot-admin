@@ -85,7 +85,7 @@ public interface UserMapper {
      * @param id 用户Id
      * @param roleIds 角色
      */
-    void saveRoles(@Param("id") String id, @Param("roleIds") String[] roleIds);
+    void saveRoles(@Param("id") String id, @Param("roleIds") List<String> roleIds);
 
 
 }

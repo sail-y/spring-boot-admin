@@ -9,11 +9,6 @@ package com.dmc.util;
  * <p/>
  */
 public class AppConst {
-    public static final String SESSION_NAME = "sessionInfo";
-    public static final Integer OK = 200;
-    public static final Integer ERROR = 500;
-    public static final Integer NO_PERMISSION = 403;
-    public static final Integer NO_SESSION = 405;
 
     public static final Integer RESOURCE_TYPE_MENU = 0;
     public static final Integer RESOURCE_TYPE_METHOD = 1;

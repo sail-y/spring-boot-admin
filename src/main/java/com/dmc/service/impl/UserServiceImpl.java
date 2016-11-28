@@ -1,9 +1,9 @@
 package com.dmc.service.impl;
 
+import com.dmc.jwt.AuthTokenDetails;
 import com.dmc.mapper.ResourceMapper;
 import com.dmc.mapper.UserMapper;
 import com.dmc.model.Resource;
-import com.dmc.model.SessionInfo;
 import com.dmc.model.User;
 import com.dmc.service.UserService;
 import com.dmc.util.AppConst;
@@ -36,6 +36,10 @@ public class UserServiceImpl implements UserService {
         params.put("password", DigestUtils.md5Hex(user.getPassword()));
 
         user = userMapper.login(params);
+//        if (user != null) {
+//            user.setRoleIds(userMapper.getUserRoleIds(user.getId()));
+//        }
+
 
         return user;
     }
@@ -55,9 +59,9 @@ public class UserServiceImpl implements UserService {
     public User get(String id) {
         User user = userMapper.getById(id);
         List<String> roleIds = userMapper.getUserRoleIds(user.getId());
-        user.setRoleIds(Joiner.on(",").join(roleIds));
+        user.setRoleIds(roleIds);
         List<String> roleNames = userMapper.getUserRoleNames(user.getId());
-        user.setRoleNames(Joiner.on(",").join(roleNames));
+        user.setRoleNames(roleNames);
         return user;
     }
 
@@ -79,13 +83,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void grant(String ids, User user) {
         Assert.hasText(ids, "ids must have length; it must not be null or empty");
-        Assert.hasText(user.getRoleIds(), "roleIds must have length; it must not be null or empty");
+        Assert.notEmpty(user.getRoleIds(), "roleIds must have length; it must not be null or empty");
 
-        String[] roleIds = user.getRoleIds().split(",");
 
         for (String id : ids.split(",")) {
             userMapper.deleteRoles(id);
-            userMapper.saveRoles(id, roleIds);
+            userMapper.saveRoles(id, user.getRoleIds());
         }
     }
 
@@ -101,21 +104,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public void editPwd(User user) {
         Assert.notNull(user, "user can not be null");
-        Assert.hasText(user.getPassword(), "pwd mush have value");
+        Assert.hasText(user.getPassword(), "password mush have value");
 
         user.setPassword(DigestUtils.md5Hex(user.getPassword()));
         userMapper.update(user);
     }
 
     @Override
-    public boolean editCurrentUserPwd(SessionInfo sessionInfo, String oldPwd, String pwd) {
-        User user = userMapper.getById(sessionInfo.getId());
+    public boolean editCurrentUserPwd(String currUid, String oldPwd, String pwd) {
+        User user = userMapper.getById(currUid);
         if (user.getPassword().equalsIgnoreCase(DigestUtils.md5Hex(oldPwd))) {// 说明原密码输入正确
             user.setPassword(DigestUtils.md5Hex(pwd));
             userMapper.update(user);
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<String> getUserRoleNames(String id) {
+        return userMapper.getUserRoleNames(id);
     }
 
 }

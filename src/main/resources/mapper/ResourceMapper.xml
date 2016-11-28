@@ -51,6 +51,10 @@
                 INNER JOIN user_role ur ON ur.ROLE_ID = role.ID INNER JOIN user u ON u.ID = ur.USER_ID
                 WHERE u.ID = #{userId} AND rr.RESOURCE_ID = r.ID)
             </if>
+            <if test="roleId != null">
+                and exists(select 1 from role_resource rr INNER JOIN role role ON rr.ROLE_ID = role.ID
+                WHERE rr.RESOURCE_ID = r.ID and role.id = #{roleId})
+            </if>
             <if test="type != null">
                 and r.type = #{type}
             </if>

@@ -2,10 +2,11 @@ package com.dmc.controller;
 
 import com.dmc.model.RestResp;
 import com.dmc.model.Resource;
-import com.dmc.model.SessionInfo;
+import com.dmc.jwt.AuthTokenDetails;
 import com.dmc.model.Menu;
 import com.dmc.service.ResourceService;
 import com.dmc.util.AppConst;
+import com.dmc.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,14 +33,12 @@ public class ResourceController {
      * <p>
      * 通过用户ID判断，他能看到的菜单
      *
-     * @param session
      * @return
      */
     @RequestMapping("/menus")
     @ResponseBody
-    public List<Menu> menus(HttpSession session) {
-        SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-        return resourceService.menus(sessionInfo);
+    public List<Menu> menus() {
+        return resourceService.menus();
     }
 
     /**
@@ -47,14 +46,13 @@ public class ResourceController {
      * <p>
      * 通过用户ID判断，他能看到的资源
      *
-     * @param session
      * @return
      */
     @RequestMapping("/allTree")
     @ResponseBody
-    public List<Menu> allTree(HttpSession session) {
-        SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-        return resourceService.allTree(sessionInfo);
+    public List<Menu> allTree() {
+
+        return resourceService.allTree();
     }
 
     /**
@@ -74,9 +72,8 @@ public class ResourceController {
      */
     @RequestMapping("/add")
     @ResponseBody
-    public void add(Resource resource, HttpSession session) {
-        SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-        resourceService.add(resource, sessionInfo);
+    public void add(Resource resource) {
+        resourceService.add(resource);
     }
 
     /**
@@ -104,9 +101,8 @@ public class ResourceController {
      */
     @RequestMapping("/treeGrid")
     @ResponseBody
-    public List<Resource> treeGrid(HttpSession session) {
-        SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-        return resourceService.treeGrid(sessionInfo);
+    public List<Resource> treeGrid() {
+        return resourceService.treeGrid();
     }
 
     /**

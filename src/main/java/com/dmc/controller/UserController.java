@@ -1,18 +1,19 @@
 package com.dmc.controller;
 
+import com.dmc.dto.AuthTokenDTO;
+import com.dmc.jwt.AuthTokenDetails;
+import com.dmc.jwt.JsonWebTokenUtility;
 import com.dmc.model.RestResp;
-import com.dmc.model.SessionInfo;
 import com.dmc.model.User;
 import com.dmc.service.UserService;
-import com.dmc.util.AppConst;
-import com.dmc.util.IpUtil;
+import com.dmc.util.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * 用户控制器
@@ -25,30 +26,49 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private HttpSession session;
+    private JsonWebTokenUtility tokenService = new JsonWebTokenUtility();
 
     /**
      * 用户登录
      *
-     * @param user    用户对象
-     * @param request
+     * @param u 用户对象
      * @return
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public SessionInfo login(@RequestBody User user, HttpServletRequest request) {
-        User u = userService.login(user);
-        if (u != null) {
-            SessionInfo sessionInfo = new SessionInfo();
-            BeanUtils.copyProperties(u, sessionInfo);
-            sessionInfo.setIp(IpUtil.getIpAddr(request));
-            sessionInfo.setResourceList(userService.resourceList(u.getId()));
-            session.setAttribute(AppConst.SESSION_NAME, sessionInfo);
-            return sessionInfo;
+    public AuthTokenDTO login(@RequestBody User u) {
+        AuthTokenDTO authToken = null;
+
+        User user = userService.login(u);
+
+        if (user != null) {
+
+
+            AuthTokenDetails authTokenDetails = new AuthTokenDetails();
+            authTokenDetails.setId(user.getId());
+            authTokenDetails.setUsername(user.getUsername());
+            authTokenDetails.setExpirationDate(buildExpirationDate());
+            authTokenDetails.setRoleNames(userService.getUserRoleNames(user.getId()));
+
+            // Create auth token
+            String jwt = tokenService.createJsonWebToken(authTokenDetails);
+            if (jwt != null) {
+                authToken = new AuthTokenDTO();
+                authToken.setToken(jwt);
+                authToken.setUserId(user.getId());
+                authToken.setResourceList(userService.resourceList(user.getId()));
+            }
         } else {
             throw new RuntimeException("用户名或密码错误");
         }
 
+        return authToken;
+    }
+
+
+    private Date buildExpirationDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.HOUR_OF_DAY, 1);
+        return calendar.getTime();
     }
 
 
@@ -101,9 +121,9 @@ public class UserController {
      * @return
      */
     @RequestMapping("/delete")
-    public void delete(String id, HttpSession session) {
-        SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-        if (id != null && !id.equalsIgnoreCase(sessionInfo.getId())) {// 不能删除自己
+    public void delete(String id) {
+        String currUid = SessionUtil.getCurrUid();
+        if (id != null && !id.equalsIgnoreCase(currUid)) {// 不能删除自己
             userService.delete(id);
         }
     }
@@ -120,7 +140,7 @@ public class UserController {
         if (ids != null && ids.length() > 0) {
             for (String id : ids.split(",")) {
                 if (id != null) {
-                    this.delete(id, session);
+                    this.delete(id);
                 }
             }
         }
@@ -147,8 +167,9 @@ public class UserController {
      */
     @RequestMapping("/editPwd")
     @ResponseBody
-    public void editPwd(User user) {
+    public RestResp editPwd(@RequestBody User user) {
         userService.editPwd(user);
+        return new RestResp();
     }
 
 
@@ -161,14 +182,11 @@ public class UserController {
     @RequestMapping(value = "/editCurrentUserPwd", method = RequestMethod.POST)
     @ResponseBody
     public RestResp editCurrentUserPwd(@RequestBody User user) {
-        if (session != null) {
-            SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-            if (sessionInfo != null) {
-                if (!userService.editCurrentUserPwd(sessionInfo, user.getOldPassword(), user.getPassword())) {
-                    throw new RuntimeException("原密码错误！");
-                }
-            } else {
-                throw new RuntimeException("登录超时，请重新登录！");
+        String currUid = SessionUtil.getCurrUid();
+
+        if (currUid != null) {
+            if (!userService.editCurrentUserPwd(currUid, user.getOldPassword(), user.getPassword())) {
+                throw new RuntimeException("原密码错误！");
             }
         } else {
             throw new RuntimeException("登录超时，请重新登录！");

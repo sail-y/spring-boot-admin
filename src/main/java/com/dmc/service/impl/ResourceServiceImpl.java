@@ -1,12 +1,13 @@
 package com.dmc.service.impl;
 
 import com.dmc.util.AppConst;
+import com.dmc.util.SessionUtil;
 import com.google.common.base.Strings;
 import com.dmc.mapper.ResourceMapper;
 import com.dmc.mapper.RoleMapper;
 import com.dmc.mapper.UserMapper;
 import com.dmc.model.Resource;
-import com.dmc.model.SessionInfo;
+import com.dmc.jwt.AuthTokenDetails;
 import com.dmc.model.Menu;
 import com.dmc.service.ResourceService;
 import org.springframework.beans.BeanUtils;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.websocket.Session;
 import java.util.*;
 
 @Service("resourceService")
@@ -28,15 +30,15 @@ public class ResourceServiceImpl implements ResourceService {
     private RoleMapper roleMapper;
 
     @Override
-    public List<Menu> menus(SessionInfo sessionInfo) {
+    public List<Menu> menus() {
 
         List<Menu> menuList = new ArrayList<>();
 
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put("type", AppConst.RESOURCE_TYPE_MENU);// 菜单类型的资源
-
-        if (sessionInfo != null) {
-            params.put("userId", sessionInfo.getId());// 只查自己有权限的资源
+        String currUid = SessionUtil.getCurrUid();
+        if (currUid != null) {
+            params.put("userId", currUid);// 只查自己有权限的资源
         }
 
         List<Resource> resourceList = resourceMapper.getResourceList(params);
@@ -67,7 +69,7 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public List<Menu> allTree(SessionInfo sessionInfo) {
+    public List<Menu> allTree() {
         List<Menu> menuList = new ArrayList<Menu>();
 
         Map<String, Object> params = new HashMap<>();
@@ -77,11 +79,13 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public List<Resource> treeGrid(SessionInfo sessionInfo) {
+    public List<Resource> treeGrid() {
 
         Map<String, Object> params = new HashMap<>();
-        if (sessionInfo != null) {
-            params.put("userId", sessionInfo.getId());// 自查自己有权限的资源
+        String currUid = SessionUtil.getCurrUid();
+
+        if (currUid != null) {
+            params.put("userId", currUid);// 自查自己有权限的资源
         }
 
         List<Resource> resourceList = resourceMapper.getResourceList(params);
@@ -94,7 +98,7 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public void add(Resource resource, SessionInfo sessionInfo) {
+    public void add(Resource resource) {
 
         if (Strings.isNullOrEmpty(resource.getPid())) {
             resource.setPid(null);
@@ -102,7 +106,7 @@ public class ResourceServiceImpl implements ResourceService {
         resourceMapper.save(resource);
 
         // 由于当前用户所属的角色，没有访问新添加的资源权限，所以在新添加资源的时候，将当前资源授权给当前用户的所有角色，以便添加资源后在资源列表中能够找到
-        String userId = sessionInfo.getId();
+        String userId = SessionUtil.getCurrUid();
         List<String> roleIds = userMapper.getUserRoleIds(userId);
         roleIds.forEach(roleId -> roleMapper.saveRoleResources(roleId, new String[]{resource.getId()}));
 
@@ -132,6 +136,11 @@ public class ResourceServiceImpl implements ResourceService {
     public Resource get(String id) {
 
         return resourceMapper.getById(id);
+    }
+
+    @Override
+    public List<Resource> getResourceList(Map<String, Object> params) {
+        return resourceMapper.getResourceList(params);
     }
 
 }

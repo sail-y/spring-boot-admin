@@ -1,20 +1,19 @@
 package com.dmc.service.impl;
 
-import com.dmc.model.Menu;
-import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
+import com.dmc.jwt.AuthTokenDetails;
 import com.dmc.mapper.ResourceMapper;
 import com.dmc.mapper.RoleMapper;
 import com.dmc.mapper.UserMapper;
 import com.dmc.model.Role;
-import com.dmc.model.SessionInfo;
 import com.dmc.service.RoleService;
-import org.springframework.beans.BeanUtils;
+import com.dmc.util.SessionUtil;
+import com.google.common.base.Joiner;
+import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,19 +32,19 @@ public class RoleServiceImpl implements RoleService {
     private ResourceMapper resourceMapper;
 
     @Override
-    public void add(Role role, SessionInfo sessionInfo) {
+    public void add(Role role) {
 
         roleMapper.save(role);
 
         // 刚刚添加的角色，赋予给当前的用户
-        userMapper.saveRoles(sessionInfo.getId(), new String[]{role.getId()});
+        userMapper.saveRoles(SessionUtil.getCurrUid(), Collections.singletonList(role.getId()));
     }
 
     @Override
     public Role get(String roleId) {
         Role role = roleMapper.getById(roleId);
-        List<String> resourceIds =  resourceMapper.getRoleResourceIds(roleId);
-        List<String> resourceNames =  resourceMapper.getRoleResourceNames(roleId);
+        List<String> resourceIds = resourceMapper.getRoleResourceIds(roleId);
+        List<String> resourceNames = resourceMapper.getRoleResourceNames(roleId);
 
         role.setResourceIds(Joiner.on(",").join(resourceIds));
         role.setResourceNames(Joiner.on(",").join(resourceNames));
@@ -59,10 +58,11 @@ public class RoleServiceImpl implements RoleService {
 
 
     @Override
-    public List<Role> treeGrid(SessionInfo sessionInfo) {
-        Map<String, Object> params = new HashMap<String, Object>();
-        if (sessionInfo != null) {
-            params.put("userId", sessionInfo.getId());// 查自己有权限的角色
+    public List<Role> treeGrid() {
+        Map<String, Object> params = new HashMap<>();
+        String currUid = SessionUtil.getCurrUid();
+        if (currUid != null) {
+            params.put("userId", currUid);// 查自己有权限的角色
         }
 
         List<Role> roles = roleMapper.getRoleList(params);
@@ -85,30 +85,30 @@ public class RoleServiceImpl implements RoleService {
 
 
     @Override
-    public List<Role> tree(SessionInfo sessionInfo) {
-        List<Role> list = new ArrayList<>();
+    public List<Role> roles() {
 
-        Map<String, Object> params = new HashMap<String, Object>();
-        if (sessionInfo != null) {
-            params.put("userId", sessionInfo.getId());// 查自己有权限的角色
+        Map<String, Object> params = new HashMap<>();
+        String currUid = SessionUtil.getCurrUid();
+        if (currUid != null) {
+            params.put("userId", currUid);// 查自己有权限的角色
         }
 
         List<Role> roles = roleMapper.getRoleList(params);
 
 
-        return list;
+        return roles;
     }
 
     @Override
-    public List<Role> allTree() {
-        return this.tree(null);
+    public List<Role> allRole() {
+        return roleMapper.getRoleList(new HashMap<>());
     }
 
     @Override
     public void grant(Role role) {
         roleMapper.deleteRoleResources(role.getId());
 
-        if(!Strings.isNullOrEmpty(role.getResourceIds())){
+        if (!Strings.isNullOrEmpty(role.getResourceIds())) {
             roleMapper.saveRoleResources(role.getId(), role.getResourceIds().split(","));
         }
     }

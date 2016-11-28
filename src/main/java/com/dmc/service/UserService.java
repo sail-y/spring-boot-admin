@@ -1,6 +1,6 @@
 package com.dmc.service;
 
-import com.dmc.model.SessionInfo;
+import com.dmc.jwt.AuthTokenDetails;
 import com.dmc.model.User;
 
 import java.util.List;
@@ -76,12 +76,13 @@ public interface UserService {
     /**
      * 修改用户自己的密码
      *
-     * @param sessionInfo
+     * @param currUid
      * @param oldPwd
      * @param pwd
      * @return
      */
-    boolean editCurrentUserPwd(SessionInfo sessionInfo, String oldPwd, String pwd);
+    boolean editCurrentUserPwd(String currUid, String oldPwd, String pwd);
 
 
+    List<String> getUserRoleNames(String id);
 }

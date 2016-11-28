@@ -2,7 +2,7 @@ package com.dmc.controller;
 
 import com.dmc.model.RestResp;
 import com.dmc.model.Role;
-import com.dmc.model.SessionInfo;
+import com.dmc.jwt.AuthTokenDetails;
 import com.dmc.service.RoleService;
 import com.dmc.util.AppConst;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +34,9 @@ public class RoleController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
-	public RestResp add(Role role, HttpSession session) {
-		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
+	public RestResp add(Role role) {
 		RestResp j = new RestResp();
-		roleService.add(role, sessionInfo);
+		roleService.add(role);
 
 		j.setMsg("添加成功！");
 		return j;
@@ -66,9 +65,8 @@ public class RoleController {
 	 */
 	@RequestMapping("/treeGrid")
 	@ResponseBody
-	public List<Role> treeGrid(HttpSession session) {
-		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-		return roleService.treeGrid(sessionInfo);
+	public List<Role> treeGrid() {
+		return roleService.treeGrid();
 	}
 
 	/**
@@ -78,9 +76,8 @@ public class RoleController {
 	 */
 	@RequestMapping("/tree")
 	@ResponseBody
-	public List<Role> tree(HttpSession session) {
-		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(AppConst.SESSION_NAME);
-		return roleService.tree(sessionInfo);
+	public List<Role> tree() {
+		return roleService.roles();
 	}
 
 	/**
@@ -91,7 +88,7 @@ public class RoleController {
 	@RequestMapping("/allTree")
 	@ResponseBody
 	public List<Role> allTree() {
-		return roleService.allTree();
+		return roleService.allRole();
 	}
 
 	/**

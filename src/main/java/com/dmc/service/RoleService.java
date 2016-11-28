@@ -1,8 +1,7 @@
 package com.dmc.service;
 
 import com.dmc.model.Role;
-import com.dmc.model.SessionInfo;
-import com.dmc.model.Menu;
+import com.dmc.jwt.AuthTokenDetails;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ public interface RoleService {
 	 * 
 	 * @param role
 	 */
-	public void add(Role role, SessionInfo sessionInfo);
+	public void add(Role role);
 
 	/**
 	 * 获得角色
@@ -41,7 +40,7 @@ public interface RoleService {
 	 * 
 	 * @return
 	 */
-	public List<Role> treeGrid(SessionInfo sessionInfo);
+	public List<Role> treeGrid();
 
 	/**
 	 * 删除角色
@@ -55,14 +54,14 @@ public interface RoleService {
 	 * 
 	 * @return
 	 */
-	public List<Role> tree(SessionInfo sessionInfo);
+	public List<Role> roles();
 
 	/**
 	 * 获得角色
 	 * 
 	 * @return
 	 */
-	public List<Role> allTree();
+	public List<Role> allRole();
 
 	/**
 	 * 为角色授权
@@ -70,5 +69,6 @@ public interface RoleService {
 	 * @param role
 	 */
 	public void grant(Role role);
+
 
 }

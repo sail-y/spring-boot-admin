@@ -36,7 +36,7 @@
     </delete>
 
     <delete id="deleteRoles">
-        DELETE FROM user_role
+        DELETE FROM dmc.user_role
         WHERE USER_ID = #{id}
     </delete>
 
@@ -77,8 +77,8 @@
 
     <!-- 用户的角色名称-->
     <select id="getUserRoleNames" resultType="java.lang.String">
-        SELECT r.username
-        FROM dmc.role r INNER JOIN user_role ur ON r.ID = ur.ROLE_ID
+        SELECT r.name
+        FROM dmc.role r INNER JOIN dmc.user_role ur ON r.ID = ur.ROLE_ID
         WHERE ur.user_id = #{id}
     </select>
 

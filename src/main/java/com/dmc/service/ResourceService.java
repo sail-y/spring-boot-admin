@@ -1,10 +1,11 @@
 package com.dmc.service;
 
 import com.dmc.model.Resource;
-import com.dmc.model.SessionInfo;
+import com.dmc.jwt.AuthTokenDetails;
 import com.dmc.model.Menu;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 资源Service
@@ -19,37 +20,33 @@ public interface ResourceService {
 	 * 
 	 * 通过用户ID判断，他能看到的资源
 	 * 
-	 * @param sessionInfo
 	 * @return
 	 */
-	public List<Menu> menus(SessionInfo sessionInfo);
+	public List<Menu> menus();
 
 	/**
 	 * 获得资源树(包括所有资源类型)
 	 * 
 	 * 通过用户ID判断，他能看到的资源
 	 * 
-	 * @param sessionInfo
 	 * @return
 	 */
-	public List<Menu> allTree(SessionInfo sessionInfo);
+	public List<Menu> allTree();
 
 	/**
 	 * 获得资源列表
 	 * 
-	 * @param sessionInfo
-	 * 
+	 *
 	 * @return
 	 */
-	public List<Resource> treeGrid(SessionInfo sessionInfo);
+	public List<Resource> treeGrid();
 
 	/**
 	 * 添加资源
 	 * 
 	 * @param resource
-	 * @param sessionInfo
 	 */
-	public void add(Resource resource, SessionInfo sessionInfo);
+	public void add(Resource resource);
 
 	/**
 	 * 删除资源
@@ -72,5 +69,13 @@ public interface ResourceService {
 	 * @return
 	 */
 	public Resource get(String id);
+
+	/**
+	 * 资列表
+	 * @param params
+	 * @return
+	 */
+    List<Resource> getResourceList(Map<String, Object> params);
+
 
 }
