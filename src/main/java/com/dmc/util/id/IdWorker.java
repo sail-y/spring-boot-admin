@@ -86,14 +86,4 @@ public class IdWorker {
     }
 
 
-    public static void main(String[] args) {
-        IdWorker worker2 = new IdWorker(2);
-        for (int i = 0; i < 1000; i++) {
-
-            System.out.println(worker2.nextId());
-        }
-
-
-    }
-
 }

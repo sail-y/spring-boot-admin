@@ -11,7 +11,7 @@
          </div>
          <div class="title">欢迎使用贝斯系统</div>
          <div class="line">
-             <input type="text" v-model="name" name="name" class="user-name" placeholder="用户名">
+             <input type="text" v-model="username" name="username" class="user-name" placeholder="用户名">
          </div>
          <div class="line">
              <input type="password" v-model="password" v-on:focus="hanlderPwd" v-on:blur="hanlderMove" class="pwd" name="pwd" placeholder="密码">
@@ -27,12 +27,13 @@
 
 import Server from '../common/server.js'
 
+
 export default {
   name: 'Login',
   data () {
     return {
       "isActive" : false,
-      "name" : "",
+      "username" : "",
       "password" : ""
     }
   },
@@ -44,11 +45,20 @@ export default {
       this.isActive = true;
     },
     hanlderMove: function () {
-      this.isActive = false;  
+      this.isActive = false;
     },
-    hanlderSubmit: function () {
-      console.log(this.name);
-      console.log(this.password);
+    hanlderSubmit: function () {  
+      
+      this.$http.post("http://localhost:9003/user/login", { username:this.username, password:this.password })
+                .then((response) => {
+                    var data = response.data;
+                    
+                    if(data.code && data.code != 200) {
+                        alert(data.msg)
+                    }else {
+                      token = data.token
+                    }
+                })
     }
   }
 }
@@ -151,7 +161,7 @@ html,body{
   }
  @keyframes left {
   0%{
-    left: 25%;  
+    left: 25%;
     background-image: url(../assets/images/hand.png);
   }
   60%,100%{
@@ -163,7 +173,7 @@ html,body{
  }
   @-webkit-keyframes left {
   0%{
-    left: 25%;  
+    left: 25%;
     background-image: url(../assets/images/hand.png);
   }
   60%,100%{
@@ -177,7 +187,7 @@ html,body{
   @keyframes right {
   0%{
     right: 25%;
-    bottom: 0;  
+    bottom: 0;
     background-image: url(../assets/images/hand.png);
   }
   60%,100%{
@@ -190,7 +200,7 @@ html,body{
   @-webkit-keyframes right {
   0%{
     right: 25%;
-    bottom: 0;  
+    bottom: 0;
     background-image: url(../assets/images/hand.png);
   }
   60%,100%{
