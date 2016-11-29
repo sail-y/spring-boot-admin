@@ -73,7 +73,7 @@
         WHERE r.ID = #{id}
     </select>
 
-    <select id="getRoleResourceIds" resultType="java.lang.String">
+    <select id="getRoleResourceIds" resultType="java.lang.Long">
         SELECT r.id FROM resource r INNER JOIN role_resource rr ON r.ID = rr.RESOURCE_ID
         WHERE rr.ROLE_ID = #{roleId}
     </select>

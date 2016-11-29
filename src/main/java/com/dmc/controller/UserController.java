@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * 用户控制器
@@ -95,7 +96,7 @@ public class UserController {
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public User add(User user) {
+    public User add(@RequestBody User user) {
         userService.add(user);
         return user;
     }
@@ -109,7 +110,7 @@ public class UserController {
      */
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
-    public User edit(User user) {
+    public User edit(@RequestBody User user) {
         userService.edit(user);
         return user;
     }
@@ -120,10 +121,10 @@ public class UserController {
      * @param id
      * @return
      */
-    @RequestMapping("/delete")
-    public void delete(String id) {
-        String currUid = SessionUtil.getCurrUid();
-        if (id != null && !id.equalsIgnoreCase(currUid)) {// 不能删除自己
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public void delete(Long id) {
+        Long currUid = SessionUtil.getCurrUid();
+        if (Objects.equals(id, currUid)) {// 不能删除自己
             userService.delete(id);
         }
     }
@@ -136,12 +137,10 @@ public class UserController {
      */
     @RequestMapping(value = "/batchDelete", method = RequestMethod.POST)
     @ResponseBody
-    public void batchDelete(String ids, HttpSession session) {
+    public void batchDelete(String ids) {
         if (ids != null && ids.length() > 0) {
             for (String id : ids.split(",")) {
-                if (id != null) {
-                    this.delete(id);
-                }
+                this.delete(Long.valueOf(id));
             }
         }
     }
@@ -154,7 +153,7 @@ public class UserController {
      */
     @RequestMapping("/grant")
     @ResponseBody
-    public void grant(String ids, User user) {
+    public void grant(String ids, @RequestBody User user) {
         userService.grant(ids, user);
     }
 
@@ -182,7 +181,7 @@ public class UserController {
     @RequestMapping(value = "/editCurrentUserPwd", method = RequestMethod.POST)
     @ResponseBody
     public RestResp editCurrentUserPwd(@RequestBody User user) {
-        String currUid = SessionUtil.getCurrUid();
+        Long currUid = SessionUtil.getCurrUid();
 
         if (currUid != null) {
             if (!userService.editCurrentUserPwd(currUid, user.getOldPassword(), user.getPassword())) {

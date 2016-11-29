@@ -53,7 +53,7 @@ public interface ResourceService {
 	 * 
 	 * @param id
 	 */
-	public void delete(String id);
+	public void delete(Long id);
 
 	/**
 	 * 修改资源
@@ -68,7 +68,7 @@ public interface ResourceService {
 	 * @param id
 	 * @return
 	 */
-	public Resource get(String id);
+	public Resource get(Long id);
 
 	/**
 	 * 资列表

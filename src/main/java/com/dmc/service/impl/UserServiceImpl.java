@@ -1,13 +1,12 @@
 package com.dmc.service.impl;
 
-import com.dmc.jwt.AuthTokenDetails;
 import com.dmc.mapper.ResourceMapper;
 import com.dmc.mapper.UserMapper;
 import com.dmc.model.Resource;
 import com.dmc.model.User;
 import com.dmc.service.UserService;
 import com.dmc.util.AppConst;
-import com.google.common.base.Joiner;
+import com.dmc.util.id.IdUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,7 +46,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void add(User user) {
-        if (userMapper.countUserName(user.getName()) > 0) {
+        user.setId(IdUtil.generateId());
+        if (userMapper.countUserName(user.getUsername()) > 0) {
             throw new RuntimeException("登录名已存在！");
         } else {
             user.setPassword(DigestUtils.md5Hex(user.getPassword()));
@@ -56,9 +56,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User get(String id) {
+    public User get(Long id) {
         User user = userMapper.getById(id);
-        List<String> roleIds = userMapper.getUserRoleIds(user.getId());
+        List<Long> roleIds = userMapper.getUserRoleIds(user.getId());
         user.setRoleIds(roleIds);
         List<String> roleNames = userMapper.getUserRoleNames(user.getId());
         user.setRoleNames(roleNames);
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(Long id) {
         userMapper.deleteRoles(id);
         userMapper.deleteById(id);
     }
@@ -87,13 +87,13 @@ public class UserServiceImpl implements UserService {
 
 
         for (String id : ids.split(",")) {
-            userMapper.deleteRoles(id);
-            userMapper.saveRoles(id, user.getRoleIds());
+            userMapper.deleteRoles(Long.valueOf(id));
+            userMapper.saveRoles(Long.valueOf(id), user.getRoleIds());
         }
     }
 
     @Override
-    public List<String> resourceList(String id) {
+    public List<String> resourceList(Long id) {
         Map<String, Object> params = new HashMap<>();
         params.put("userId", id);
         params.put("type", AppConst.RESOURCE_TYPE_METHOD);
@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean editCurrentUserPwd(String currUid, String oldPwd, String pwd) {
+    public boolean editCurrentUserPwd(Long currUid, String oldPwd, String pwd) {
         User user = userMapper.getById(currUid);
         if (user.getPassword().equalsIgnoreCase(DigestUtils.md5Hex(oldPwd))) {// 说明原密码输入正确
             user.setPassword(DigestUtils.md5Hex(pwd));
@@ -122,7 +122,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<String> getUserRoleNames(String id) {
+    public List<String> getUserRoleNames(Long id) {
         return userMapper.getUserRoleNames(id);
     }
 

@@ -26,7 +26,7 @@ public interface RoleService {
 	 * @param id
 	 * @return
 	 */
-	public Role get(String id);
+	public Role get(Long id);
 
 	/**
 	 * 编辑角色
@@ -47,7 +47,7 @@ public interface RoleService {
 	 * 
 	 * @param id
 	 */
-	public void delete(String id);
+	public void delete(Long id);
 
 	/**
 	 * 获得角色(只能看到自己拥有的角色)

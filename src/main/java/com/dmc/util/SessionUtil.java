@@ -13,12 +13,12 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public class SessionUtil {
 
-    public static String getCurrUid() {
+    public static Long getCurrUid() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal();
         if (userDetails != null) {
-            return userDetails.getUsername();
+            return Long.valueOf(userDetails.getUsername());
         }
 
         return null;

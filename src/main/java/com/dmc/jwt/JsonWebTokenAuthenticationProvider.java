@@ -58,7 +58,7 @@ public class JsonWebTokenAuthenticationProvider implements AuthenticationProvide
                     authTokenDetails.getRoleNames().stream()
                             .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
             // userId介入Spring Security
-            principal = new User(authTokenDetails.getId(), "",
+            principal = new User(authTokenDetails.getId().toString(), "",
                     authorities);
         }
 

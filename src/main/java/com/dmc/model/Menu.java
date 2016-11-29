@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class Menu implements java.io.Serializable {
 
-    private String id;
+    private Long id;
     private String text;
     private String url;
     private List<Menu> children;

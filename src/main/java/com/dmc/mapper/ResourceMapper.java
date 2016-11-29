@@ -33,7 +33,7 @@ public interface ResourceMapper {
      *
      * @param id 主键
      */
-    void deleteById(String id);
+    void deleteById(Long id);
 
     /**
      * 编辑资源
@@ -48,19 +48,19 @@ public interface ResourceMapper {
      * @param id ID
      * @return 资源
      */
-    Resource getById(String id);
+    Resource getById(Long id);
 
     /**
      * 查询角色的资源ID
      * @param roleId 角色ID
      * @return 资源ID
      */
-    List<String> getRoleResourceIds(String roleId);
+    List<Long> getRoleResourceIds(Long roleId);
 
     /**
      * 角色的资源名称集合
      * @param roleId 角色ID
      * @return 资源名称
      */
-    List<String> getRoleResourceNames(String roleId);
+    List<String> getRoleResourceNames(Long roleId);
 }

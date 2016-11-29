@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class Resource implements java.io.Serializable {
 
-	private String id;
+	private Long id;
 	private String type;
-	private String pid;
+	private Long pid;
 	private String pname;
 	private String name;
 	private String remark;

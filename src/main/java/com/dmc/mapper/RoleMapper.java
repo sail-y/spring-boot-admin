@@ -24,7 +24,7 @@ public interface RoleMapper {
      * @param id ID
      * @return 角色
      */
-    Role getById(String id);
+    Role getById(Long id);
 
     /**
      * 更新角色
@@ -43,18 +43,18 @@ public interface RoleMapper {
      * 删除角色
      * @param id ID
      */
-    void deleteById(String id);
+    void deleteById(Long id);
 
     /**
      * 删除角色资源
      * @param id 角色ID
      */
-    void deleteRoleResources(String id);
+    void deleteRoleResources(Long id);
 
     /**
      * 保存角色的资源
      * @param id 角色ID
      * @param resourceIds 资源ID
      */
-    void saveRoleResources(@Param("id") String id, @Param("resourceIds") String[] resourceIds);
+    void saveRoleResources(@Param("id") Long id, @Param("resourceIds") List<Long> resourceIds);
 }

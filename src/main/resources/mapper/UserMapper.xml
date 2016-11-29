@@ -5,8 +5,8 @@
 
     <!--注册用户-->
     <insert id="save" parameterType="com.dmc.model.User">
-        INSERT INTO dmc.user (ID,username, password)
-        VALUES (#{id}, #{username}, #{password})
+        INSERT INTO dmc.user (id, name, username, password)
+        VALUES (#{id}, #{name}, #{username}, #{password})
     </insert>
 
     <!--保存角色-->
@@ -26,7 +26,7 @@
             <if test="password !=null">
                 password = #{password},
             </if>
-            modify_time = #{modifyTime},
+            modify_time = now(),
         </set>
         where id = #{id}
     </update>
@@ -69,7 +69,7 @@
     </select>
 
     <!--用户的角色-->
-    <select id="getUserRoleIds" resultType="java.lang.String">
+    <select id="getUserRoleIds" resultType="java.lang.Long">
         SELECT ROLE_ID
         FROM dmc.user_role
         WHERE USER_ID = #{id}
