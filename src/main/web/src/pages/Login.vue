@@ -27,6 +27,7 @@
 
 import Server from '../common/server.js'
 
+
 export default {
   name: 'Login',
   data () {
@@ -49,6 +50,7 @@ export default {
     hanlderSubmit: function () {
       console.log(this.name);
       console.log(this.password);
+      Server.fetchGet("http://photobazaar-testing-dev.camera360.com/manage/photoGrapher/getList?page=1&limit=1000",{});
     }
   }
 }
