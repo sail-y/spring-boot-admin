@@ -16,10 +16,12 @@
         <input type="password" v-model="password" v-on:focus="hanlderPwd" v-on:blur="hanlderMove" class="pwd" name="pwd"
                placeholder="密码">
       </div>
-      {{user.msg}}
+
       <div class="text-center">
         <button v-on:click="hanlderSubmit" class="login-btn">登录</button>
       </div>
+      <br>
+      <span style="color: red">{{user.msg}}</span>
     </div>
   </div>
 </template>
