@@ -21,11 +21,13 @@ const actions = {
 
           if (data.code && data.code != 200) {
             commit('loginFail', data.msg)
+            resolve(false)
           } else {
             commit('setUser', data)
+            resolve(true)
           }
 
-          resolve(true)
+
         })
 
 
@@ -48,6 +50,8 @@ const mutations = {
       state.resourceList = session.resourceList
 
       localStorage.setItem('user', JSON.stringify(session))
+    }else {
+      state.token = null
     }
   },
   loginFail (state, msg) {

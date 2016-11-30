@@ -9,13 +9,14 @@
       </div>
       <div class="title">欢迎使用贝斯系统</div>
       <div class="line">
-        <input type="text" v-model="username" name="username" class="user-name" placeholder="用户名">{{user.msg}}
+        <input type="text" v-model="username" name="username" class="user-name" placeholder="用户名">
       </div>
 
       <div class="line">
         <input type="password" v-model="password" v-on:focus="hanlderPwd" v-on:blur="hanlderMove" class="pwd" name="pwd"
                placeholder="密码">
       </div>
+      {{user.msg}}
       <div class="text-center">
         <button v-on:click="hanlderSubmit" class="login-btn">登录</button>
       </div>
