@@ -8,6 +8,7 @@ import com.dmc.model.Resource;
 import com.dmc.service.ResourceService;
 import com.dmc.util.AppConst;
 import com.dmc.util.SessionUtil;
+import com.dmc.util.id.IdUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,7 +97,7 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public void add(Resource resource) {
-
+        resource.setId(IdUtil.generateId());
         resourceMapper.save(resource);
 
         // 由于当前用户所属的角色，没有访问新添加的资源权限，所以在新添加资源的时候，将当前资源授权给当前用户的所有角色，以便添加资源后在资源列表中能够找到

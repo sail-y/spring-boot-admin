@@ -6,6 +6,7 @@ import com.dmc.mapper.UserMapper;
 import com.dmc.model.Role;
 import com.dmc.service.RoleService;
 import com.dmc.util.SessionUtil;
+import com.dmc.util.id.IdUtil;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
@@ -34,7 +35,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void add(Role role) {
-
+        role.setId(IdUtil.generateId());
         roleMapper.save(role);
 
         // 刚刚添加的角色，赋予给当前的用户
