@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -73,20 +72,6 @@ public class UserController {
     }
 
 
-    /**
-     * 退出登录
-     *
-     * @param session
-     * @return
-     */
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public RestResp logout(HttpSession session) {
-        if (session != null) {
-            session.invalidate();
-        }
-
-        return new RestResp();
-    }
 
 
     /**
@@ -94,8 +79,7 @@ public class UserController {
      *
      * @return
      */
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST)
     public User add(@RequestBody User user) {
         userService.add(user);
         return user;
@@ -105,10 +89,8 @@ public class UserController {
     /**
      * 修改用户
      *
-     * @param user
-     * @return
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
     public User edit(@RequestBody User user) {
         userService.edit(user);
@@ -118,15 +100,18 @@ public class UserController {
     /**
      * 删除用户
      *
-     * @param id
+     * @param userId
      * @return
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public void delete(Long id) {
+    @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
+    public RestResp delete(@PathVariable("userId") Long userId) {
         Long currUid = SessionUtil.getCurrUid();
-        if (Objects.equals(id, currUid)) {// 不能删除自己
-            userService.delete(id);
+        if (Objects.equals(userId, currUid)) {// 不能删除自己
+            userService.delete(userId);
+            return new RestResp(RestResp.ERROR,"不能删除自己");
         }
+
+        return new RestResp(RestResp.OK, "删除成功");
     }
 
     /**

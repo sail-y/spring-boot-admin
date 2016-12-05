@@ -24,4 +24,9 @@ public class SessionUtil {
         return null;
 
     }
+
+    public static void clear() {
+
+        SecurityContextHolder.clearContext();
+    }
 }

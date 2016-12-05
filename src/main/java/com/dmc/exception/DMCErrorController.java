@@ -79,7 +79,9 @@ public class DMCErrorController implements ErrorController {
         String path = MapUtils.getString(body, "path");
         String message = MapUtils.getString(body, "message");
         RestResp restResp = new RestResp(RestResp.ERROR, message, path);
-
+        if (MapUtils.getInteger(body, "status") == 404) {
+            restResp = new RestResp(RestResp.NOT_FOUND, "访问的路径不存在", path);
+        }
         return new ResponseEntity<>(restResp, HttpStatus.OK);
     }
 

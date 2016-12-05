@@ -24,7 +24,6 @@ public class WebSecurityConfig extends JsonWebTokenSecurityConfig {
 
                 // allow anonymous access to /user/login endpoint
                 .antMatchers("/user/login").permitAll()
-                .antMatchers("/user/logout").permitAll()
                 .antMatchers("/swagger/**").permitAll()
 
 

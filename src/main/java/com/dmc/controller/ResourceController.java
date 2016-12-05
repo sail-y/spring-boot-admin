@@ -1,18 +1,13 @@
 package com.dmc.controller;
 
-import com.dmc.model.RestResp;
-import com.dmc.model.Resource;
-import com.dmc.jwt.AuthTokenDetails;
 import com.dmc.model.Menu;
+import com.dmc.model.Resource;
+import com.dmc.model.RestResp;
 import com.dmc.service.ResourceService;
-import com.dmc.util.AppConst;
-import com.dmc.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -20,7 +15,7 @@ import java.util.List;
  *
  * @author yangfan
  */
-@Controller
+@RestController
 @RequestMapping("/resource")
 public class ResourceController {
 
@@ -35,10 +30,14 @@ public class ResourceController {
      *
      * @return
      */
-    @RequestMapping("/menus")
-    @ResponseBody
+    @RequestMapping(value = "/menus", method = RequestMethod.POST)
     public List<Menu> menus() {
         return resourceService.menus();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Resource getById(@PathVariable("id") Long id) {
+        return resourceService.get(id);
     }
 
     /**
@@ -48,77 +47,39 @@ public class ResourceController {
      *
      * @return
      */
-    @RequestMapping("/allTree")
-    @ResponseBody
-    public List<Menu> allTree() {
+    @RequestMapping(value = "/allMenus", method = RequestMethod.POST)
+    public List<Menu> allMenus() {
 
-        return resourceService.allTree();
-    }
-
-    /**
-     * 跳转到资源管理页面
-     *
-     * @return
-     */
-    @RequestMapping("/manager")
-    public String manager() {
-        return "/admin/resource";
+        return resourceService.allMenus();
     }
 
     /**
      * 添加资源
-     *
-     * @return
      */
-    @RequestMapping("/add")
-    @ResponseBody
-    public void add(Resource resource) {
+    @RequestMapping(method = RequestMethod.POST)
+    public RestResp add(@RequestBody Resource resource) {
         resourceService.add(resource);
+        return new RestResp();
     }
 
     /**
      * 编辑资源
-     *
-     * @param resource
-     * @return
      */
-    @RequestMapping("/edit")
-    @ResponseBody
-    public RestResp edit(Resource resource) {
-        RestResp j = new RestResp();
+    @RequestMapping(method = RequestMethod.PUT)
+    public RestResp edit(@RequestBody Resource resource) {
         resourceService.edit(resource);
 
-        j.setMsg("编辑成功！");
-        return j;
-    }
-
-    /**
-     * 获得资源列表
-     * <p>
-     * 通过用户ID判断，他能看到的资源
-     *
-     * @return
-     */
-    @RequestMapping("/treeGrid")
-    @ResponseBody
-    public List<Resource> treeGrid() {
-        return resourceService.treeGrid();
+        return new RestResp();
     }
 
     /**
      * 删除资源
-     *
-     * @param id
-     * @return
      */
-    @RequestMapping("/delete")
-    @ResponseBody
-    public RestResp delete(Long id) {
-        RestResp j = new RestResp();
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public RestResp delete(@PathVariable("id") Long id) {
         resourceService.delete(id);
-        j.setMsg("删除成功！");
 
-        return j;
+        return new RestResp();
     }
 
 }

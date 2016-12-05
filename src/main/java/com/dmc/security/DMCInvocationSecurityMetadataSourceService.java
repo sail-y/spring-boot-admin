@@ -11,7 +11,6 @@ import com.dmc.service.ResourceService;
 import com.dmc.service.RoleService;
 import com.dmc.util.AppConst;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
@@ -20,6 +19,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -39,7 +39,7 @@ public class DMCInvocationSecurityMetadataSourceService implements
     private ResourceService resourceService;
 
 
-    private static Map<String, Collection<ConfigAttribute>> resourceMap = null;
+    private static Map<Resource, Collection<ConfigAttribute>> resourceMap = null;
 
     public DMCInvocationSecurityMetadataSourceService() {
 
@@ -63,21 +63,20 @@ public class DMCInvocationSecurityMetadataSourceService implements
             List<Resource> resources = resourceService.getResourceList(params);
 
             for (Resource resource : resources) {
-                String url = resource.getUrl();
 
                 /*
                  * 判断资源文件和权限的对应关系，如果已经存在相关的资源url，则要通过该url为key提取出权限集合，将权限增加到权限集合中。
                  * sparta
                  */
-                if (resourceMap.containsKey(url)) {
+                if (resourceMap.containsKey(resource)) {
 
-                    Collection<ConfigAttribute> value = resourceMap.get(url);
+                    Collection<ConfigAttribute> value = resourceMap.get(resource);
                     value.add(ca);
-                    resourceMap.put(url, value);
+                    resourceMap.put(resource, value);
                 } else {
                     Collection<ConfigAttribute> atts = new ArrayList<>();
                     atts.add(ca);
-                    resourceMap.put(url, atts);
+                    resourceMap.put(resource, atts);
                 }
 
             }
@@ -98,14 +97,18 @@ public class DMCInvocationSecurityMetadataSourceService implements
             throws IllegalArgumentException {
 
         FilterInvocation filterInvocation = (FilterInvocation) object;
-        for (String requestURL : resourceMap.keySet()) {
-            RequestMatcher requestMatcher = new AntPathRequestMatcher(requestURL);
-            if (requestMatcher.matches(filterInvocation.getHttpRequest())) {
-                return resourceMap.get(requestURL);
+        for (Resource resource : resourceMap.keySet()) {
+            RequestMatcher requestMatcher = new AntPathRequestMatcher(resource.getUrl());
+            HttpServletRequest httpRequest = filterInvocation.getHttpRequest();
+            String method = httpRequest.getMethod();
+
+            if (requestMatcher.matches(httpRequest) && resource.getMethod().equalsIgnoreCase(method)) {
+                return resourceMap.get(resource);
             }
         }
 
         return null;
+
     }
 
     @Override

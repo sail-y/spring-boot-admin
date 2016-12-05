@@ -11,6 +11,6 @@ package com.dmc.exception;
 public class WrongPathException extends RuntimeException {
 
     public WrongPathException() {
-        super("未配置的资源！");
+        super("你访问的接口不存在或未配置！");
     }
 }

@@ -7,6 +7,7 @@ import com.dmc.model.User;
 import com.dmc.service.UserService;
 import com.dmc.util.AppConst;
 import com.dmc.util.id.IdUtil;
+import com.google.common.base.Strings;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,6 +71,9 @@ public class UserServiceImpl implements UserService {
         if (userMapper.countUserName(user.getName()) > 0) {
             throw new RuntimeException("登录名已存在！");
         } else {
+            if(!Strings.isNullOrEmpty(user.getPassword())) {
+                user.setPassword(DigestUtils.md5Hex(user.getPassword()));
+            }
             userMapper.update(user);
         }
     }

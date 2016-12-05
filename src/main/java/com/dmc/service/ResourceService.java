@@ -31,7 +31,7 @@ public interface ResourceService {
 	 * 
 	 * @return
 	 */
-	public List<Menu> allTree();
+	public List<Menu> allMenus();
 
 	/**
 	 * 获得资源列表

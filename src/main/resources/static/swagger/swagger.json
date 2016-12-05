@@ -16,7 +16,6 @@
     "/user/login": {
       "post": {
         "summary": "登录",
-        "description": "用户登录接口",
         "parameters": [
           {
             "name": "user",
@@ -54,39 +53,14 @@
             "schema": {
               "$ref": "#/definitions/SessionInfo"
             }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
           }
         }
       }
     },
-    "/user/logout": {
-      "post": {
-        "summary": "退出登录",
-        "description": "退出登录",
-        "tags": [
-          "User"
-        ],
-        "responses": {
-          "200": {
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
+
     "/user/editCurrentUserPwd": {
       "post": {
         "summary": "修改密码",
-        "description": "修改密码",
         "parameters": [
           {
             "name": "user",
@@ -112,40 +86,259 @@
         "tags": [
           "User"
         ],
-
         "responses": {
           "200": {
-          },
-          "default": {
-            "description": "Unexpected error",
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "summary": "添加用户",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "required": true,
             "schema": {
-              "$ref": "#/definitions/Error"
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "description": "用户名"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "昵称"
+                },
+                "password": {
+                  "type": "string",
+                  "format": "password",
+                  "description": "密码"
+                }
+              }
             }
           }
+        ],
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+          }
+        }
+      },
+      "put": {
+        "summary": "更新用户",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "ID"
+                },
+                "username": {
+                  "type": "string",
+                  "description": "用户名"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "昵称"
+                },
+                "password": {
+                  "type": "string",
+                  "format": "password",
+                  "description": "密码"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+          }
+        }
+      }
+    },
+    "/user/{userId}": {
+      "delete": {
+        "summary": "删除用户",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+
+        "responses": {
+
         }
       }
     },
     "/resource/menus": {
       "post": {
         "summary": "获取菜单",
-        "description": "获得用户菜单",
         "tags": [
-          "User"
+          "Resource"
         ],
         "responses": {
           "200": {
-            "description": "菜单",
+            "description": "资源",
             "schema": {
               "$ref": "#/definitions/Resource"
             }
-          },
-          "default": {
-            "description": "Unexpected error",
+          }
+        }
+      }
+    },
+    "/resource": {
+      "post": {
+        "summary": "添加资源",
+        "parameters": [
+          {
+            "name": "resource",
+            "in": "body",
+            "required": true,
             "schema": {
-              "$ref": "#/definitions/Error"
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "资源名"
+                },
+                "type": {
+                  "type": "number",
+                  "description": "0:资源，1:某个操作"
+                },
+                "pid": {
+                  "type": "number",
+                  "description": "上级资源ID"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "路由路径或者接口地址"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "Resource"
+        ],
+        "responses": {
+          "200": {
+            "description": "资源",
+            "schema": {
+              "$ref": "#/definitions/Resource"
             }
           }
         }
+      },
+      "put": {
+        "summary": "更新资源",
+        "parameters": [
+          {
+            "name": "resource",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "资源ID"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "资源名"
+                },
+                "type": {
+                  "type": "number",
+                  "description": "0:资源，1:某个操作"
+                },
+                "pid": {
+                  "type": "number",
+                  "description": "上级资源ID"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "路由路径或者接口地址"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "Resource"
+        ],
+        "responses": {
+          "200": {
+            "description": "资源",
+            "schema": {
+              "$ref": "#/definitions/Resource"
+            }
+          }
+        }
+      }
+    },
+    "/resource/{resourceId}": {
+      "delete": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "删除资源",
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "资源详情",
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Resource"
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       }
     }
   },
@@ -154,7 +347,8 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
+          "type": "integer",
+          "format": "int64",
           "description": "唯一ID"
         },
         "name": {
@@ -172,12 +366,12 @@
         },
         "createTime": {
           "type": "string",
-          "format": "data-time",
+          "format": "date-time",
           "description": "创建时间"
         },
         "modifyTime": {
           "type": "string",
-          "format": "data-time",
+          "format": "date-time",
           "description": "修改时间"
         },
         "roleIds": {
@@ -189,28 +383,12 @@
         }
       }
     },
-    "Error": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32",
-          "example": "403"
-        },
-        "msg": {
-          "type": "string",
-          "example": "没有权限进行操作！"
-        },
-        "data": {
-          "type": "string"
-        }
-      }
-    },
     "SessionInfo": {
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
+          "type": "integer",
+          "format": "int64",
           "description": "唯一ID",
           "example": "1"
         },
@@ -237,38 +415,32 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "description": "菜单id",
-          "example": "1"
+          "type": "integer",
+          "format": "int64",
+          "description": "资源id"
         },
-        "text": {
+        "name": {
           "type": "string",
-          "description": "菜单名",
-          "example": "系统管理"
+          "description": "资源名"
+        },
+        "type": {
+          "type": "number",
+          "description": "0:菜单，1:某个操作"
+        },
+        "pid": {
+          "type": "number",
+          "description": "上级资源ID"
         },
         "url": {
           "type": "string",
-          "description": "路径"
+          "description": "路由路径或者接口地址"
         },
         "children": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Resource"
           },
-          "description": "下级菜单",
-          "example": [
-            {
-              "id": "zygl",
-              "text": "资源管理",
-              "url": "/resource/manager"
-            },
-            {
-              "id": "userCreateDatetimeChart",
-              "text": "用户图表",
-              "url": "/chartController/userCreateDatetimeChart"
-            }
-          ]
-
+          "description": "下级资源"
         }
       }
     }

@@ -4,16 +4,13 @@
 
 
     <insert id="save" parameterType="com.dmc.model.Resource">
-        INSERT INTO resource (ID, ICON, NAME, REMARK, SEQ, URL, PID, type)
-        VALUES (#{id}, #{iconCls}, #{name}, #{remark},
-                #{seq}, #{url}, #{pid}, #{type})
+        INSERT INTO dmc.resource (ID, NAME, REMARK, SEQ, URL, method, PID, type)
+        VALUES (#{id}, #{name}, #{remark},
+                #{seq}, #{url}, #{method}, #{pid}, #{type})
     </insert>
     <update id="update" parameterType="com.dmc.model.Resource">
-        UPDATE resource
+        UPDATE dmc.resource
         <set>
-            <if test="iconCls != null">
-                icon = #{iconCls},
-            </if>
             <if test="name != null">
                 name = #{name},
             </if>
@@ -37,7 +34,7 @@
 
 
     <delete id="deleteById">
-        DELETE FROM resource
+        DELETE FROM dmc.resource
         WHERE ID = #{id}
     </delete>
 
@@ -47,12 +44,12 @@
         FROM dmc.resource r
         <where>
             <if test="userId != null">
-                and exists(select 1 from role_resource rr INNER JOIN role role ON rr.ROLE_ID = role.ID
-                INNER JOIN user_role ur ON ur.ROLE_ID = role.ID INNER JOIN user u ON u.ID = ur.USER_ID
+                and exists(select 1 from dmc.role_resource rr INNER JOIN dmc.role role ON rr.ROLE_ID = role.ID
+                INNER JOIN dmc.user_role ur ON ur.ROLE_ID = role.ID INNER JOIN user u ON u.ID = ur.USER_ID
                 WHERE u.ID = #{userId} AND rr.RESOURCE_ID = r.ID)
             </if>
             <if test="roleId != null">
-                and exists(select 1 from role_resource rr INNER JOIN role role ON rr.ROLE_ID = role.ID
+                and exists(select 1 from dmc.role_resource rr INNER JOIN role role ON rr.ROLE_ID = role.ID
                 WHERE rr.RESOURCE_ID = r.ID and role.id = #{roleId})
             </if>
             <if test="type != null">
@@ -66,20 +63,22 @@
         SELECT
             r.*,
             (SELECT p.name
-             FROM resource p
-             WHERE r.PID = p.ID)              pname
+             FROM dmc.resource p
+             WHERE r.PID = p.ID) pname
         FROM
-            resource r
+            dmc.resource r
         WHERE r.ID = #{id}
     </select>
 
     <select id="getRoleResourceIds" resultType="java.lang.Long">
-        SELECT r.id FROM resource r INNER JOIN role_resource rr ON r.ID = rr.RESOURCE_ID
+        SELECT r.id
+        FROM dmc.resource r INNER JOIN dmc.role_resource rr ON r.ID = rr.RESOURCE_ID
         WHERE rr.ROLE_ID = #{roleId}
     </select>
 
     <select id="getRoleResourceNames" resultType="java.lang.String">
-        SELECT r.name FROM resource r INNER JOIN role_resource rr ON r.ID = rr.RESOURCE_ID
+        SELECT r.name
+        FROM dmc.resource r INNER JOIN dmc.role_resource rr ON r.ID = rr.RESOURCE_ID
         WHERE rr.ROLE_ID = #{roleId}
     </select>
 </mapper>

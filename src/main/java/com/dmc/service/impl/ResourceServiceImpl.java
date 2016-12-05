@@ -35,9 +35,7 @@ public class ResourceServiceImpl implements ResourceService {
         Map<String, Object> params = new HashMap<>();
         params.put("type", AppConst.RESOURCE_TYPE_MENU);// 菜单类型的资源
         Long currUid = SessionUtil.getCurrUid();
-        if (currUid != null) {
-            params.put("userId", currUid);// 只查自己有权限的资源
-        }
+        params.put("userId", currUid);// 只查自己有权限的资源
 
         List<Resource> resourceList = resourceMapper.getResourceList(params);
 
@@ -67,7 +65,7 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public List<Menu> allTree() {
+    public List<Menu> allMenus() {
         List<Menu> menuList = new ArrayList<Menu>();
 
         Map<String, Object> params = new HashMap<>();

@@ -7,7 +7,9 @@ import com.dmc.service.RoleService;
 import com.dmc.util.AppConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -32,9 +34,9 @@ public class RoleController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping("/add")
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public RestResp add(Role role) {
+	public RestResp add(@RequestBody Role role) {
 		RestResp j = new RestResp();
 		roleService.add(role);
 
@@ -48,9 +50,9 @@ public class RoleController {
 	 * @param role
 	 * @return
 	 */
-	@RequestMapping("/edit")
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
-	public RestResp edit(Role role) {
+	public RestResp edit(@RequestBody Role role) {
 		RestResp j = new RestResp();
 		roleService.edit(role);
 
@@ -97,7 +99,7 @@ public class RoleController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping("/delete")
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
 	public RestResp delete(Long id) {
 		RestResp j = new RestResp();
