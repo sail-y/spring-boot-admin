@@ -102,7 +102,7 @@ public class DMCInvocationSecurityMetadataSourceService implements
             HttpServletRequest httpRequest = filterInvocation.getHttpRequest();
             String method = httpRequest.getMethod();
 
-            if (requestMatcher.matches(httpRequest) && resource.getMethod().equalsIgnoreCase(method)) {
+            if (requestMatcher.matches(httpRequest) && method.equalsIgnoreCase(resource.getMethod())) {
                 return resourceMap.get(resource);
             }
         }

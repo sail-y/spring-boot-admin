@@ -144,14 +144,12 @@ public class UserController {
 
     /**
      * 用户授权
-     *
-     * @param ids
-     * @return
      */
     @RequestMapping(value = "/grant", method = RequestMethod.POST)
     @ResponseBody
-    public void grant(String ids, @RequestBody User user) {
-        userService.grant(ids, user);
+    public RestResp grant(@RequestBody User user) {
+        userService.grant(user);
+        return new RestResp("授权成功！");
     }
 
 

@@ -53,10 +53,9 @@ public interface UserService {
     /**
      * 用户授权
      *
-     * @param ids
      * @param user 需要user.roleIds的属性值
      */
-    void grant(String ids, User user);
+    void grant(User user);
 
     /**
      * 获得用户能访问的资源地址

@@ -57,7 +57,6 @@
         }
       }
     },
-
     "/user/editCurrentUserPwd": {
       "post": {
         "summary": "修改密码",
@@ -94,7 +93,7 @@
     },
     "/user": {
       "post": {
-        "summary": "添加用户",
+        "summary": "用户-添加",
         "parameters": [
           {
             "name": "user",
@@ -129,7 +128,7 @@
         }
       },
       "put": {
-        "summary": "更新用户",
+        "summary": "用户-更新",
         "parameters": [
           {
             "name": "user",
@@ -171,7 +170,7 @@
     },
     "/user/{userId}": {
       "delete": {
-        "summary": "删除用户",
+        "summary": "用户-删除",
         "tags": [
           "User"
         ],
@@ -184,9 +183,66 @@
             "format": "int64"
           }
         ],
-
         "responses": {
-
+          "200": {
+          }
+        }
+      },
+      "get": {
+        "summary": "用户-详情",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/user/grant": {
+      "post": {
+        "summary": "用户-授权",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "用户ID"
+                },
+                "roleIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "角色ID List"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+          }
         }
       }
     },
@@ -208,7 +264,7 @@
     },
     "/resource": {
       "post": {
-        "summary": "添加资源",
+        "summary": "资源-添加",
         "parameters": [
           {
             "name": "resource",
@@ -222,16 +278,20 @@
                   "description": "资源名"
                 },
                 "type": {
-                  "type": "number",
+                  "type": "integer",
                   "description": "0:资源，1:某个操作"
                 },
                 "pid": {
-                  "type": "number",
+                  "type": "integer",
                   "description": "上级资源ID"
                 },
                 "url": {
                   "type": "string",
                   "description": "路由路径或者接口地址"
+                },
+                "remark": {
+                  "type": "string",
+                  "description": "备注"
                 }
               }
             }
@@ -242,15 +302,11 @@
         ],
         "responses": {
           "200": {
-            "description": "资源",
-            "schema": {
-              "$ref": "#/definitions/Resource"
-            }
           }
         }
       },
       "put": {
-        "summary": "更新资源",
+        "summary": "资源-更新",
         "parameters": [
           {
             "name": "resource",
@@ -269,16 +325,20 @@
                   "description": "资源名"
                 },
                 "type": {
-                  "type": "number",
+                  "type": "integer",
                   "description": "0:资源，1:某个操作"
                 },
                 "pid": {
-                  "type": "number",
+                  "type": "integer",
                   "description": "上级资源ID"
                 },
                 "url": {
                   "type": "string",
                   "description": "路由路径或者接口地址"
+                },
+                "remark": {
+                  "type": "string",
+                  "description": "备注"
                 }
               }
             }
@@ -289,10 +349,6 @@
         ],
         "responses": {
           "200": {
-            "description": "资源",
-            "schema": {
-              "$ref": "#/definitions/Resource"
-            }
           }
         }
       }
@@ -302,7 +358,7 @@
         "tags": [
           "Resource"
         ],
-        "summary": "删除资源",
+        "summary": "资源-删除",
         "parameters": [
           {
             "name": "resourceId",
@@ -317,7 +373,7 @@
         "tags": [
           "Resource"
         ],
-        "summary": "资源详情",
+        "summary": "资源-详情",
         "parameters": [
           {
             "name": "resourceId",
@@ -333,12 +389,160 @@
               "$ref": "#/definitions/Resource"
             }
           }
-        },
-        "security": [
+        }
+      }
+    },
+    "/role": {
+      "post": {
+        "summary": "角色-添加",
+        "tags": [
+          "Role"
+        ],
+        "parameters": [
           {
-            "Authorization": []
+            "name": "role",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "资源名"
+                },
+                "pid": {
+                  "type": "integer",
+                  "description": "上级ID"
+                },
+                "remark": {
+                  "type": "string",
+                  "description": "备注"
+                }
+              }
+            }
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+          }
+        }
+      },
+      "put": {
+        "summary": "角色-更新",
+        "tags": [
+          "Role"
+        ],
+        "parameters": [
+          {
+            "name": "role",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "资源ID"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "资源名"
+                },
+                "pid": {
+                  "type": "integer",
+                  "description": "上级ID"
+                },
+                "remark": {
+                  "type": "string",
+                  "description": "备注"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+          }
+        }
+      }
+    },
+    "/role/{roleId}": {
+      "get": {
+        "summary": "角色-详情",
+        "tags": [
+          "Role"
+        ],
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Role"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "角色-删除",
+        "tags": [
+          "Role"
+        ],
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+          }
+        }
+      }
+    },
+    "/role/grant": {
+      "post": {
+        "summary": "角色-授权",
+        "tags": [
+          "Role"
+        ],
+        "parameters": [
+          {
+            "name": "role",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "资源名"
+                },
+                "resourceIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "资源ID List"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+          }
+        }
       }
     }
   },
@@ -424,11 +628,11 @@
           "description": "资源名"
         },
         "type": {
-          "type": "number",
+          "type": "integer",
           "description": "0:菜单，1:某个操作"
         },
         "pid": {
-          "type": "number",
+          "type": "integer",
           "description": "上级资源ID"
         },
         "url": {
@@ -441,6 +645,33 @@
             "$ref": "#/definitions/Resource"
           },
           "description": "下级资源"
+        },
+        "remark": {
+          "type": "string",
+          "description": "备注"
+        }
+      }
+    },
+    "Role": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "角色id"
+        },
+        "pid": {
+          "type": "integer",
+          "format": "int64",
+          "description": "上级角色id"
+        },
+        "name": {
+          "type": "string",
+          "description": "角色名"
+        },
+        "remark": {
+          "type": "string",
+          "description": "描述"
         }
       }
     }
