@@ -58,12 +58,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User get(Long id) {
-        User user = userMapper.getById(id);
-        List<Long> roleIds = userMapper.getUserRoleIds(user.getId());
-        user.setRoleIds(roleIds);
-        List<String> roleNames = userMapper.getUserRoleNames(user.getId());
-        user.setRoleNames(roleNames);
-        return user;
+        return userMapper.getById(id);
     }
 
     @Override

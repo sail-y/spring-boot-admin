@@ -7,10 +7,7 @@ import com.dmc.service.RoleService;
 import com.dmc.util.AppConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -34,14 +31,11 @@ public class RoleController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
 	public RestResp add(@RequestBody Role role) {
-		RestResp j = new RestResp();
 		roleService.add(role);
-
-		j.setMsg("添加成功！");
-		return j;
+		return new RestResp(RestResp.OK,"添加成功！");
 	}
 
 	/**
@@ -50,63 +44,27 @@ public class RoleController {
 	 * @param role
 	 * @return
 	 */
-	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseBody
 	public RestResp edit(@RequestBody Role role) {
-		RestResp j = new RestResp();
 		roleService.edit(role);
-
-		j.setMsg("编辑成功！");
-		return j;
+		return new RestResp(RestResp.OK,"更新成功！");
 	}
 
-	/**
-	 * 获得角色列表
-	 * 
-	 * @return
-	 */
-	@RequestMapping("/treeGrid")
-	@ResponseBody
-	public List<Role> treeGrid() {
-		return roleService.treeGrid();
-	}
 
-	/**
-	 * 角色(只能看到自己拥有的角色)
-	 * 
-	 * @return
-	 */
-	@RequestMapping("/tree")
-	@ResponseBody
-	public List<Role> tree() {
-		return roleService.roles();
-	}
-
-	/**
-	 * 角色
-	 * 
-	 * @return
-	 */
-	@RequestMapping("/allTree")
-	@ResponseBody
-	public List<Role> allTree() {
-		return roleService.allRole();
-	}
 
 	/**
 	 * 删除角色
 	 * 
-	 * @param id
+	 * @param roleId
 	 * @return
 	 */
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/{roleId}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public RestResp delete(Long id) {
-		RestResp j = new RestResp();
-		roleService.delete(id);
-		j.setMsg("删除成功！");
+	public RestResp delete(@PathVariable("roleId") Long roleId) {
+		roleService.delete(roleId);
 
-		return j;
+		return new RestResp(RestResp.OK, "删除成功！");
 	}
 
 
@@ -116,7 +74,7 @@ public class RoleController {
 	 * @param role
 	 * @return
 	 */
-	@RequestMapping("/grant")
+	@RequestMapping(value = "/grant", method = RequestMethod.POST)
 	@ResponseBody
 	public RestResp grant(Role role) {
 		RestResp j = new RestResp();

@@ -98,6 +98,18 @@ public class UserController {
     }
 
     /**
+     * 用户详情
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+    public User getUserById(@PathVariable("userId") Long userId) {
+        User user = userService.get(userId);
+        user.setPassword(null);
+        return user;
+    }
+
+    /**
      * 删除用户
      *
      * @param userId
@@ -120,7 +132,7 @@ public class UserController {
      * @param ids ('0','1','2')
      * @return
      */
-    @RequestMapping(value = "/batchDelete", method = RequestMethod.POST)
+    @RequestMapping(value = "/batchDelete", method = RequestMethod.DELETE)
     @ResponseBody
     public void batchDelete(String ids) {
         if (ids != null && ids.length() > 0) {
@@ -136,7 +148,7 @@ public class UserController {
      * @param ids
      * @return
      */
-    @RequestMapping("/grant")
+    @RequestMapping(value = "/grant", method = RequestMethod.POST)
     @ResponseBody
     public void grant(String ids, @RequestBody User user) {
         userService.grant(ids, user);

@@ -5,7 +5,6 @@ import com.dmc.model.Resource;
 import com.dmc.model.RestResp;
 import com.dmc.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
