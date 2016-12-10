@@ -2,11 +2,13 @@ package com.dmc.model;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Role implements java.io.Serializable {
 
-    private String id;
-    private String pid;
+    private Long id;
+    private Long pid;
     private String pname;
     private String name;
     private String remark;

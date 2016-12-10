@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 public class AuthTokenDTO {
     private String token;
-    private String userId;
+    private Long userId;
     private List<String> resourceList;
 
 }

@@ -46,21 +46,21 @@ public interface UserMapper {
      * @param id 用户ID
      * @return 角色ID
      */
-    List<String> getUserRoleIds(String id);
+    List<Long> getUserRoleIds(Long id);
 
     /**
      * 获得用户的角色名字
      * @param id 用户ID
      * @return 角色名称
      */
-    List<String> getUserRoleNames(String id);
+    List<String> getUserRoleNames(Long id);
 
     /**
      * ID查询用户
      * @param id ID
      * @return 用户
      */
-    User getById(String id);
+    User getById(Long id);
 
     /**
      * 更新用户
@@ -72,20 +72,20 @@ public interface UserMapper {
      * 删除用户
      * @param id 用户ID
      */
-    void deleteById(String id);
+    void deleteById(Long id);
 
     /**
      * 删除用户的角色
      * @param id 用户ID
      */
-    void deleteRoles(String id);
+    void deleteRoles(Long id);
 
     /**
      * 保存用户角色
      * @param id 用户Id
      * @param roleIds 角色
      */
-    void saveRoles(@Param("id") String id, @Param("roleIds") List<String> roleIds);
+    void saveRoles(@Param("id") Long id, @Param("roleIds") List<Long> roleIds);
 
 
 }

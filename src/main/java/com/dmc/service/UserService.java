@@ -34,7 +34,7 @@ public interface UserService {
      * @param id
      * @return
      */
-    User get(String id);
+    User get(Long id);
 
     /**
      * 编辑用户
@@ -48,7 +48,7 @@ public interface UserService {
      *
      * @param id
      */
-    void delete(String id);
+    void delete(Long id);
 
     /**
      * 用户授权
@@ -64,7 +64,7 @@ public interface UserService {
      * @param id 用户ID
      * @return
      */
-    List<String> resourceList(String id);
+    List<String> resourceList(Long id);
 
     /**
      * 编辑用户密码
@@ -81,8 +81,8 @@ public interface UserService {
      * @param pwd
      * @return
      */
-    boolean editCurrentUserPwd(String currUid, String oldPwd, String pwd);
+    boolean editCurrentUserPwd(Long currUid, String oldPwd, String pwd);
 
 
-    List<String> getUserRoleNames(String id);
+    List<String> getUserRoleNames(Long id);
 }

@@ -37,7 +37,7 @@ public class JsonWebTokenUtility {
 
     public String createJsonWebToken(AuthTokenDetails authTokenDetails) {
         String token =
-                Jwts.builder().setSubject(authTokenDetails.getId())
+                Jwts.builder().setSubject(authTokenDetails.getId().toString())
                         .claim("username", authTokenDetails.getUsername())
                         .claim("roleNames", authTokenDetails.getRoleNames())
                         .setExpiration(authTokenDetails.getExpirationDate())
@@ -72,7 +72,7 @@ public class JsonWebTokenUtility {
             Date expirationDate = claims.getExpiration();
 
             authTokenDetails = new AuthTokenDetails();
-            authTokenDetails.setId(userId);
+            authTokenDetails.setId(Long.valueOf(userId));
             authTokenDetails.setUsername(username);
             authTokenDetails.setRoleNames(roleNames);
             authTokenDetails.setExpirationDate(expirationDate);

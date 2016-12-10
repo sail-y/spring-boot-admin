@@ -99,7 +99,7 @@ public class RoleController {
 	 */
 	@RequestMapping("/delete")
 	@ResponseBody
-	public RestResp delete(String id) {
+	public RestResp delete(Long id) {
 		RestResp j = new RestResp();
 		roleService.delete(id);
 		j.setMsg("删除成功！");

@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 public class AuthTokenDetails implements java.io.Serializable {
 
-    private String id;// 用户ID
+    private Long id;// 用户ID
     private String username;// 用户登录名
     private String ip;// 用户IP
 
