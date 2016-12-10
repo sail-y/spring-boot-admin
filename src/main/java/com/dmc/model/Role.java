@@ -13,10 +13,9 @@ public class Role implements java.io.Serializable {
     private String name;
     private String remark;
     private Integer seq;
-    private String iconCls;
 
-    private String resourceIds;
-    private String resourceNames;
+    private List<Long> resourceIds;
+    private List<String> resourceNames;
 
 
 }

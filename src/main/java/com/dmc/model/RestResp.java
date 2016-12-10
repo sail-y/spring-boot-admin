@@ -19,6 +19,7 @@ public class RestResp implements java.io.Serializable {
     public static final Integer ERROR = 500;
     public static final Integer NO_PERMISSION = 10001;
     public static final Integer NO_SESSION = 10002;
+    public static final Integer NOT_FOUND = 404;
 
     // 默认成功
     private Integer code = OK;

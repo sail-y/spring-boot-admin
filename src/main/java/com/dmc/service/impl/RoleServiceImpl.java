@@ -6,6 +6,7 @@ import com.dmc.mapper.UserMapper;
 import com.dmc.model.Role;
 import com.dmc.service.RoleService;
 import com.dmc.util.SessionUtil;
+import com.dmc.util.id.IdUtil;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
@@ -34,7 +35,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void add(Role role) {
-
+        role.setId(IdUtil.generateId());
         roleMapper.save(role);
 
         // 刚刚添加的角色，赋予给当前的用户
@@ -47,8 +48,8 @@ public class RoleServiceImpl implements RoleService {
         List<Long> resourceIds = resourceMapper.getRoleResourceIds(roleId);
         List<String> resourceNames = resourceMapper.getRoleResourceNames(roleId);
 
-        role.setResourceIds(Joiner.on(",").join(resourceIds));
-        role.setResourceNames(Joiner.on(",").join(resourceNames));
+        role.setResourceIds(resourceIds);
+        role.setResourceNames(resourceNames);
         return role;
     }
 
@@ -72,8 +73,8 @@ public class RoleServiceImpl implements RoleService {
             List<Long> resourceIds = resourceMapper.getRoleResourceIds(role.getId());
             List<String> resourceNames = resourceMapper.getRoleResourceNames(role.getId());
 
-            role.setResourceIds(Joiner.on(",").join(resourceIds));
-            role.setResourceNames(Joiner.on(",").join(resourceNames));
+            role.setResourceIds(resourceIds);
+            role.setResourceNames(resourceNames);
         });
         return roles;
     }
@@ -94,10 +95,8 @@ public class RoleServiceImpl implements RoleService {
             params.put("userId", currUid);// 查自己有权限的角色
         }
 
-        List<Role> roles = roleMapper.getRoleList(params);
 
-
-        return roles;
+        return roleMapper.getRoleList(params);
     }
 
     @Override
@@ -109,9 +108,8 @@ public class RoleServiceImpl implements RoleService {
     public void grant(Role role) {
         roleMapper.deleteRoleResources(role.getId());
 
-        if (!Strings.isNullOrEmpty(role.getResourceIds())) {
-            List<String> strings = Splitter.on(",").splitToList(role.getResourceIds());
-            roleMapper.saveRoleResources(role.getId(), strings.stream().map(Long::valueOf).collect(Collectors.toList()));
+        if (!role.getResourceIds().isEmpty()) {
+            roleMapper.saveRoleResources(role.getId(), role.getResourceIds());
         }
     }
 

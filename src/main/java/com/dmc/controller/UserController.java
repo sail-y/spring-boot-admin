@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -73,20 +72,6 @@ public class UserController {
     }
 
 
-    /**
-     * 退出登录
-     *
-     * @param session
-     * @return
-     */
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public RestResp logout(HttpSession session) {
-        if (session != null) {
-            session.invalidate();
-        }
-
-        return new RestResp();
-    }
 
 
     /**
@@ -94,8 +79,7 @@ public class UserController {
      *
      * @return
      */
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST)
     public User add(@RequestBody User user) {
         userService.add(user);
         return user;
@@ -105,10 +89,8 @@ public class UserController {
     /**
      * 修改用户
      *
-     * @param user
-     * @return
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
     public User edit(@RequestBody User user) {
         userService.edit(user);
@@ -116,17 +98,32 @@ public class UserController {
     }
 
     /**
-     * 删除用户
-     *
-     * @param id
+     * 用户详情
+     * @param userId
      * @return
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public void delete(Long id) {
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+    public User getUserById(@PathVariable("userId") Long userId) {
+        User user = userService.get(userId);
+        user.setPassword(null);
+        return user;
+    }
+
+    /**
+     * 删除用户
+     *
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
+    public RestResp delete(@PathVariable("userId") Long userId) {
         Long currUid = SessionUtil.getCurrUid();
-        if (Objects.equals(id, currUid)) {// 不能删除自己
-            userService.delete(id);
+        if (Objects.equals(userId, currUid)) {// 不能删除自己
+            userService.delete(userId);
+            return new RestResp(RestResp.ERROR,"不能删除自己");
         }
+
+        return new RestResp(RestResp.OK, "删除成功");
     }
 
     /**
@@ -135,7 +132,7 @@ public class UserController {
      * @param ids ('0','1','2')
      * @return
      */
-    @RequestMapping(value = "/batchDelete", method = RequestMethod.POST)
+    @RequestMapping(value = "/batchDelete", method = RequestMethod.DELETE)
     @ResponseBody
     public void batchDelete(String ids) {
         if (ids != null && ids.length() > 0) {
@@ -147,14 +144,12 @@ public class UserController {
 
     /**
      * 用户授权
-     *
-     * @param ids
-     * @return
      */
-    @RequestMapping("/grant")
+    @RequestMapping(value = "/grant", method = RequestMethod.POST)
     @ResponseBody
-    public void grant(String ids, @RequestBody User user) {
-        userService.grant(ids, user);
+    public RestResp grant(@RequestBody User user) {
+        userService.grant(user);
+        return new RestResp("授权成功！");
     }
 
 

@@ -7,6 +7,7 @@ import com.dmc.model.User;
 import com.dmc.service.UserService;
 import com.dmc.util.AppConst;
 import com.dmc.util.id.IdUtil;
+import com.google.common.base.Strings;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,12 +58,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User get(Long id) {
-        User user = userMapper.getById(id);
-        List<Long> roleIds = userMapper.getUserRoleIds(user.getId());
-        user.setRoleIds(roleIds);
-        List<String> roleNames = userMapper.getUserRoleNames(user.getId());
-        user.setRoleNames(roleNames);
-        return user;
+        return userMapper.getById(id);
     }
 
     @Override
@@ -70,6 +66,9 @@ public class UserServiceImpl implements UserService {
         if (userMapper.countUserName(user.getName()) > 0) {
             throw new RuntimeException("登录名已存在！");
         } else {
+            if (!Strings.isNullOrEmpty(user.getPassword())) {
+                user.setPassword(DigestUtils.md5Hex(user.getPassword()));
+            }
             userMapper.update(user);
         }
     }
@@ -81,15 +80,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void grant(String ids, User user) {
-        Assert.hasText(ids, "ids must have length; it must not be null or empty");
+    public void grant(User user) {
+        Assert.notNull(user.getId(), "id 不能为空");
         Assert.notEmpty(user.getRoleIds(), "roleIds must have length; it must not be null or empty");
 
 
-        for (String id : ids.split(",")) {
-            userMapper.deleteRoles(Long.valueOf(id));
-            userMapper.saveRoles(Long.valueOf(id), user.getRoleIds());
-        }
+        userMapper.deleteRoles(user.getId());
+        userMapper.saveRoles(user.getId(), user.getRoleIds());
     }
 
     @Override
