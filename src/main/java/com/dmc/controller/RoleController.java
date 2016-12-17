@@ -27,7 +27,7 @@ public class RoleController {
     @RequestMapping(method = RequestMethod.POST)
     public RestResp add(@RequestBody Role role) {
         roleService.add(role);
-        return new RestResp(RestResp.OK, "添加成功！");
+        return RestResp.ok("添加成功！");
     }
 
     /**
@@ -39,11 +39,12 @@ public class RoleController {
     @RequestMapping(method = RequestMethod.PUT)
     public RestResp edit(@RequestBody Role role) {
         roleService.edit(role);
-        return new RestResp(RestResp.OK, "更新成功！");
+        return RestResp.ok("更新成功！");
     }
 
     /**
      * get role by id
+     *
      * @param roleId
      * @return
      */
@@ -63,7 +64,7 @@ public class RoleController {
     public RestResp delete(@PathVariable("roleId") Long roleId) {
         roleService.delete(roleId);
 
-        return new RestResp(RestResp.OK, "删除成功！");
+        return RestResp.ok("删除成功！");
     }
 
 
@@ -78,7 +79,7 @@ public class RoleController {
 
         roleService.grant(role);
 
-        return new RestResp(RestResp.OK, "授权成功！");
+        return RestResp.ok("授权成功！");
     }
 
 

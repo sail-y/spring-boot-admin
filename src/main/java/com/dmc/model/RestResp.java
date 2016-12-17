@@ -30,22 +30,36 @@ public class RestResp implements java.io.Serializable {
     private String path;
     private Date timestamp;
 
-    public RestResp() {
+
+    private RestResp() {
 
     }
 
-    public RestResp(Object data) {
+    private RestResp(Object data) {
         this.data = data;
     }
 
-    public RestResp(Integer code, String msg, String path) {
+    private RestResp(Integer code, String msg, String path) {
         this.code = code;
         this.msg = msg;
         this.path = path;
         this.timestamp = new Date();
     }
 
-    public RestResp(Integer code, String msg) {
+    private RestResp(Integer code, String msg) {
         this(code, msg, null);
+    }
+
+
+    public static RestResp ok(String msg) {
+        return new RestResp(OK, msg);
+    }
+
+    public static RestResp error(Integer code, String msg) {
+        return new RestResp(code, msg);
+    }
+
+    public static RestResp error(Integer code, String msg, String path) {
+        return new RestResp(code, msg, path);
     }
 }
