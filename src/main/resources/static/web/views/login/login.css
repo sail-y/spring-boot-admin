@@ -1,0 +1,157 @@
+
+
+  .line1 {
+    height: 1px;
+  }
+
+  #main {
+    width: 100%;
+    background-color: #f3f3f4;
+    height: 100%;
+  }
+
+  .box {
+    width: 500px;
+    margin: 0 auto;
+    color: #333;
+    margin-top: 15%;
+    text-align: center;
+    background-color: #fff;
+    border: solid 1px #ccc;
+    padding: 30px 0;
+    position: relative;
+  }
+
+  .line {
+    margin-bottom: 20px;
+  }
+
+  input {
+    width: 300px;
+    border: solid 1px #ccc;
+    height: 32px;
+    padding-left: 5px;
+    border-radius: 3px;
+  }
+
+  .login-btn {
+    background-color: #449d44;
+    width: 305px;
+    height: 32px;
+    line-height: 32px;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    text-align: center;
+    font-size: 15px;
+    letter-spacing: 3px;
+  }
+
+  .title {
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 20px;
+  }
+
+  .mao-box {
+    position: absolute;
+    top: -89px;
+    left: 50%;
+    width: 100%;
+    margin-left: -50%;
+    text-align: center;
+  }
+
+  .tou-img {
+    width: 100px;
+  }
+
+  .left-img {
+    position: absolute;
+    left: 25%;
+    bottom: 0;
+    width: 28px;
+    display: inline-block;
+    background-image: url(../../images/hand.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    height: 18px;
+  }
+
+  .right-img {
+    position: absolute;
+    right: 25%;
+    bottom: 0;
+    width: 28px;
+    display: inline-block;
+    background-image: url(../../images/hand.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    height: 18px;
+  }
+
+  .left-img.active {
+    animation: left 0.5s linear;
+    -webkit-animation: left 0.5s linear;
+    -webkit-animation-fill-mode: forwards;
+  }
+
+  .right-img.active {
+    animation: right 0.5s linear;
+    -webkit-animation: right 0.5s linear;
+    -webkit-animation-fill-mode: forwards;
+  }
+
+  @keyframes left {
+    0% {
+      left: 25%;
+      background-image: url(../../images/hand.png);
+    }
+    60%, 100% {
+      left: 42.5%;
+      height: 40px;
+      bottom: 10px;
+      background-image: url(../../images/left-hand.png);
+    }
+  }
+
+  @-webkit-keyframes left {
+    0% {
+      left: 25%;
+      background-image: url(../../images/hand.png);
+    }
+    60%, 100% {
+      left: 42.5%;
+      height: 40px;
+      bottom: 10px;
+      background-image: url(../../images/left-hand.png);
+    }
+  }
+
+  @keyframes right {
+    0% {
+      right: 25%;
+      bottom: 0;
+      background-image: url(../../images/hand.png);
+    }
+    60%, 100% {
+      right: 42.5%;
+      height: 40px;
+      bottom: 10px;
+      background-image: url(../../images/right-hand.png);
+    }
+  }
+
+  @-webkit-keyframes right {
+    0% {
+      right: 25%;
+      bottom: 0;
+      background-image: url(../../images/hand.png);
+    }
+    60%, 100% {
+      right: 42.5%;
+      height: 40px;
+      bottom: 10px;
+      background-image: url(../../images/right-hand.png);
+    }
+  }

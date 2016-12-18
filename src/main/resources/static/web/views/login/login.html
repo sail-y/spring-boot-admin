@@ -2,9 +2,46 @@
 <html>
 <head>
 	<title>贝斯系统</title>
-	<link rel="stylesheet" type="text/css" href="../common/css/common.css">	
+	<link rel="stylesheet" type="text/css" href="../../common/css/common.css">	
+	<link rel="stylesheet" type="text/css" href="./login.css">	
 </head>
 <body>
-6666
+
+  <div class="loading" id="loading">
+    <div class="spinner">
+      <div class="double-bounce1"></div>
+      <div class="double-bounce2"></div>
+    </div>
+  </div>
+  <div id="tips"></div>
+  <!-- model -->
+  <div id="main">
+    <div class="line1"></div>
+    <div class="box">
+      <div class="mao-box">
+        <img src="../../images/tou.png" class="tou-img">
+        <span id="left" class="left-img hand"></span>
+        <span class="right-img hand"></span>
+      </div>
+      <div class="title">欢迎使用贝斯系统</div>
+      <div class="line">
+        <input type="text" name="username" class="user-name" placeholder="用户名">
+      </div>
+
+      <div class="line">
+        <input type="password" class="pwd" name="pwd" placeholder="密码">
+      </div>
+
+      <div class="text-center">
+        <button class="login-btn">登录</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../common/js/base.min.js"></script>
+  <script type="text/javascript" src="../../common/js/sea.js"></script>
+  <script type="text/javascript" src="../../common/js/utils.js"></script>
+  <script type="text/javascript" src="../../common/js/common.js"></script>
+  <script seajs type="text/javascript" src="./login.js"></script>
 </body>
 </html>

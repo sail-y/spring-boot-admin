@@ -1,0 +1,177 @@
+*{
+	margin:0;
+	padding:0;
+}
+html, body {
+	width: 100%;
+    height: 100%;
+}
+input
+{
+  border:none;
+  padding: 0;
+  margin:0;
+  outline: none;
+}
+
+
+p
+{
+  border:none;
+  padding: 0;
+  margin:0;
+}
+
+li
+{
+  list-style: none;
+}
+
+ul
+{
+  padding: 0;
+  margin:0;
+}
+
+button
+{
+  border:none;
+  padding:0;
+  margin:0;
+}
+.page{
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+  background-color: #fff;
+}
+.text-center{
+	text-align: center;
+}
+.pull-left{
+	float: left;
+}
+.pull-right{
+	text-align: right;
+}
+.wid-100{
+	width: 100%;
+}
+.text-left{
+	text-align: left;
+}
+.text-right{
+	text-align: right;
+}
+.main-color{
+  color:#36c186;
+}
+.pull-right{
+  float: right;
+}
+.pull-left{
+  float: left;
+}
+.marign-top-10{
+  margin-top: 10px;
+}
+.one-overflow{
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.two-overflow{
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+/*loading*/
+.loading
+{
+    position: fixed;
+    z-index: 100060;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    background: rgba(0,0,0,0.4);
+    display: none;
+    /*display: -webkit-box;*/
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+}
+
+.loading-show
+{
+    display: -webkit-box;
+}
+
+/*loading动画*/
+.spinner {
+  width: 60px;
+  height: 60px;
+  left:50%;
+  top:50%;
+ 
+  position: absolute;
+  margin: -30px auto 0 -30px;
+}
+
+.double-bounce1, .double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #3781e4;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+   
+  -webkit-animation: bounce 2.0s infinite ease-in-out;
+  animation: bounce 2.0s infinite ease-in-out;
+}
+ 
+.double-bounce2 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+ 
+@-webkit-keyframes bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+ 
+@keyframes bounce {
+  0%, 100% {
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 50% {
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
+
+#tips,.tips
+{
+    padding:10px 5px;
+    height:auto;
+    width: 200px;
+    border-radius: 5px;
+    line-height: 22px;
+    color:white;
+    font-size: 14px;
+    text-align: center;
+    position: fixed;
+    left:50%;
+    margin-left: -105px;
+    top:45%;
+    display: none;
+    z-index: 100003;
+    background:#22c074;
+    text-align: center;
+}
