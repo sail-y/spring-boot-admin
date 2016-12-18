@@ -39,7 +39,7 @@ public interface ResourceService {
 	 *
 	 * @return
 	 */
-	public List<Resource> treeGrid();
+	public List<Resource> treeList();
 
 	/**
 	 * 添加资源

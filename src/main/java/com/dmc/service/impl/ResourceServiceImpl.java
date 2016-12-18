@@ -75,7 +75,7 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public List<Resource> treeGrid() {
+    public List<Resource> treeList() {
 
         Map<String, Object> params = new HashMap<>();
         Long currUid = SessionUtil.getCurrUid();

@@ -392,6 +392,21 @@
         }
       }
     },
+    "/resource/treeList": {
+      "get": {
+        "tags": [
+          "Resource"
+        ],
+        "summary": "资源-列表",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Resource"
+            }
+          }
+        }
+      }
+    },
     "/role": {
       "post": {
         "summary": "角色-添加",
@@ -634,6 +649,10 @@
         "pid": {
           "type": "integer",
           "description": "上级资源ID"
+        },
+        "method": {
+          "type": "string",
+          "description": "方法"
         },
         "url": {
           "type": "string",

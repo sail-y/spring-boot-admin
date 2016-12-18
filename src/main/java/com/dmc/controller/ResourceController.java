@@ -81,4 +81,13 @@ public class ResourceController {
         return RestResp.ok("删除成功");
     }
 
+
+    /**
+     * tree型列表
+     * @return
+     */
+    @RequestMapping(value = "/treeList", method = RequestMethod.GET)
+    public List<Resource> treeList() {
+        return resourceService.treeList();
+    }
 }
