@@ -16,11 +16,12 @@
   </div>
   <div id="tips"></div>
   <div class="page">
-     <div class="header-name">菜单管理</div>
+     <div class="header-name">资源管理</div>
       <table id="tree-basic">
         <thead>
           <tr>
-            <th>节点名称</th>
+            <th>资源名称</th>
+            <th>URL</th>
             <th>操作</th>
           </tr>
         </thead>
@@ -33,6 +34,7 @@
       <%for(var i = 0; i < list.length; i ++){%>
          <tr data-tt-id="<%=list[i].id%>" <%if(typeof list[i].pid != "undefined"){%>data-tt-parent-id="<%=list[i].pid%>"<%}%>>
             <td><%=list[i].name%></td>
+            <td><%=list[i].url%></td>
             <td>
                 <a class="edit-btn blue">编辑</a>
                 <a class="del-btn blue">删除</a>
