@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service("resourceService")
 @Transactional
@@ -90,8 +91,34 @@ public class ResourceServiceImpl implements ResourceService {
         resourceList.forEach(resource -> map.put(resource.getId(), resource));
         resourceList.forEach(resource -> resource.setPname(resource.getPid() != null ? map.get(resource.getPid()).getName() : null));
 
-        return resourceList;
+        List<Resource> list = new ArrayList<>();
+
+        resourceList = new CopyOnWriteArrayList<>(resourceList);
+        for (Resource resource : resourceList) {
+            if (resource.getPid() == null) {
+                list.add(resource);
+                resourceList.remove(resource);
+                treeSort(resourceList, list, resource);
+            }
+        }
+
+
+        return list;
     }
+
+
+    private void treeSort(List<Resource> resourceList, List<Resource> list, Resource parent) {
+
+        for (Resource resource : resourceList) {
+            if (Objects.equals(parent.getId(), resource.getPid())) {
+                list.add(resource);
+                resourceList.remove(resource);
+                treeSort(resourceList, list, resource);
+            }
+        }
+    }
+
+
 
     @Override
     public void add(Resource resource) {
