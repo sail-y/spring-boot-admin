@@ -6,7 +6,8 @@ define(function(require, exports, module){
 
 		events:{
 			"click .menu-ul li" : "handlerShowLi",
-			"click .item-ul li" : "handlerPage"
+			"click .item-ul li" : "handlerPage",
+			"click .tab-content li" : "handlerTab"
 		},
 
 		menuTemplate:_.template($('#menuTemplate').html()),
@@ -14,7 +15,7 @@ define(function(require, exports, module){
 		initialize:function(){
 			this.model = new Backbone.Model();
 			this.getMenu();
-			$("#content").attr("src","./index.html");
+			$("#content").attr("src","../menu/menu.html");
 			
 		},
 
@@ -49,8 +50,16 @@ define(function(require, exports, module){
 			event.stopPropagation();
 			var target = $(event.currentTarget);
 			var url = target.data("link");
-			console.log(url);
-			$("#content").attr("src",url);
+				target.siblings().removeClass("active");
+				target.addClass("active");
+				console.log(url);
+				$("#content").attr("src",url);
+		},
+
+		handlerTab:function(event) {
+			var target = $(event.currentTarget);
+				target.siblings().removeClass("active");
+				target.addClass("active");
 		}
 
 

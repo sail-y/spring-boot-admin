@@ -5,7 +5,7 @@ $(function() {
 	function getSize() {
 
 		var bodyWidth = $(window).width() - 220;
-		var bodyHeight = $(window).height() - 62;
+		var bodyHeight = $(window).height() - 102;
 
 		$("#content").css({
 			"width" : bodyWidth + "px",

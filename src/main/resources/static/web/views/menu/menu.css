@@ -1,0 +1,12 @@
+.header-name{
+	font-size: 20px;
+	padding:10px;
+}
+body table.treetable thead tr th{
+	border:none;
+	height: 30px;
+	line-height: 30px;
+}
+body table.treetable thead tr th{
+	background-color: #ccc;
+}

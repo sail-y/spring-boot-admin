@@ -75,6 +75,7 @@ body .page{
   height: 40px;
   width: 100%;
   line-height: 40px;
+  cursor: pointer;
 }
 .li-icon{
   margin-left: 10px;
@@ -88,8 +89,9 @@ body .page{
 .item-ul{
   display: none;
 }
-.item-ul li{
-  cursor: pointer;
+.item-ul li.active{
+  box-sizing: border-box;
+  border-left: solid 2px #19aa8d;
 }
 .top-content{
   height: 60px;
@@ -97,7 +99,46 @@ body .page{
   border-bottom: solid 1px #e7eaec;
   box-sizing: border-box;
 }
-#content{
+.tab-content{
+  height: 40px;
+  border-bottom: solid 2px #293846;
+  box-sizing: border-box;
+  background-color: #f2f2f2;
+  overflow: hidden;
+}
+.tab-content li{
+  float: left;
+  height: 40px;
+  line-height: 40px;
+  padding:0 12px;
+  border-right: solid 1px #ccc;
+  text-align: center;
+  color: #777;
+  background-color: #f2f2f2;
+  font-size: 14px;
+  cursor: pointer;
+}
+.tab-content li.active{
+  background-color: #293846;
+  color: #fff;
+}
+.tab-content li.active b{
+  background-color: #f2f2f2;
+  color: #293846;
+}
+.tab-content li b{
+   font-size: 12px;
+   color: #fff;
+   background-color: #ccc;
+   width: 14px;
+   height: 14px;
+   line-height: 14px;
+   border-radius: 10px;
+   text-align: center;
+   display: inline-block;
+   margin-left: 3px;
+   vertical-align: middle;
+
 }
 
 

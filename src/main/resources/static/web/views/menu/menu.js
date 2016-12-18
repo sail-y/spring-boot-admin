@@ -9,7 +9,7 @@ define(function(require, exports, module){
 
 		initialize:function(){
 			this.model = new Backbone.Model();
-			
+			 $("#tree-basic").treetable({ expandable: true });
 		},
 
 
