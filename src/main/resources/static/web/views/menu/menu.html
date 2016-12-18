@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>贝斯系统</title>
+	<link rel="stylesheet" type="text/css" href="../../common/css/common.css">	
+  <link rel="stylesheet" type="text/css" href="../../common/js/jquery-treetable/jquery.treetable.css">
+  <link rel="stylesheet" href="../../common/js/jquery-treetable/jquery.treetable.theme.default.css" />
+	<link rel="stylesheet" type="text/css" href="./menu.css">	
+</head>
+<body>
+  <div class="loading" id="loading">
+    <div class="spinner">
+      <div class="double-bounce1"></div>
+      <div class="double-bounce2"></div>
+    </div>
+  </div>
+  <div id="tips"></div>
+  <div class="page">
+     <div class="header-name">菜单管理</div>
+      <table id="tree-basic">
+        <thead>
+          <tr>
+            <th>Tree column</th>
+            <th>Additional data</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-tt-id="1">
+            <td>Node 1: Click on the icon in front of me to expand this branch.</td>
+            <td>I live in the second column.</td>
+          </tr>
+          <tr data-tt-id="1.1" data-tt-parent-id="1">
+            <td>Node 1.1: Look, I am a table row <em>and</em> I am part of a tree!</td>
+            <td>Interesting.</td>
+          </tr>
+          <tr data-tt-id="1.1.1" data-tt-parent-id="1.1">
+            <td>Node 1.1.1: I am part of the tree too!</td>
+            <td>That's it!</td>
+          </tr>
+          <tr data-tt-id="2">
+            <td>Node 2: I am another root node, but without children</td>
+            <td>Hurray!</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+
+  <script src="../../common/js/base.min.js"></script>
+  <script type="text/javascript" src="../../common/js/sea.js"></script>
+  <script type="text/javascript" src="../../common/js/utils.js"></script>
+  <script type="text/javascript" src="../../common/js/common.js"></script>
+  <script type="text/javascript" src="../../common/js/jquery-treetable/jquery.treetable.js"></script>
+  <script seajs type="text/javascript" src="./menu.js"></script>
+</body>
+</html>
