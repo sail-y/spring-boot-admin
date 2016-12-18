@@ -67,7 +67,7 @@ public class UserController {
 
     private Date buildExpirationDate() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.HOUR_OF_DAY, 1);
+        calendar.add(Calendar.DAY_OF_WEEK, 1);
         return calendar.getTime();
     }
 
@@ -120,10 +120,10 @@ public class UserController {
         Long currUid = SessionUtil.getCurrUid();
         if (Objects.equals(userId, currUid)) {// 不能删除自己
             userService.delete(userId);
-            return new RestResp(RestResp.ERROR,"不能删除自己");
+            return RestResp.error(RestResp.ERROR,"不能删除自己");
         }
 
-        return new RestResp(RestResp.OK, "删除成功");
+        return RestResp.ok("删除成功");
     }
 
     /**
@@ -149,7 +149,7 @@ public class UserController {
     @ResponseBody
     public RestResp grant(@RequestBody User user) {
         userService.grant(user);
-        return new RestResp("授权成功！");
+        return RestResp.ok("授权成功！");
     }
 
 
@@ -163,7 +163,7 @@ public class UserController {
     @ResponseBody
     public RestResp editPwd(@RequestBody User user) {
         userService.editPwd(user);
-        return new RestResp();
+        return RestResp.ok("编辑成功");
     }
 
 
@@ -186,7 +186,7 @@ public class UserController {
             throw new RuntimeException("登录超时，请重新登录！");
         }
 
-        return new RestResp();
+        return RestResp.ok("修改成功");
     }
 
 

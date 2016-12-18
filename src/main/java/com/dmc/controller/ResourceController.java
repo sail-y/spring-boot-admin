@@ -58,7 +58,7 @@ public class ResourceController {
     @RequestMapping(method = RequestMethod.POST)
     public RestResp add(@RequestBody Resource resource) {
         resourceService.add(resource);
-        return new RestResp();
+        return RestResp.ok("添加成功");
     }
 
     /**
@@ -68,7 +68,7 @@ public class ResourceController {
     public RestResp edit(@RequestBody Resource resource) {
         resourceService.edit(resource);
 
-        return new RestResp();
+        return RestResp.ok("编辑成功");
     }
 
     /**
@@ -78,7 +78,7 @@ public class ResourceController {
     public RestResp delete(@PathVariable("id") Long id) {
         resourceService.delete(id);
 
-        return new RestResp();
+        return RestResp.ok("删除成功");
     }
 
 }
