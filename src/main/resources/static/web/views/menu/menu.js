@@ -7,10 +7,28 @@ define(function(require, exports, module){
 		events:{
 		},
 
+		template:_.template($('#treeTemplate').html()),
+
 		initialize:function(){
 			this.model = new Backbone.Model();
-			 $("#tree-basic").treetable({ expandable: true });
+			 this.getTree();
 		},
+
+		render:function() {
+			$(".tree-body").empty().append(this.template(this.model.toJSON()));
+		},
+
+		getTree:function() {
+			
+			utils.getJSON("/resource/treeList",{},function(res) {
+               console.log(res);
+               this.model.set("list",res);
+               this.render();
+               $("#tree-basic").treetable({ expandable: true });
+			}.bind(this))
+		},
+
+
 
 
 

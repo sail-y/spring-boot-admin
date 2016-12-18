@@ -4,9 +4,18 @@
 }
 body table.treetable thead tr th{
 	border:none;
+	height: 35px;
+	line-height: 35px;
+	background-color: #eee;
+}
+body table.treetable{
+   margin:0;
+   border: none;
+}
+body table.treetable tr{
 	height: 30px;
 	line-height: 30px;
 }
-body table.treetable thead tr th{
-	background-color: #ccc;
+.edit-btn{
+	margin-right: 10px;
 }

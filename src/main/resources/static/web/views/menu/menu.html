@@ -20,30 +20,26 @@
       <table id="tree-basic">
         <thead>
           <tr>
-            <th>Tree column</th>
-            <th>Additional data</th>
+            <th>节点名称</th>
+            <th>操作</th>
           </tr>
         </thead>
-        <tbody>
-          <tr data-tt-id="1">
-            <td>Node 1: Click on the icon in front of me to expand this branch.</td>
-            <td>I live in the second column.</td>
-          </tr>
-          <tr data-tt-id="1.1" data-tt-parent-id="1">
-            <td>Node 1.1: Look, I am a table row <em>and</em> I am part of a tree!</td>
-            <td>Interesting.</td>
-          </tr>
-          <tr data-tt-id="1.1.1" data-tt-parent-id="1.1">
-            <td>Node 1.1.1: I am part of the tree too!</td>
-            <td>That's it!</td>
-          </tr>
-          <tr data-tt-id="2">
-            <td>Node 2: I am another root node, but without children</td>
-            <td>Hurray!</td>
-          </tr>
+        <tbody class="tree-body">
         </tbody>
       </table>
   </div>
+
+  <script type="text/template" id="treeTemplate">
+      <%for(var i = 0; i < list.length; i ++){%>
+         <tr data-tt-id="<%=list[i].id%>" <%if(typeof list[i].pid != "undefined"){%>data-tt-parent-id="<%=list[i].pid%>"<%}%>>
+            <td><%=list[i].name%></td>
+            <td>
+                <a class="edit-btn blue">编辑</a>
+                <a class="del-btn blue">删除</a>
+            </td>
+          </tr>
+      <%}%>
+  </script>
 
   <script src="../../common/js/base.min.js"></script>
   <script type="text/javascript" src="../../common/js/sea.js"></script>

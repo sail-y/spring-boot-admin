@@ -89,6 +89,9 @@ button
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+.blue{
+  color: #3781e4;
+}
 /*loading*/
 .loading
 {
