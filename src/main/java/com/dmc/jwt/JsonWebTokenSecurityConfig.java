@@ -44,7 +44,10 @@ public abstract class JsonWebTokenSecurityConfig extends WebSecurityConfigurerAd
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.headers()
+                .frameOptions()
+                .sameOrigin()
+                .and()
                 // disable CSRF, http basic, form login
                 .csrf().disable() //
                 .httpBasic().disable() //
