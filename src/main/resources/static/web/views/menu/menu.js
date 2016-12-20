@@ -12,6 +12,7 @@ define(function(require, exports, module){
 		initialize:function(){
 			this.model = new Backbone.Model();
 			 this.getTree();
+			 this.model.set("resourceData",resourceData);
 		},
 
 		render:function() {
@@ -21,7 +22,6 @@ define(function(require, exports, module){
 		getTree:function() {
 			
 			utils.getJSON("/resource/treeList",{},function(res) {
-               console.log(res);
                this.model.set("list",res);
                this.render();
                $("#tree-basic").treetable({ expandable: true });

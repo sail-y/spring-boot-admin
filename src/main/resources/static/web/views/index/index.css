@@ -138,7 +138,20 @@ body .page{
    display: inline-block;
    margin-left: 3px;
    vertical-align: middle;
-
+}
+.btn{
+  padding:5px 15px;
+  border:solid 1px #eee;
+  cursor: pointer;
+}
+.default-btn{
+  color: #fff;
+  background-color: #1ab394;
+}
+.logout-btn{
+  float: right;
+  margin-right: 10px;
+  margin-top: 15px;
 }
 
 

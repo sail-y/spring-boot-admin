@@ -1,6 +1,10 @@
 $(function() {
 	var token = localStorage.getItem("token");
 	var link = location.href;
+	window.resourceData = localStorage.getItem("resourceList");
+	if (resourceData) {
+		resourceData = $.parseJSON(resourceData);
+	}
 
 	function getSize() {
 

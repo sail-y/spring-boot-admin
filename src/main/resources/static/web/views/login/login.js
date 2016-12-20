@@ -32,7 +32,11 @@ define(function(require, exports, module){
 				"password" : password
 			},function(res) {
 				var token = res.token;
+				var resourceList = JSON.stringify(res.resourceList);
+				console.log(JSON.stringify(res));
 				localStorage.setItem("token",token);
+				localStorage.setItem("resourceList",resourceList);
+
 				window.location.href = "../index/index.html";
 			})
 		}

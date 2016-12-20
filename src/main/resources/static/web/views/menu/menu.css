@@ -19,3 +19,6 @@ body table.treetable tr{
 .edit-btn{
 	margin-right: 10px;
 }
+.pointer{
+	cursor: pointer;
+}

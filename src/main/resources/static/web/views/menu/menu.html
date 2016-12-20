@@ -36,8 +36,8 @@
             <td><%=list[i].name%></td>
             <td><%=list[i].url%></td>
             <td>
-                <a class="edit-btn blue">编辑</a>
-                <a class="del-btn blue">删除</a>
+                <%if($.inArray("/resource",resourceData) > -1){%><a class="edit-btn blue pointer">编辑</a><%}%>
+                <%if($.inArray("/resource",resourceData) > -1){%><a class="del-btn blue pointer">删除</a><%}%>
             </td>
           </tr>
       <%}%>

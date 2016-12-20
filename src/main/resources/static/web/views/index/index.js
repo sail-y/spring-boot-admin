@@ -7,7 +7,8 @@ define(function(require, exports, module){
 		events:{
 			"click .menu-ul li" : "handlerShowLi",
 			"click .item-ul li" : "handlerPage",
-			"click .tab-content li" : "handlerTab"
+			"click .tab-content li" : "handlerTab",
+			"click .logout-btn" : "handlerLogout"
 		},
 
 		menuTemplate:_.template($('#menuTemplate').html()),
@@ -25,7 +26,6 @@ define(function(require, exports, module){
 
 		getMenu:function() {
 			utils.getPOST("/resource/menus",{},function(res) {
-				console.log(res);
 				this.model.set("list",res);
 				this.menuRender();
 
@@ -60,6 +60,11 @@ define(function(require, exports, module){
 			var target = $(event.currentTarget);
 				target.siblings().removeClass("active");
 				target.addClass("active");
+		},
+
+		handlerLogout:function() {
+			localStorage.removeItem("token");
+			window.location.href = "../login/login.html";
 		}
 
 
