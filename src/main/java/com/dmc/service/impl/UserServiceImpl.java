@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
         params.put("userId", id);
         params.put("type", AppConst.RESOURCE_TYPE_METHOD);
         List<Resource> resources = resourceMapper.getResourceList(params);
-        return resources.stream().map(Resource::getUrl).collect(Collectors.toList());
+        return resources.stream().map(resource -> resource.getUrl() + "-" + resource.getMethod()).collect(Collectors.toList());
     }
 
     @Override
