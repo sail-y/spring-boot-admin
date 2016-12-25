@@ -42,9 +42,6 @@ public class UserServiceImpl implements UserService {
         params.put("password", DigestUtils.md5Hex(user.getPassword()));
 
         user = userMapper.login(params);
-//        if (user != null) {
-//            user.setRoleIds(userMapper.getUserRoleIds(user.getId()));
-//        }
 
 
         return user;
@@ -64,7 +61,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User get(Long id) {
-        return userMapper.getById(id);
+        User user = userMapper.getById(id);
+        if (user != null) {
+            user.setRoleIds(userMapper.getUserRoleIds(id));
+        }
+        return user;
     }
 
     @Override
@@ -111,6 +112,8 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(DigestUtils.md5Hex(user.getPassword()));
         userMapper.update(user);
+
+
     }
 
     @Override
