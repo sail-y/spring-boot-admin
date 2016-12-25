@@ -1,6 +1,10 @@
 define(function(require, exports, module){
 
 	var table;
+
+	var code;
+
+	var userId;
 		
 	var Home = Backbone.View.extend({
 
@@ -10,7 +14,10 @@ define(function(require, exports, module){
 			"click .edit-btn" : "handlerEdit",
 			"click .pwd-btn" : "handlerPwd",
 			"click .del-btn" : "handlerDelete",
-			"click .add-btn" : "handlreAdd"
+			"click .add-btn" : "handlreAdd",
+			"click .close-btn" : "handlerClose",
+			"click .auth-sure" : "handlerAuth",
+			"click .auth-btn" : "handlerShow"
 		},
 
 		initialize:function(){
@@ -117,7 +124,7 @@ define(function(require, exports, module){
 		},
 
 		getData:function() {
-			utils.getPOST("/resource/menus",{},function(res) {
+			utils.getJSON("/role/tree",{},function(res) {
 				this.initTree(res);
 
 			}.bind(this));
@@ -129,19 +136,96 @@ define(function(require, exports, module){
 				   	view: {
 						dblClickExpand: false
 					},
-					data: {
-						key: {
-							name: "text",
-							children: "children",
-							url:"url1"
-						}
+					check: {
+						enable: true
 					},
-					callback: {
-						onClick: this.onClick
+					data: {
+						simpleData: {
+							enable: true,
+							idKey: "id",
+							pIdKey: "pid"
+						}
 					}
 				};
 				zTree = $.fn.zTree.init($("#role"), setting, res);
+				this.setCheck();
+				$("#py").bind("change", this.setCheck);
+				$("#sy").bind("change", this.setCheck);
+				$("#pn").bind("change", this.setCheck);
+				$("#sn").bind("change", this.setCheck);
 		},
+
+	   setCheck:function() {
+			var zTree = $.fn.zTree.getZTreeObj("role"),
+			py = $("#py").attr("checked")? "p":"",
+			sy = $("#sy").attr("checked")? "s":"",
+			pn = $("#pn").attr("checked")? "p":"",
+			sn = $("#sn").attr("checked")? "s":"",
+			type = { "Y":py + sy, "N":pn + sn};
+			zTree.setting.check.chkboxType = type;
+			this.showCode('setting.check.chkboxType = { "Y" : "' + type.Y + '", "N" : "' + type.N + '" };');
+		},
+		showCode:function(str) {
+			if (!code) code = $("#code");
+			code.empty();
+			code.append("<li>"+str+"</li>");
+		},
+
+		handlerClose:function(event) {
+			var target = $(event.currentTarget);
+				target.parent().parent().hide();
+		},
+
+		handlerAuth:function() {
+			var treeObj = $.fn.zTree.getZTreeObj("role");
+			var nodes = treeObj.getCheckedNodes(true);
+			var arr = [];
+				for(var i = 0; i < nodes.length; i ++) {
+					arr.push(nodes[i].id);
+				}
+				if (arr.length == 0) {
+					utils.showTip("请选择权限");
+					return;
+				}
+				utils.getPOST("/user/grant",{
+					"id" : userId,
+					"roleIds" : arr
+				},function(res) {
+					utils.showTip("配置成功");
+					setTimeout(function() {
+						$(".role-view").hide();
+						table.ajax.reload();
+					},1000);
+					
+				})
+
+		},
+
+		handlerShow:function(event) {
+			var target = $(event.currentTarget);
+			var _this = this;
+				userId = target.data("id");
+				utils.getJSON("/user/" + userId,{},function(res) {
+					_this.initEdit(res);
+				})
+				
+
+		},
+
+		initEdit:function(res) {
+			var treeObj = $.fn.zTree.getZTreeObj("role");
+			var nodes = treeObj.getNodes();
+			var data = res.roleIds;
+				for(var i = 0; i < data.length; i ++) {
+					for(var j = 0; j < nodes.length; j ++) {
+						if (data[i] == nodes[j].id) {
+							nodes[j].checked = true;
+							treeObj.updateNode(nodes[i]);
+						}
+					}
+				}
+				$(".role-view").show();
+		}
 
 
 

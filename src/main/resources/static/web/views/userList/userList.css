@@ -25,11 +25,35 @@ body .row{
 	left: 0;
 	display: none;
 }
+.role-box{
+	width: 500px;
+	height: auto;
+	padding-bottom: 20px;
+	background-color: #efeeee;
+	border-radius: 5px;
+	margin:0 auto;
+	margin-top: 20px;
+	padding-top: 20px;
+	position: relative;
+	border: solid 1px #ccc;
+}
 #role{
-   width: 300px;
+   width: 280px;
    height: auto;
    margin:0 auto;
-   background-color: #f2f2f2;
-   min-height: 350px;
+   background-color: #fff;
+   min-height: 300px;
    margin-top: 20px;
+}
+.auth-sure{
+	margin-top: 10px;
+	margin-left: 355px;
+}
+.close-btn{
+	color: #333;
+	font-size: 16px;
+	position: absolute;
+	top: 5px;
+	right: 10px;
+	cursor: pointer;
 }

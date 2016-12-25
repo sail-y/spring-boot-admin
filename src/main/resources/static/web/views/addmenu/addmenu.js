@@ -149,8 +149,7 @@ define(function(require, exports, module){
 			var nodes = zTree.getSelectedNodes();
 			var text = nodes[0].text;
 				pid = nodes[0].id;
-                $(".inp-tree").val(text);
-				$("#tree").hide();
+                alert(pid);
 		},
 
 		handlerShow:function() {

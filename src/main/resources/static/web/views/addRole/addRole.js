@@ -17,29 +17,15 @@ define(function(require, exports, module){
 			"click .inp-tree" : "handlerShow"
 		},
 
-		oneTemplate:_.template($('#oneTemplate').html()),
-
-		twoTemplate:_.template($('#twoTemplate').html()),
-
 		initialize:function(){
 			this.model = new Backbone.Model();
 			this.getMenu();
 			
 		},
 
-		menuRender:function() {
-			$(".one-sel").empty().append(this.oneTemplate(this.model.toJSON()));
-		},
-
-		twoRender:function() {
-			$(".two-sel").empty().append(this.twoTemplate(this.model.toJSON()));
-		},
-
 		getMenu:function() {
-			utils.getPOST("/resource/menus",{},function(res) {
+			utils.getJSON("/role/tree",{},function(res) {
 				list = res;
-				this.model.set("onelist",res);
-				this.menuRender();
 				this.initData();
 				this.initTree(res);
 
@@ -48,12 +34,10 @@ define(function(require, exports, module){
 		},
 
 		handlerSure:function() {
-			var type = $(".type-sel").val();
 			var name = $(".name").val();
 			var remark = $(".remark").val();
 			var seq = $(".seq").val();
 			var postData = {
-				"type" : type,
 				"name" : name,
 				"seq" : seq
 			}
@@ -61,7 +45,7 @@ define(function(require, exports, module){
 				postData["remark"] = remark;
 			}
 			if (name == "") {
-				utils.showTip("请输入资源名");
+				utils.showTip("请输入角色名");
 				return;
 			}
 			if (seq == "") {
@@ -81,7 +65,7 @@ define(function(require, exports, module){
 		},
 
 		handlerAdd:function(postData) {
-			utils.getPOST("/resource",postData,function(res) {
+			utils.getPOST("/role",postData,function(res) {
 				utils.showTip("添加成功");
 				setTimeout(function() {
 					window.location.href = "../roleList/roleList.html";
@@ -106,7 +90,7 @@ define(function(require, exports, module){
 			var _this = this;
 		    if (id) {
 		    	$(".sure-btn").text("修改");
-		    	utils.getJSON("/resource/" + id,{},function(res){
+		    	utils.getJSON("/role/" + id,{},function(res){
 		    		_this.dealData(res);
 		    	})
 		    }
@@ -140,10 +124,10 @@ define(function(require, exports, module){
 						dblClickExpand: false
 					},
 					data: {
-						key: {
-							name: "text",
-							children: "children",
-							url:"url1"
+						simpleData: {
+							enable: true,
+							idKey: "id",
+							pIdKey: "pid"
 						}
 					},
 					callback: {
@@ -155,8 +139,9 @@ define(function(require, exports, module){
 
 		onClick:function() {
 			var nodes = zTree.getSelectedNodes();
-			var text = nodes[0].text;
+			var text = nodes[0].name;
 				pid = nodes[0].id;
+				console.log(nodes);
                 $(".inp-tree").val(text);
 				$("#tree").hide();
 		},
