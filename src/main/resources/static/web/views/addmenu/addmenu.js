@@ -60,7 +60,7 @@ define(function(require, exports, module){
 				utils.showTip("请输入排序");
 				return;
 			}
-			if (pid) {
+			if (typeof pid != "undefined") {
 				postData["pid"] = pid;
 			}
 
@@ -75,6 +75,7 @@ define(function(require, exports, module){
 		handlerAdd:function(postData) {
 			utils.getPOST("/resource",postData,function(res) {
 				utils.showTip("添加成功");
+				$(window,parent.document).trigger("changeMenu");
 				setTimeout(function() {
 					window.location.href = "../menu/menu.html";
 				},1000);
@@ -86,7 +87,7 @@ define(function(require, exports, module){
 			postData["id"] = id;
 			utils.getPUT("/resource",postData,function(res) {
 				utils.showTip("修改成功");
-				
+				$(window,parent.document).trigger("changeMenu");
 				setTimeout(function() {
 					window.location.href = "../menu/menu.html";
 				},1000);
@@ -110,7 +111,7 @@ define(function(require, exports, module){
 			$(".name").val(res.name);
 			$(".seq").val(res.seq);
 			
-			if (res.pid) {
+			if (typeof res.pid != "undefined") {
 				pid = res.pid;
 				$(".inp-tree").val(res.pname);
 			}
@@ -149,7 +150,8 @@ define(function(require, exports, module){
 			var nodes = zTree.getSelectedNodes();
 			var text = nodes[0].text;
 				pid = nodes[0].id;
-                alert(pid);
+                $(".inp-tree").val(text);
+                $("#tree").hide();
 		},
 
 		handlerShow:function() {

@@ -24,8 +24,10 @@
 	margin-top: 30px;
 }
 #tree{
-	position: absolute;
-	top: 55px;
-	left: 105px;
+    position: absolute;
+    top: 68px;
+    left: 105px;
+    height: 200px;
+    overflow: hidden;
 	display: none;
 }

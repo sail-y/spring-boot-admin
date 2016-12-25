@@ -8,6 +8,7 @@ body .page{
   position: fixed;
   top: 0;
   left: 0;
+  overflow-y: auto;
 }
 .head-img{
   width: 60px;
@@ -81,7 +82,7 @@ body .page{
   margin-left: 10px;
   margin-right: 5px;
 }
-.container{
+.container-main{
   background-color:#f2f2f2;
   margin-left: 220px;
   height: 100%;
@@ -143,6 +144,13 @@ body .page{
   float: right;
   margin-right: 10px;
   margin-top: 15px;
+  background-color: #1ab394;
+  border-color: #1ab394;
+  color: #FFFFFF;
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .alert-view{

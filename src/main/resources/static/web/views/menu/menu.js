@@ -19,6 +19,7 @@ define(function(require, exports, module){
 			 this.getTree();
 			 this.model.set("resourceData",resourceData); 
 			 this.hideView();
+
 		},
 
 		render:function() {
@@ -50,7 +51,7 @@ define(function(require, exports, module){
 			var _this = this;
 
 			$(".alert-view .s-btn",parent.document).click(function() {
-				$(".alert-view",parent.document).hide();
+				$(this).parent().parent().parent().hide();
 				_this.handlerSureDel();
 			})
 		},
@@ -59,6 +60,7 @@ define(function(require, exports, module){
 			var _this = this;
 			utils.getDelect("/resource/" + resourceId,{},function(res) {
 				utils.showTip("删除成功");
+				$(window).trigger("changeMenu");
 				setTimeout(function() {
 					window.location.href = "../menu/menu.html";
 				},1000);

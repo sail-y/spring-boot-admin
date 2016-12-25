@@ -92,22 +92,6 @@ button
 .blue{
   color: #3781e4;
 }
-
-.btn{
-  padding:7px 17px;
-  border:solid 1px #eee;
-  cursor: pointer;
-}
-.btn-default{
-  color: #fff;
-  background-color: #1ab394;
-}
-.btn-primary{
-  background-color: #1ab394;
-  border:solid 1px #ccc;
-  background-color: #eee;
-  color: #666;  
-}
 .line{
   padding:10px 0 10px 20px;
   color: #333;
@@ -136,6 +120,20 @@ body ul.ztree{
 }
 .relative{
   position: relative;
+}
+.de-btn{
+  margin-right: 10px;
+  margin-top: 15px;
+  background-color: #1ab394;
+  border-color: #1ab394;
+  color: #FFFFFF;
+  border-radius: 3px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+iframe{
+  border:0;
 }
 
 

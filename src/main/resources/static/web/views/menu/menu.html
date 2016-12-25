@@ -3,6 +3,8 @@
 <head>
 	<title>贝斯系统</title>
 	<link rel="stylesheet" type="text/css" href="../../common/css/common.css">	
+  <link href="../../common/ui/css/admin/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="../../common/ui/css/admin/style.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" type="text/css" href="../../common/js/jquery-treetable/jquery.treetable.css">
   <link rel="stylesheet" href="../../common/js/jquery-treetable/jquery.treetable.theme.default.css" />
 	<link rel="stylesheet" type="text/css" href="./menu.css">	
@@ -17,7 +19,7 @@
   <div id="tips"></div>
   <div class="page">
       <div>
-         <button  class="add-btn btn btn-primary">添加</button>
+         <button  class="add-btn btn btn-primary btn-xs">添加</button>
       </div>
       <table id="tree-basic">
       </table>
@@ -37,8 +39,8 @@
                   <td><%=list[i].name%></td>
                   <td><%=list[i].url%></td>
                   <td>
-                      <%if($.inArray("/resource-put",resourceData) > -1){%><a data-id="<%=list[i].id%>" class="edit-btn blue pointer">编辑</a><%}%>
-                      <%if($.inArray("/resource/*-delete",resourceData) > -1){%><a data-id="<%=list[i].id%>" class="del-btn blue pointer">删除</a><%}%>
+                      <%if($.inArray("/resource-put",resourceData) > -1){%><a data-id="<%=list[i].id%>" class="edit-btn btn btn-xs btn-primary pointer">编辑</a><%}%>
+                      <%if($.inArray("/resource/*-delete",resourceData) > -1){%><a data-id="<%=list[i].id%>" class="del-btn btn btn-xs btn-danger pointer">删除</a><%}%>
                   </td>
                 </tr>
             <%}%>

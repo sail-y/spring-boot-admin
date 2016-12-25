@@ -2,7 +2,6 @@
 <html>
 <head>
 	<title>贝斯系统</title>
-
 	<link rel="stylesheet" type="text/css" href="../../common/css/common.css">	
 	<link rel="stylesheet" type="text/css" href="./index.css">	
 </head>
@@ -39,13 +38,11 @@
        <!-- nav end -->
        
        <!-- container start -->
-       <div class="container">
+       <div class="container-main">
            <div class="top-content">
-               <button class="btn-default btn logout-btn">退出</button>
+               <button class="btn-primary btn btn-xs logout-btn">退出</button>
            </div>
            <ul class="tab-content">
-               <li class="active">用户管理 <b>x</b></li>
-               <li>菜单管理 <b>x</b></li>
            </ul>
            <div class="main-content">
                <iframe src=""  frameborder="0" id="content"></iframe>
@@ -65,7 +62,7 @@
              </a>
              <ul class="item-ul">
                  <%for(var j = 0; j < list[i].children.length; j ++){%>
-                   <li data-link="<%=list[i].children[j].url%>"><span class="li-icon">-</span><%=list[i].children[j].text%></li>
+                   <li class="iframe<%=list[i].children[j].id%>" data-text="<%=list[i].children[j].text%>" data-link="<%=list[i].children[j].url%>" data-id="<%=list[i].children[j].id%>"><span class="li-icon">-</span><%=list[i].children[j].text%></li>
                  <%}%>
              </ul>
          </li>

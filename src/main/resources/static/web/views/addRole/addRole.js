@@ -76,7 +76,7 @@ define(function(require, exports, module){
 
 		handlerEdit:function(postData) {
 			postData["id"] = id;
-			utils.getPUT("/resource",postData,function(res) {
+			utils.getPUT("/role",postData,function(res) {
 				utils.showTip("修改成功");
 				
 				setTimeout(function() {
@@ -97,17 +97,12 @@ define(function(require, exports, module){
 		},
 
 		dealData:function(res) {
-			var type = res.type;
-			$(".type-sel").val(type);
 			$(".name").val(res.name);
 			$(".seq").val(res.seq);
 			
 			if (res.pid) {
 				pid = res.pid;
 				$(".inp-tree").val(res.pname);
-			}
-			if (res.url) {
-				$(".url").val(res.url);
 			}
 			if (res.remark) {
 				$(".remark").val(res.remark);

@@ -5,9 +5,7 @@ define(function(require, exports, module){
 		el:document.getElementsByTagName('body')[0],
 
 		events:{
-			"click .menu-ul li" : "handlerShowLi",
-			"click .item-ul li" : "handlerPage",
-			"click .tab-content li" : "handlerTab",
+			"click .menu-ul>li" : "handlerShowLi",
 			"click .logout-btn" : "handlerLogout"
 		},
 
@@ -16,7 +14,8 @@ define(function(require, exports, module){
 		initialize:function(){
 			this.model = new Backbone.Model();
 			this.getMenu();
-			$("#content").attr("src","../addRole/addRole.html");
+			
+			$("#content").attr("src","../menu/menu.html");
 			
 		},
 
@@ -44,22 +43,6 @@ define(function(require, exports, module){
 				target.addClass("active");
 			}
 
-		},
-
-		handlerPage:function(event) {
-			event.stopPropagation();
-			var target = $(event.currentTarget);
-			var url = target.data("link");
-				target.siblings().removeClass("active");
-				target.addClass("active");
-				console.log(url);
-				$("#content").attr("src",url);
-		},
-
-		handlerTab:function(event) {
-			var target = $(event.currentTarget);
-				target.siblings().removeClass("active");
-				target.addClass("active");
 		},
 
 		handlerLogout:function() {

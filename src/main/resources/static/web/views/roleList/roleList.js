@@ -12,7 +12,6 @@ define(function(require, exports, module){
 
 		events:{
 			"click .edit-btn" : "handlerEdit",
-			"click .pwd-btn" : "handlerPwd",
 			"click .del-btn" : "handlerDelete",
 			"click .add-btn" : "handlreAdd",
 			"click .close-btn" : "handlerClose",
@@ -31,16 +30,15 @@ define(function(require, exports, module){
 		initData:function() {
 			table = $('#table').DataTable({
 			    "ajax": {
-			        url:"/user/tables"
+			        url:"/role/tables"
 			    },
 			    "columns": [
-			        {"data": "username"},
 			        {"data": "name"},
-			        {"data": "createTime"},
+			        {"data": "remark"},
+			        {"data": "seq"},
 			        {render: function (data, type, row, meta) {
 			                return "<button data-id='"+row.id+"' class='btn btn-danger del-btn btn-xs margin-right-5'>删除</button>"
 			                       + "<button data-id='"+row.id+"' class='btn btn-primary edit-btn btn-xs margin-right-5'>编辑</button>"
-			                       + "<button data-id='"+row.id+"' class='btn btn-default pwd-btn btn-xs margin-right-5'>修改密码</button>"
 			                       + "<button data-id='"+row.id+"' class='btn btn-primary auth-btn btn-xs'>授权</button>"
 					            }
 					}
@@ -51,13 +49,7 @@ define(function(require, exports, module){
 		handlerEdit:function(event) {
 			var target = $(event.currentTarget);
 			var id = target.data("id");
-			window.location.href = "../addUser/addUser.html?id=" + id;
-		},
-
-		handlerPwd:function(event) {
-			var target = $(event.currentTarget);
-			var id = target.data("id");
-			window.location.href = "../editPassword/editPassword.html?id=" + id;
+			window.location.href = "../addRole/addRole.html?id=" + id;
 		},
 
 		handlerDelete:function(event) {
@@ -79,7 +71,7 @@ define(function(require, exports, module){
 
 		handlerSureDel:function() {
 			var _this = this;
-			utils.getDelect("/user/" + resourceId,{},function(res) {
+			utils.getDelect("/role/" + resourceId,{},function(res) {
 				utils.showTip("删除成功");
 				setTimeout(function() {
 					table.ajax.reload();
@@ -88,11 +80,11 @@ define(function(require, exports, module){
 		},
 
 		handlreAdd:function() {
-			window.location.href = "../addUser/addUser.html";
+			window.location.href = "../addRole/addRole.html";
 		},
 
 		getData:function() {
-			utils.getJSON("/role/tree",{},function(res) {
+			utils.getJSON("/resource/treeList",{},function(res) {
 				this.initTree(res);
 
 			}.bind(this));
@@ -155,9 +147,9 @@ define(function(require, exports, module){
 					utils.showTip("请选择权限");
 					return;
 				}
-				utils.getPOST("/user/grant",{
+				utils.getPOST("/role/grant",{
 					"id" : userId,
-					"roleIds" : arr
+					"resourceIds" : arr
 				},function(res) {
 					utils.showTip("配置成功");
 					setTimeout(function() {
@@ -173,7 +165,7 @@ define(function(require, exports, module){
 			var target = $(event.currentTarget);
 			var _this = this;
 				userId = target.data("id");
-				utils.getJSON("/user/" + userId,{},function(res) {
+				utils.getJSON("/role/" + userId,{},function(res) {
 					_this.initEdit(res);
 				})
 				
@@ -182,7 +174,7 @@ define(function(require, exports, module){
 
 		initEdit:function(res) {
 			var treeObj = $.fn.zTree.getZTreeObj("role");
-			var data = res.roleIds;
+			var data = res.resourceIds;
 			var nodes = treeObj.transformToArray(treeObj.getNodes());
 				treeObj.checkAllNodes(false);
 				console.log(nodes);
@@ -204,4 +196,4 @@ define(function(require, exports, module){
 
 });
 
-seajs.use('./userList.js');
+seajs.use('./roleList.js');
