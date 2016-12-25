@@ -139,19 +139,56 @@ body .page{
    margin-left: 3px;
    vertical-align: middle;
 }
-.btn{
-  padding:5px 15px;
-  border:solid 1px #eee;
-  cursor: pointer;
-}
-.default-btn{
-  color: #fff;
-  background-color: #1ab394;
-}
 .logout-btn{
   float: right;
   margin-right: 10px;
   margin-top: 15px;
+}
+
+.alert-view{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 9999;
+  display: none;
+}
+.alert-box{
+  width: 85%;
+  max-width: 300px;
+  margin: 0 auto;
+  background-color: #fff;
+  border: solid 1px 5px;
+  font-size: 14px;
+  color: #333;
+  border-radius: 5px;
+  margin-top: 15%;
+}
+.alert-txt{
+  padding:20px 15px;
+  text-align: center;
+}
+.alert-ul{
+  width: 100%;
+  border-top:solid 1px #eee;
+  box-sizing: border-box;
+  height: 40px;
+  color: #3781e4;
+  overflow: hidden;
+}
+.alert-ul li{
+  width: 50%;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  box-sizing: border-box;
+  float: left;
+  display: inline-block;
+}
+.alert-ul li:nth-child(1){
+  border-right: solid 1px #eee;
 }
 
 

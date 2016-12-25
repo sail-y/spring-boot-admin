@@ -16,8 +16,14 @@
   </div>
   <div id="tips"></div>
   <div class="page">
-     <div class="header-name">资源管理</div>
+      <div>
+         <button  class="add-btn btn btn-primary">添加</button>
+      </div>
       <table id="tree-basic">
+      </table>
+  </div>
+
+  <script type="text/template" id="treeTemplate">
         <thead>
           <tr>
             <th>资源名称</th>
@@ -26,21 +32,17 @@
           </tr>
         </thead>
         <tbody class="tree-body">
+            <%for(var i = 0; i < list.length; i ++){%>
+               <tr data-tt-id="<%=list[i].id%>" <%if(typeof list[i].pid != "undefined"){%>data-tt-parent-id="<%=list[i].pid%>"<%}%>>
+                  <td><%=list[i].name%></td>
+                  <td><%=list[i].url%></td>
+                  <td>
+                      <%if($.inArray("/resource-put",resourceData) > -1){%><a data-id="<%=list[i].id%>" class="edit-btn blue pointer">编辑</a><%}%>
+                      <%if($.inArray("/resource/*-delete",resourceData) > -1){%><a data-id="<%=list[i].id%>" class="del-btn blue pointer">删除</a><%}%>
+                  </td>
+                </tr>
+            <%}%>
         </tbody>
-      </table>
-  </div>
-
-  <script type="text/template" id="treeTemplate">
-      <%for(var i = 0; i < list.length; i ++){%>
-         <tr data-tt-id="<%=list[i].id%>" <%if(typeof list[i].pid != "undefined"){%>data-tt-parent-id="<%=list[i].pid%>"<%}%>>
-            <td><%=list[i].name%></td>
-            <td><%=list[i].url%></td>
-            <td>
-                <%if($.inArray("/resource",resourceData) > -1){%><a class="edit-btn blue pointer">编辑</a><%}%>
-                <%if($.inArray("/resource",resourceData) > -1){%><a class="del-btn blue pointer">删除</a><%}%>
-            </td>
-          </tr>
-      <%}%>
   </script>
 
   <script src="../../common/js/base.min.js"></script>

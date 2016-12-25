@@ -1,10 +1,15 @@
 define(function(require, exports, module){
+
+	var resourceId = "";
 		
 	var Home = Backbone.View.extend({
 
 		el:document.getElementsByTagName('body')[0],
 
 		events:{
+			"click .add-btn" : "handlerAdd",
+			"click .del-btn" : "handlerDelete",
+			"click .edit-btn" : "handlerEdit"
 		},
 
 		template:_.template($('#treeTemplate').html()),
@@ -12,11 +17,12 @@ define(function(require, exports, module){
 		initialize:function(){
 			this.model = new Backbone.Model();
 			 this.getTree();
-			 this.model.set("resourceData",resourceData);
+			 this.model.set("resourceData",resourceData); 
+			 this.hideView();
 		},
 
 		render:function() {
-			$(".tree-body").empty().append(this.template(this.model.toJSON()));
+			$("#tree-basic").empty().append(this.template(this.model.toJSON()));
 		},
 
 		getTree:function() {
@@ -27,6 +33,44 @@ define(function(require, exports, module){
                $("#tree-basic").treetable({ expandable: true });
 			}.bind(this))
 		},
+
+		handlerAdd:function() {
+			window.location.href = "../addmenu/addmenu.html";
+		},
+
+		handlerDelete:function(event) {
+			var target = $(event.currentTarget);
+			    resourceId = target.data("id");
+			$(".alert-view .alert-txt",parent.document).text("确定要删除吗？");
+			$(".alert-view",parent.document).show();
+
+		},
+
+		hideView:function() {
+			var _this = this;
+
+			$(".alert-view .s-btn",parent.document).click(function() {
+				$(".alert-view",parent.document).hide();
+				_this.handlerSureDel();
+			})
+		},
+
+		handlerSureDel:function() {
+			var _this = this;
+			utils.getDelect("/resource/" + resourceId,{},function(res) {
+				utils.showTip("删除成功");
+				setTimeout(function() {
+					window.location.href = "../menu/menu.html";
+				},1000);
+			})
+		},
+
+		handlerEdit:function(event) {
+			var target = $(event.currentTarget);
+			var id = target.data("id");
+			window.location.href = "../addmenu/addmenu.html?id=" + id;
+
+		}
 
 
 

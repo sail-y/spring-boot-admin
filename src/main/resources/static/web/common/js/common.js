@@ -26,5 +26,9 @@ $(function() {
 
 	$(window).on("resize",function() {
 		getSize();
-	})
+	});
+
+	$(".alert-view .c-btn").click(function() {
+		$(".alert-view").hide();
+	});
 })

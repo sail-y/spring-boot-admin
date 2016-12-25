@@ -92,6 +92,62 @@ button
 .blue{
   color: #3781e4;
 }
+
+.btn{
+  padding:7px 17px;
+  border:solid 1px #eee;
+  cursor: pointer;
+}
+.btn-default{
+  color: #fff;
+  background-color: #1ab394;
+}
+.btn-primary{
+  background-color: #1ab394;
+  border:solid 1px #ccc;
+  background-color: #eee;
+  color: #666;  
+}
+.line{
+  padding:10px 0 10px 20px;
+  color: #333;
+  font-size: 14px;
+}
+.line-name{
+  display: inline-block;
+ width: 70px;
+ text-align: left;
+ margin-right: 10px;
+}
+.sel{
+  width: 290px;
+  height: 35px;
+  border: solid 1px #ccc;
+}
+.inp{
+  width: 285px;
+  height: 35px;
+  padding-left: 5px;
+  border:solid 1px #ccc;
+}
+body ul.ztree{
+    margin: 0 auto;
+    background-color: #f2f2f2;
+}
+.relative{
+  position: relative;
+}
+
+
+
+
+
+
+
+
+
+
+
 /*loading*/
 .loading
 {

@@ -75,6 +75,24 @@ window.utils = {
 	   });
     },
 
+    getPUT:function(url,param,callback) {
+		var _this = this;
+	       $.ajax({
+		      url: baseUrl + url,
+		      type: 'PUT',
+		      dataType: 'json',
+		      data: JSON.stringify(param?param:{}),
+		      contentType: "application/json; charset=utf-8", 
+		      beforeSend: function(request) {
+		            request.setRequestHeader("Authorization", token);
+		      },
+		      success:function(res){
+		      	_this.getData(res,callback);
+		      },
+		      fail:function(){}
+		   });
+    },
+
      getPOST:function(url,param,callback){
      	var _this = this;
 	   $.ajax({
@@ -114,6 +132,9 @@ window.utils = {
 	      type: 'DELETE',
 	      dataType: 'json',
 	      data: param?param:{},
+	      beforeSend: function(request) {
+	            request.setRequestHeader("Authorization", token);
+	      },
 	      success:function(res){
 	        if (callback) callback(res);
 	      },
@@ -137,7 +158,7 @@ window.utils = {
 
     getData:function(res,callback) {
         var _this = this;
-        if (typeof res.code != "undefined") {
+        if (res.code && res.code != 200) {
         	 	_this.showTip(res.msg);
         	 if (res.code == 10002) {
 				setTimeout(function(){

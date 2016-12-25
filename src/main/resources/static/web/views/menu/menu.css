@@ -22,3 +22,7 @@ body table.treetable tr{
 .pointer{
 	cursor: pointer;
 }
+.add-btn{
+	margin:10px;
+	float: left;
+}

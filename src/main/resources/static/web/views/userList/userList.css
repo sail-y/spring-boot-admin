@@ -1,0 +1,15 @@
+#table_wrapper{
+	padding-top: 30px;
+}
+#table_length,.dataTables_filter,.dataTables_info{
+	display: none;
+}
+#table_wrapper .current{
+	font-size: 14px;
+}
+#table_paginate{
+	margin-right: 10px;
+}
+body .row{
+	margin:0;
+}
