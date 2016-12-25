@@ -30,7 +30,7 @@ define(function(require, exports, module){
 					return;
 				}
 				if (name == "") {
-					utils.showTip("请输入名字");
+					utils.showTip("请输入昵称");
 					return;
 				}
 				if (password == "") {

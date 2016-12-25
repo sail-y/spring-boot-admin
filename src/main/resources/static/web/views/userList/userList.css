@@ -1,9 +1,6 @@
 #table_wrapper{
 	padding-top: 30px;
 }
-#table_length,.dataTables_filter,.dataTables_info{
-	display: none;
-}
 #table_wrapper .current{
 	font-size: 14px;
 }
@@ -12,4 +9,7 @@
 }
 body .row{
 	margin:0;
+}
+.margin-right-5{
+	margin-right: 5px;
 }
