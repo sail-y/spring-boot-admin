@@ -2,7 +2,11 @@ package com.dmc.controller;
 
 import com.dmc.model.RestResp;
 import com.dmc.model.Role;
+import com.dmc.model.User;
 import com.dmc.service.RoleService;
+import com.dmc.vo.DataTable;
+import com.dmc.vo.RoleVO;
+import com.dmc.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +46,10 @@ public class RoleController {
         return RestResp.ok("更新成功！");
     }
 
+    @RequestMapping(value = "/tables", method = RequestMethod.POST)
+    public DataTable<Role> tables(@RequestBody RoleVO roleVO) {
+        return roleService.tables(roleVO);
+    }
     /**
      * get role by id
      *

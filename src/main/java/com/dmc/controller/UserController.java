@@ -99,7 +99,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/tables", method = RequestMethod.POST)
-    public DataTable<User> edit(@RequestBody UserVO userVO) {
+    public DataTable<User> tables(@RequestBody UserVO userVO) {
         return userService.tables(userVO);
     }
 

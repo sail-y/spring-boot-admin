@@ -4,9 +4,14 @@ import com.dmc.mapper.ResourceMapper;
 import com.dmc.mapper.RoleMapper;
 import com.dmc.mapper.UserMapper;
 import com.dmc.model.Role;
+import com.dmc.model.User;
 import com.dmc.service.RoleService;
 import com.dmc.util.SessionUtil;
 import com.dmc.util.id.IdUtil;
+import com.dmc.vo.DataTable;
+import com.dmc.vo.RoleVO;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
@@ -111,6 +116,19 @@ public class RoleServiceImpl implements RoleService {
         if (!role.getResourceIds().isEmpty()) {
             roleMapper.saveRoleResources(role.getId(), role.getResourceIds());
         }
+    }
+
+    @Override
+    public DataTable<Role> tables(RoleVO roleVO) {
+        PageHelper.offsetPage(roleVO.getStart(), roleVO.getLength());
+
+        List<Role> roles = roleMapper.getRoleList(new HashMap<>());
+        DataTable<Role> tables = new DataTable<>();
+        tables.setRecordsTotal(((Page) roles).getTotal());
+        tables.setRecordsFiltered(tables.getRecordsTotal());
+        tables.setDraw(roleVO.getDraw());
+        tables.setData(roles);
+        return tables;
     }
 
 }

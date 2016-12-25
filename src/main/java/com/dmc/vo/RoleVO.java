@@ -8,5 +8,5 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class UserVO extends TablePage {
+public class RoleVO extends TablePage{
 }
