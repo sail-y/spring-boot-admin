@@ -9,13 +9,15 @@ define(function(require, exports, module){
 		events:{
 			"click .edit-btn" : "handlerEdit",
 			"click .pwd-btn" : "handlerPwd",
-			"click .del-btn" : "handlerDelete"
+			"click .del-btn" : "handlerDelete",
+			"click .add-btn" : "handlreAdd"
 		},
 
 		initialize:function(){
 			this.model = new Backbone.Model();
 			this.initData();
 			this.hideView();
+			this.getData();
 			
 		},
 
@@ -108,6 +110,37 @@ define(function(require, exports, module){
 					table.ajax.reload();
 				},1000);
 			})
+		},
+
+		handlreAdd:function() {
+			window.location.href = "../addUser/addUser.html";
+		},
+
+		getData:function() {
+			utils.getPOST("/resource/menus",{},function(res) {
+				this.initTree(res);
+
+			}.bind(this));
+			
+		},
+
+		initTree:function(res) {
+			   var setting = {
+				   	view: {
+						dblClickExpand: false
+					},
+					data: {
+						key: {
+							name: "text",
+							children: "children",
+							url:"url1"
+						}
+					},
+					callback: {
+						onClick: this.onClick
+					}
+				};
+				zTree = $.fn.zTree.init($("#role"), setting, res);
 		},
 
 

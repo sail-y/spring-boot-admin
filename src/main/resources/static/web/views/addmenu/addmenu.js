@@ -17,29 +17,16 @@ define(function(require, exports, module){
 			"click .inp-tree" : "handlerShow"
 		},
 
-		oneTemplate:_.template($('#oneTemplate').html()),
-
-		twoTemplate:_.template($('#twoTemplate').html()),
-
 		initialize:function(){
 			this.model = new Backbone.Model();
 			this.getMenu();
 			
 		},
 
-		menuRender:function() {
-			$(".one-sel").empty().append(this.oneTemplate(this.model.toJSON()));
-		},
-
-		twoRender:function() {
-			$(".two-sel").empty().append(this.twoTemplate(this.model.toJSON()));
-		},
-
 		getMenu:function() {
 			utils.getPOST("/resource/menus",{},function(res) {
 				list = res;
 				this.model.set("onelist",res);
-				this.menuRender();
 				this.initData();
 				this.initTree(res);
 

@@ -9,6 +9,8 @@
   <link href="../../common/ui/css/icons.css" rel="stylesheet" type="text/css" />
   <link href="../../common/ui/css/admin/style.css" rel="stylesheet" type="text/css" />
   <link href="../../common/ui/css/admin/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="../../common/ztree/css/tree.css" type="text/css">
+  <link rel="stylesheet" href="../../common/ztree/css/metroStyle/metroStyle.css" type="text/css">
 	<link rel="stylesheet" type="text/css" href="./userList.css">	
 </head>
 <body>
@@ -19,7 +21,13 @@
     </div>
   </div>
   <div id="tips"></div>
+  <div class="role-view">
+     <ul id="role" class="ztree"></ul>
+  </div>
   <div class="page">
+    <div>
+       <button  class="add-btn btn btn-primary btn-xs">添加</button>
+    </div>
     <table id="table" class="table table-striped">
         <thead>
           <tr>
@@ -38,6 +46,7 @@
   <script type="text/javascript" src="../../common/ui/js/admin/jquery.dataTables.js"></script>
   <script type="text/javascript" src="../../common/ui/js/admin/dataTables.bootstrap.js"></script>
   <script type="text/javascript" src="../../common/ui/js/admin/colResizable-1.5.min.js"></script>
+  <script type="text/javascript" src="../../common/ztree/js/jquery.ztree.core.js"></script>
   <script type="text/javascript" src="../../common/js/utils.js"></script>
   <script type="text/javascript" src="../../common/js/common.js"></script>
   <script seajs type="text/javascript" src="./userList.js"></script>
