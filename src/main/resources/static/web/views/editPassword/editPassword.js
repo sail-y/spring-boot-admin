@@ -17,49 +17,21 @@ define(function(require, exports, module){
 		},
 
 		handlerSure:function() {
-			var userName = $(".user-name").val();
-			var name = $(".name").val();
-			var password = $(".pwd").val();
+			var password = $(".new-pwd").val();
 			var postData = {
-				"username" : userName,
-				"name" : name,
-				
+				"password" : password
 			}
-				if (userName == "") {
-					utils.showTip("请输入用户名");
-					return;
-				}
-				if (name == "") {
-					utils.showTip("请输入昵称");
-					return;
-				}
-
-			if (id) {
-				this.handlerEdit(postData);
-			}else{
 				if (password == "") {
-					utils.showTip("请输入密码");
+					utils.showTip("请输入新密码");
 					return;
-				}else{
-					postData["password"] = password;
 				}
-				this.handlerAdd(postData);
-			}
-		},
 
-		handlerAdd:function(postData) {
-			utils.getPOST("/user",postData,function(res) {
-				utils.showTip("添加成功");
-				setTimeout(function() {
-					window.location.href = "../userList/userList.html";
-				},1000);
-
-			})
+			this.handlerEdit(postData);
 		},
 
 		handlerEdit:function(postData) {
 			postData["id"] = id;
-			utils.getPUT("/user",postData,function(res) {
+			utils.getPUT("/user/editPwd",postData,function(res) {
 				utils.showTip("修改成功");
 				
 				setTimeout(function() {
@@ -72,8 +44,6 @@ define(function(require, exports, module){
 		initData:function() {
 			var _this = this;
 		    if (id) {
-		    	$(".sure-btn").text("修改");
-		    	$(".p-line").hide();
 		    	utils.getJSON("/user/" + id,{},function(res){
 		    		_this.dealData(res);
 		    	})
@@ -94,4 +64,4 @@ define(function(require, exports, module){
 
 });
 
-seajs.use('./addUser.js');
+seajs.use('./editPassword.js');

@@ -1,20 +1,26 @@
 define(function(require, exports, module){
+
+	var table;
 		
 	var Home = Backbone.View.extend({
 
 		el:document.getElementsByTagName('body')[0],
 
 		events:{
+			"click .edit-btn" : "handlerEdit",
+			"click .pwd-btn" : "handlerPwd",
+			"click .del-btn" : "handlerDelete"
 		},
 
 		initialize:function(){
 			this.model = new Backbone.Model();
 			this.initData();
+			this.hideView();
 			
 		},
 
 		initData:function() {
-			$('#table').DataTable({
+			table = $('#table').DataTable({
 			    "processing": false,
 			    "serverSide": true,
 			    "paging" : true,
@@ -32,10 +38,12 @@ define(function(require, exports, module){
 			    "columns": [
 			        {"data": "username"},
 			        {"data": "name"},
+			        {"data": "createTime"},
 			        {render: function (data, type, row, meta) {
-			        	console.log(data);
-			                return "<button class='btn btn-danger del-btn btn-xs margin-right-5'>删除</button>"
-			                       + "<button class='btn btn-primary eit-btn btn-xs'>编辑</button>"
+			                return "<button data-id='"+row.id+"' class='btn btn-danger del-btn btn-xs margin-right-5'>删除</button>"
+			                       + "<button data-id='"+row.id+"' class='btn btn-primary edit-btn btn-xs margin-right-5'>编辑</button>"
+			                       + "<button data-id='"+row.id+"' class='btn btn-default pwd-btn btn-xs margin-right-5'>修改密码</button>"
+			                       + "<button data-id='"+row.id+"' class='btn btn-primary auth-btn btn-xs'>授权</button>"
 					            }
 					}
 			    ],
@@ -61,7 +69,46 @@ define(function(require, exports, module){
 					}
 				}
 			});
-		}
+		},
+
+		handlerEdit:function(event) {
+			var target = $(event.currentTarget);
+			var id = target.data("id");
+			window.location.href = "../addUser/addUser.html?id=" + id;
+		},
+
+		handlerPwd:function(event) {
+			var target = $(event.currentTarget);
+			var id = target.data("id");
+			window.location.href = "../editPassword/editPassword.html?id=" + id;
+		},
+
+		handlerDelete:function(event) {
+			var target = $(event.currentTarget);
+			    resourceId = target.data("id");
+			$(".alert-view .alert-txt",parent.document).text("确定要删除吗？");
+			$(".alert-view",parent.document).show();
+
+		},
+
+		hideView:function() {
+			var _this = this;
+
+			$(".alert-view .s-btn",parent.document).click(function() {
+				$(".alert-view",parent.document).hide();
+				_this.handlerSureDel();
+			})
+		},
+
+		handlerSureDel:function() {
+			var _this = this;
+			utils.getDelect("/user/" + resourceId,{},function(res) {
+				utils.showTip("删除成功");
+				setTimeout(function() {
+					table.ajax.reload();
+				},1000);
+			})
+		},
 
 
 
