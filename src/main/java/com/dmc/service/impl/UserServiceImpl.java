@@ -131,10 +131,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public DataTable<User> tables(UserVO userVO) {
-        PageHelper.startPage(userVO.getDraw(), userVO.getLength());
+        PageHelper.offsetPage(userVO.getStart(), userVO.getLength());
+
         List<User> users = userMapper.findUser(new HashMap<>());
         DataTable<User> tables = new DataTable<>();
         tables.setRecordsTotal(((Page) users).getTotal());
+        tables.setRecordsFiltered(tables.getRecordsTotal());
         tables.setDraw(userVO.getDraw());
         tables.setData(users);
         return tables;

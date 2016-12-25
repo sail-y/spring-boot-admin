@@ -59,7 +59,7 @@
     },
     "/user/editCurrentUserPwd": {
       "post": {
-        "summary": "修改密码",
+        "summary": "修改自己的密码",
         "parameters": [
           {
             "name": "user",
@@ -73,6 +73,35 @@
                   "type": "string",
                   "description": "老密码"
                 },
+                "password": {
+                  "type": "string",
+                  "format": "password",
+                  "description": "密码"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+          }
+        }
+      }
+    },
+    "/user/editPwd": {
+      "post": {
+        "summary": "修改密码",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
                 "password": {
                   "type": "string",
                   "format": "password",
@@ -262,6 +291,7 @@
         }
       }
     },
+
     "/resource/menus": {
       "post": {
         "summary": "获取菜单",
@@ -498,6 +528,22 @@
         }
       }
     },
+    "/role/tables": {
+      "post": {
+        "summary": "角色-列表",
+        "tags": [
+          "Role"
+        ],
+
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Role"
+            }
+          }
+        }
+      }
+    },
     "/role/{roleId}": {
       "get": {
         "summary": "角色-详情",
@@ -707,6 +753,10 @@
         "remark": {
           "type": "string",
           "description": "描述"
+        },
+        "seq": {
+          "type": "string",
+          "description": "排序"
         }
       }
     }

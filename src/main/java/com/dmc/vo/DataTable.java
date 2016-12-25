@@ -11,6 +11,6 @@ import java.util.List;
 public class DataTable<T> {
     private Integer draw;
     private Long recordsTotal;
-    private Integer recordsFiltered;
+    private Long recordsFiltered;
     private List<T> data;
 }
