@@ -126,9 +126,10 @@ public class UserController {
     public RestResp delete(@PathVariable("userId") Long userId) {
         Long currUid = SessionUtil.getCurrUid();
         if (Objects.equals(userId, currUid)) {// 不能删除自己
-            userService.delete(userId);
             return RestResp.error(RestResp.ERROR,"不能删除自己");
         }
+
+        userService.delete(userId);
 
         return RestResp.ok("删除成功");
     }
