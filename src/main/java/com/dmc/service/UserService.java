@@ -2,6 +2,8 @@ package com.dmc.service;
 
 import com.dmc.jwt.AuthTokenDetails;
 import com.dmc.model.User;
+import com.dmc.vo.DataTable;
+import com.dmc.vo.UserVO;
 
 import java.util.List;
 
@@ -84,4 +86,6 @@ public interface UserService {
 
 
     List<String> getUserRoleNames(Long id);
+
+    DataTable<User> tables(UserVO userVO);
 }

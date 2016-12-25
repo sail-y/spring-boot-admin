@@ -7,8 +7,13 @@ import com.dmc.model.User;
 import com.dmc.service.UserService;
 import com.dmc.util.AppConst;
 import com.dmc.util.id.IdUtil;
+import com.dmc.vo.DataTable;
+import com.dmc.vo.UserVO;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.google.common.base.Strings;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +22,7 @@ import org.springframework.util.Assert;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service("userService")
@@ -121,6 +127,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<String> getUserRoleNames(Long id) {
         return userMapper.getUserRoleNames(id);
+    }
+
+    @Override
+    public DataTable<User> tables(UserVO userVO) {
+        PageHelper.startPage(userVO.getDraw(), userVO.getLength());
+        List<User> users = userMapper.findUser(new HashMap<>());
+        DataTable<User> tables = new DataTable<>();
+        tables.setRecordsTotal(((Page) users).getTotal());
+        tables.setDraw(userVO.getDraw());
+        tables.setData(users);
+        return tables;
     }
 
 }

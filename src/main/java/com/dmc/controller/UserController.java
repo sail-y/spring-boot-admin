@@ -7,6 +7,8 @@ import com.dmc.model.RestResp;
 import com.dmc.model.User;
 import com.dmc.service.UserService;
 import com.dmc.util.SessionUtil;
+import com.dmc.vo.DataTable;
+import com.dmc.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -91,11 +93,16 @@ public class UserController {
      *
      */
     @RequestMapping(method = RequestMethod.PUT)
-    @ResponseBody
     public User edit(@RequestBody User user) {
         userService.edit(user);
         return user;
     }
+
+    @RequestMapping(value = "/tables", method = RequestMethod.POST)
+    public DataTable<User> edit(@RequestBody UserVO userVO) {
+        return userService.tables(userVO);
+    }
+
 
     /**
      * 用户详情
@@ -133,7 +140,6 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/batchDelete", method = RequestMethod.DELETE)
-    @ResponseBody
     public void batchDelete(String ids) {
         if (ids != null && ids.length() > 0) {
             for (String id : ids.split(",")) {
@@ -160,7 +166,6 @@ public class UserController {
      * @return
      */
     @RequestMapping("/editPwd")
-    @ResponseBody
     public RestResp editPwd(@RequestBody User user) {
         userService.editPwd(user);
         return RestResp.ok("编辑成功");
