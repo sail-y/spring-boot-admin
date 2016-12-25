@@ -75,4 +75,6 @@ public interface RoleService {
 
 
     DataTable<Role> tables(RoleVO roleVO);
+
+	List<Role> tree();
 }
