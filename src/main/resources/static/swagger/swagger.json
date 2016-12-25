@@ -246,6 +246,22 @@
         }
       }
     },
+    "/user/tables": {
+      "post": {
+        "summary": "用户-列表",
+        "tags": [
+          "User"
+        ],
+
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
     "/resource/menus": {
       "post": {
         "summary": "获取菜单",
