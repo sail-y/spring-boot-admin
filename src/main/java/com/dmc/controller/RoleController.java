@@ -10,6 +10,8 @@ import com.dmc.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 角色控制器
  *
@@ -50,6 +52,12 @@ public class RoleController {
     public DataTable<Role> tables(@RequestBody RoleVO roleVO) {
         return roleService.tables(roleVO);
     }
+
+    @RequestMapping(value = "/tree", method = RequestMethod.GET)
+    public List<Role> tree() {
+        return roleService.tree();
+    }
+
     /**
      * get role by id
      *

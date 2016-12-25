@@ -15,14 +15,12 @@ import com.github.pagehelper.PageHelper;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -129,6 +127,18 @@ public class RoleServiceImpl implements RoleService {
         tables.setDraw(roleVO.getDraw());
         tables.setData(roles);
         return tables;
+    }
+
+    @Override
+    public List<Role> tree() {
+
+        Map<String, Object> params = new HashMap<>();
+
+        List<Role> roles = roleMapper.getRoleList(params);
+
+
+
+        return roles;
     }
 
 }

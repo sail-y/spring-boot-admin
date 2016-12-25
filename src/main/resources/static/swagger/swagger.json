@@ -544,6 +544,22 @@
         }
       }
     },
+    "/role/tree": {
+      "get": {
+        "summary": "角色-树列表",
+        "tags": [
+          "Role"
+        ],
+
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Role"
+            }
+          }
+        }
+      }
+    },
     "/role/{roleId}": {
       "get": {
         "summary": "角色-详情",
