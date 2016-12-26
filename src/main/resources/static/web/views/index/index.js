@@ -15,7 +15,7 @@ define(function(require, exports, module){
 			this.model = new Backbone.Model();
 			this.getMenu();
 			
-			$("#content").attr("src","../menu/menu.html");
+			$("#content").attr("src","../roleList/roleList.html");
 			
 		},
 

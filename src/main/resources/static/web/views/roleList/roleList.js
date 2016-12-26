@@ -79,8 +79,8 @@ define(function(require, exports, module){
 			})
 		},
 
-		handlreAdd:function() {
-			window.location.href = "../addRole/addRole.html";
+		handlreAdd:function(event) {
+			handlerPage(event,true);
 		},
 
 		getData:function() {

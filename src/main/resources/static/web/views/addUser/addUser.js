@@ -1,5 +1,6 @@
 define(function(require, exports, module){
 
+
 	var id = utils.getQuery("id");
 		
 	var Home = Backbone.View.extend({
@@ -48,22 +49,24 @@ define(function(require, exports, module){
 		},
 
 		handlerAdd:function(postData) {
+			var _this = this;
 			utils.getPOST("/user",postData,function(res) {
 				utils.showTip("添加成功");
 				setTimeout(function() {
-					window.location.href = "../userList/userList.html";
+					_this.reflushData();
 				},1000);
 
 			})
 		},
 
 		handlerEdit:function(postData) {
+			var _this = this;
 			postData["id"] = id;
 			utils.getPUT("/user",postData,function(res) {
 				utils.showTip("修改成功");
 				
 				setTimeout(function() {
-					window.location.href = "../userList/userList.html";
+					_this.reflushData();
 				},1000);
 
 			})
@@ -85,6 +88,17 @@ define(function(require, exports, module){
 			$(".user-name").val(res.username);
 
 		},
+
+		reflushData:function() {
+			var name = window.frameElement.id;
+			
+			$($("iframe.iframe" + name,parent.document)[0].contentWindow.document).find(".reflush-btn").click();
+			$(".tab-content li.iframe" + name,parent.document).addClass("active");
+			$(".item-ul li.iframe" + name,parent.document).addClass("active");
+			$("iframe.iframe" + name,parent.document).show();
+			$(".tab-content li.iframeaddUser",parent.document).remove();
+			$("iframe.iframeaddUser",parent.document).remove();
+		}
 
 
 

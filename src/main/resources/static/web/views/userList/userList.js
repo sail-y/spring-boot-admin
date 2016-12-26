@@ -1,6 +1,6 @@
 define(function(require, exports, module){
 
-	var table;
+	var userTable;
 
 	var code;
 
@@ -17,7 +17,8 @@ define(function(require, exports, module){
 			"click .add-btn" : "handlreAdd",
 			"click .close-btn" : "handlerClose",
 			"click .auth-sure" : "handlerAuth",
-			"click .auth-btn" : "handlerShow"
+			"click .auth-btn" : "handlerShow",
+			"click .reflush-btn" : "hanlderReflush"
 		},
 
 		initialize:function(){
@@ -29,7 +30,7 @@ define(function(require, exports, module){
 		},
 
 		initData:function() {
-			table = $('#table').DataTable({
+			userTable = $('#table').DataTable({
 			    "ajax": {
 			        url:"/user/tables"
 			    },
@@ -39,7 +40,7 @@ define(function(require, exports, module){
 			        {"data": "createTime"},
 			        {render: function (data, type, row, meta) {
 			                return "<button data-id='"+row.id+"' class='btn btn-danger del-btn btn-xs margin-right-5'>删除</button>"
-			                       + "<button data-id='"+row.id+"' class='btn btn-primary edit-btn btn-xs margin-right-5'>编辑</button>"
+			                       + "<button  data-text='编辑用户'  data-id='addUser' data-link='../addUser/addUser.html?id="+row.id+"' data-id='"+row.id+"' class='btn btn-primary edit-btn btn-xs margin-right-5'>编辑</button>"
 			                       + "<button data-id='"+row.id+"' class='btn btn-default pwd-btn btn-xs margin-right-5'>修改密码</button>"
 			                       + "<button data-id='"+row.id+"' class='btn btn-primary auth-btn btn-xs'>授权</button>"
 					            }
@@ -49,9 +50,8 @@ define(function(require, exports, module){
 		},
 
 		handlerEdit:function(event) {
-			var target = $(event.currentTarget);
-			var id = target.data("id");
-			window.location.href = "../addUser/addUser.html?id=" + id;
+			var id = $(".item-ul li.active",parent.document).data("id");
+			handlerPage(event,true,id);
 		},
 
 		handlerPwd:function(event) {
@@ -82,13 +82,14 @@ define(function(require, exports, module){
 			utils.getDelect("/user/" + resourceId,{},function(res) {
 				utils.showTip("删除成功");
 				setTimeout(function() {
-					table.ajax.reload();
+					userTable.ajax.reload();
 				},1000);
 			})
 		},
 
-		handlreAdd:function() {
-			window.location.href = "../addUser/addUser.html";
+		handlreAdd:function(event) {
+			var id = $(".item-ul li.active",parent.document).data("id");
+			handlerPage(event,true,id);
 		},
 
 		getData:function() {
@@ -162,7 +163,7 @@ define(function(require, exports, module){
 					utils.showTip("配置成功");
 					setTimeout(function() {
 						$(".role-view").hide();
-						table.ajax.reload();
+						userTable.ajax.reload();
 					},1000);
 					
 				})
@@ -194,6 +195,10 @@ define(function(require, exports, module){
 					}
 				}
 				$(".role-view").show();
+		},
+
+		hanlderReflush:function() {
+			userTable.ajax.reload();
 		}
 
 

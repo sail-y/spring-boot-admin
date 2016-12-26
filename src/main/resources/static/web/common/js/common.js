@@ -86,24 +86,26 @@ $(function() {
 			$(".item-ul").find("li." + className).addClass("active");
 	}
 
-	function handlerPage(event) {
-		console.log(event);
+	window.handlerPage = function(event,hasParent,id) {
 			event.stopPropagation();
 			var target = $(event.currentTarget);
 			var url = target.data("link");
 			var name = target.data("id");
-			var dom = $("iframe.iframe" + name);
-			var bodyWidth = $(window).width() - 220;
-			var bodyHeight = $(window).height() - 102;
 			var text = target.data("text");
-				$(".item-ul li").removeClass("active");
+			var par = document;
+				if(hasParent) {
+					par = parent.document;
+				}
+				var dom = $("iframe.iframe" + name,par);
+				var bodyWidth = $("body",par).width() - 220;
+				var bodyHeight = $("body",par).height() - 102;
+				$(".item-ul li",par).removeClass("active");
 				target.addClass("active");
-				$("iframe").hide();
-				$(".tab-content li").removeClass("active");
+				$("iframe",par).hide();
+				$(".tab-content li",par).removeClass("active");
 				if (dom.length > 0) {
-					$(".tab-content li.iframe" + name).addClass("active");
-	                  dom.show();
-				}else{
+					$(".tab-content li.iframe" + name,par).find("b").click();
+				}
 					var iframe = document.createElement('iframe');
 					var liHtml = "<li class='iframe" + name + "'>" + text + "<b>x</b></li>"
 						iframe.className = "iframe" + name;
@@ -111,11 +113,13 @@ $(function() {
 						iframe.width = bodyWidth + "px";
 						iframe.height = bodyHeight + "px";
 						iframe.frameborder = "0";
-						$(".main-content").append(iframe);
-						$("iframe.iframe" + name).show();
-						$(".tab-content").append(liHtml);
-						$(".tab-content li.iframe" + name).addClass("active");
-				}
+						if(id) {
+							iframe.id = id;
+						}
+						$(".main-content",par).append(iframe);
+						$("iframe.iframe" + name,par).show();
+						$(".tab-content",par).append(liHtml);
+						$(".tab-content li.iframe" + name,par).addClass("active");
 		}
 
 		function handlerTabDel(event) {
