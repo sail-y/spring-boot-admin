@@ -49,7 +49,7 @@ $(function () {
         });
     }
 
-    function handlerTab(event) {
+    function handlerTabClick(event) {
         var target = $(event.currentTarget);
         var className = target.attr("class").split(" ")[0];
         target.siblings().removeClass("active");
@@ -80,6 +80,8 @@ $(function () {
         if (dom.length > 0) {
             $(".tab-content li.iframe" + name, par).find("b").click();
         }
+
+        // 创建一个新的iframe
         var iframe = document.createElement('iframe');
         var liHtml = "<li class='iframe" + name + "'>" + text + "<b>x</b></li>"
         iframe.className = "iframe" + name;
@@ -98,25 +100,25 @@ $(function () {
 
     /**
      * 关闭Tab页面，并触发刷新按钮点击事件
-     * @param frameElement
+     * @param sourceFrame
      */
-    window.closeTab = function (frameElement) {
-        debugger;
-        var originFrameId = frameElement.id;
-        var tabClass = frameElement.className;
+    window.closeTab = function (sourceFrame) {
+
+        var originFrameId = sourceFrame.id;
+        var tabClass = sourceFrame.className;
 
 
+        // 刷新原Tab
 
+        $("iframe.iframe" + originFrameId, parent.document).show();
+        $($("iframe.iframe" + originFrameId, parent.document)[0].contentWindow.document).find(".refresh-btn").click();
+        $(".tab-content li.iframe" + originFrameId, parent.document).addClass("active");
+        $(".item-ul li.iframe" + originFrameId, parent.document).addClass("active");
 
         // 关闭Tab
         $(".tab-content li." + tabClass, parent.document).remove();
-        $("iframe." + tabClass, parent.document).remove();
 
-        // 刷新原Tab
-        $(".tab-content li.iframe" + originFrameId, parent.document).addClass("active");
-        $(".item-ul li.iframe" + originFrameId, parent.document).addClass("active");
-        $("iframe .iframe" + originFrameId, parent.document).show();
-        $($("iframe .iframe" + originFrameId, parent.document)[0].contentWindow.document).find(".refresh-btn").click();
+        $("iframe." + tabClass, parent.document).remove();
 
 
     }
@@ -166,7 +168,7 @@ $(function () {
     });
 
     $("body").on("click", ".tab-content li", function (event) {
-        handlerTab(event);
+        handlerTabClick(event);
     });
 
     $("body").on("click", ".tab-content li b", function (event) {
