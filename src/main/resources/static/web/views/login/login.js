@@ -33,8 +33,9 @@ define(function (require, exports, module) {
             }, function (res) {
                 var token = res.token;
                 var resourceList = JSON.stringify(res.resourceList);
-                console.log(JSON.stringify(res));
+                console.log(res);
                 localStorage.setItem("token", token);
+                localStorage.setItem("userName", res.name);
                 localStorage.setItem("resourceList", resourceList);
 
                 window.location.href = "../index/index.html";

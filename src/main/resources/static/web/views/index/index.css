@@ -181,7 +181,7 @@ body .page {
     vertical-align: middle;
 }
 
-.logout-btn {
+.logout-btn,.refresh-btn {
     float: right;
     margin-right: 10px;
     margin-top: 15px;

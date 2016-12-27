@@ -41,19 +41,13 @@
     <div class="container-main">
         <div class="top-content">
             <button class="btn-primary btn btn-xs logout-btn">退出</button>
+            <button class="btn-primary btn btn-xs refresh-btn">刷新</button>
         </div>
-        <div class="content-tabs">
-        <nav>
-            <ul class="tab-content">
-            </ul>
-        </nav>
-            <button class="refresh-btn">
-                <i class="im-spinner10 fa-spin"></i>
-                刷新
-            </button>
-        </div>
+        <ul class="tab-content">
+            <li class="iframehome active">首页</li>
+        </ul>
         <div class="main-content">
-            <iframe src="" frameborder="0" id="content"></iframe>
+            <iframe src="" frameborder="0" id="content" class="iframehome"></iframe>
         </div>
     </div>
     <!-- container end -->

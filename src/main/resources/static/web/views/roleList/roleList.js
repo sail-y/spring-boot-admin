@@ -6,6 +6,8 @@ define(function (require, exports, module) {
 
     var userId;
 
+    var resourceId;
+
     var Home = Backbone.View.extend({
 
         el: document.getElementsByTagName('body')[0],
@@ -16,7 +18,8 @@ define(function (require, exports, module) {
             "click .add-btn": "handlreAdd",
             "click .close-btn": "handlerClose",
             "click .auth-sure": "handlerAuth",
-            "click .auth-btn": "handlerShow"
+            "click .auth-btn": "handlerShow",
+            "click .refresh-btn" : "handlerRefresh"
         },
 
         initialize: function () {
