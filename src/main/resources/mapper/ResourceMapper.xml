@@ -23,6 +23,9 @@
             <if test="url != null">
                 url = #{url},
             </if>
+            <if test="method != null">
+                method = #{method},
+            </if>
             <if test="type != null">
                 type = #{type},
             </if>

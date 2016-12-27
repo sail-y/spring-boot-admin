@@ -11,7 +11,8 @@ define(function (require, exports, module) {
             "click .logout-btn": "handlerLogout",
             "click .close-btn" : "handlerClose",
             "click .pwd-edit" : "handlerEdit",
-            "click .pwdchange-btn" : "handlerShowPwd"
+            "click .pwdchange-btn" : "handlerShowPwd",
+            "click .refresh-btn" : "handlerRefresh"
         },
 
         menuTemplate: _.template($('#menuTemplate').html()),
@@ -63,6 +64,10 @@ define(function (require, exports, module) {
 
         handlerShowPwd:function() {
             $(".pwd-view").show();
+        },
+
+        handlerRefresh:function () {
+            refreshIframe();
         },
 
         handlerEdit:function() {

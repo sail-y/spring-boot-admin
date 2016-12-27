@@ -32,6 +32,7 @@ define(function (require, exports, module) {
                 this.model.set("list", res);
                 this.render();
                 $("#tree-basic").treetable({expandable: true});
+                $("#tree-basic").treetable("expandAll");
             }.bind(this))
         },
 

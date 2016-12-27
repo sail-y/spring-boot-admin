@@ -149,6 +149,15 @@ $(function () {
         return $frame;
     }
 
+
+    window.refreshIframe = function() {
+        var $frame = getSelectedTab();
+        if($frame){
+            // 刷新
+            $frame.attr('src', $frame.attr('src'));
+        }
+    }
+
     function handlerTabClose(event) {
         event.stopPropagation();
         var target = $(event.currentTarget);
@@ -179,13 +188,6 @@ $(function () {
 
     }
 
-    function handlerRefreshIframe() {
-        var $frame = getSelectedTab();
-        if($frame){
-            // 刷新
-            $frame.attr('src', $frame.attr('src'));
-        }
-    }
 
     getSize();
 
@@ -207,10 +209,6 @@ $(function () {
 
     $("body").on("click", ".tab-content li b", function (event) {
         handlerTabClose(event);
-    })
-
-    $("body").on("click", ".content-tabs .refresh-btn", function (event) {
-        handlerRefreshIframe();
     })
 
     $(window).on("changeMenu", function () {

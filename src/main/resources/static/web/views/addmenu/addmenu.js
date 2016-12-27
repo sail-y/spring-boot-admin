@@ -44,7 +44,8 @@ define(function (require, exports, module) {
             var postData = {
                 "type": type,
                 "name": name,
-                "seq": seq
+                "seq": seq,
+                "method":method
             }
             if (url != "") {
                 postData["url"] = url;

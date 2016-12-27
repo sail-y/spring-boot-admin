@@ -1,7 +1,9 @@
 body .page {
     height: 100%;
 }
-
+html body {
+    overflow: hidden;
+}
 .nav {
     width: 220px;
     height: 100%;

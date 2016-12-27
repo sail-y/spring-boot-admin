@@ -30,6 +30,7 @@
     <tr>
         <th>资源名称</th>
         <th>URL</th>
+        <th>METHOD</th>
         <th>操作</th>
     </tr>
     </thead>
@@ -39,6 +40,7 @@
     <%if(typeof list[i].pid != "undefined"){%>data-tt-parent-id="<%=list[i].pid%>"<%}%>>
     <td><%=list[i].name%></td>
     <td><%=list[i].url%></td>
+    <td><%=list[i].method%></td>
     <td>
         <%if($.inArray("/resource-put",resourceData) > -1){%><a data-id="<%=list[i].id%>"
                                                                 class="edit-btn btn btn-xs btn-primary pointer">编辑</a><%}%>
