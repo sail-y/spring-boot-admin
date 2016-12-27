@@ -57,6 +57,7 @@ public class UserController {
                 authToken = new AuthTokenDTO();
                 authToken.setToken(jwt);
                 authToken.setUserId(user.getId());
+                authToken.setName(user.getName());
                 authToken.setResourceList(userService.resourceList(user.getId()));
             }
         } else {

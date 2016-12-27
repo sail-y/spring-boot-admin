@@ -17,5 +17,6 @@ public class AuthTokenDTO {
     private String token;
     private Long userId;
     private List<String> resourceList;
+    private String name;
 
 }
