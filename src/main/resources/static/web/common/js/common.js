@@ -60,42 +60,63 @@ $(function () {
         $(".item-ul").find("li." + className).addClass("active");
     }
 
-    window.addTab = function (event, hasParent, id) {
+    window.addTab = function (event, hasParent) {
         event.stopPropagation();
         var target = $(event.currentTarget);
         var url = target.data("link");
         var name = target.data("id");
         var text = target.data("text");
-        var par = document;
+        var id = $(".item-ul li.active", parent.document).data("id");
+
+        var doc = document;
         if (hasParent) {
-            par = parent.document;
+            doc = parent.document;
         }
-        var dom = $("iframe.iframe" + name, par);
-        var bodyWidth = $("body", par).width() - 220;
-        var bodyHeight = $("body", par).height() - 102;
-        $(".item-ul li", par).removeClass("active");
-        target.addClass("active");
-        $("iframe", par).hide();
-        $(".tab-content li", par).removeClass("active");
-        if (dom.length > 0) {
-            $(".tab-content li.iframe" + name, par).find("b").click();
+        var dom = $("iframe.iframe" + name, doc);
+
+
+        function addFrame() {
+            var bodyWidth = $("body", doc).width() - 220;
+            var bodyHeight = $("body", doc).height() - 102;
+            $(".item-ul li", doc).removeClass("active");
+            target.addClass("active");
+            $("iframe", doc).hide();
+            $(".tab-content li", doc).removeClass("active");
+
+            // 创建一个新的iframe
+            var iframe = document.createElement('iframe');
+            var liHtml = "<li class='iframe" + name + "'>" + text + "<b>x</b></li>"
+            iframe.className = "iframe" + name;
+            iframe.src = url;
+            iframe.width = bodyWidth + "px";
+            iframe.height = bodyHeight + "px";
+            iframe.frameborder = "0";
+            if (id) {
+                iframe.id = id;
+            }
+            $(".main-content", doc).append(iframe);
+            $("iframe.iframe" + name, doc).show();
+            $(".tab-content", doc).append(liHtml);
+            $(".tab-content li.iframe" + name, doc).addClass("active");
         }
 
-        // 创建一个新的iframe
-        var iframe = document.createElement('iframe');
-        var liHtml = "<li class='iframe" + name + "'>" + text + "<b>x</b></li>"
-        iframe.className = "iframe" + name;
-        iframe.src = url;
-        iframe.width = bodyWidth + "px";
-        iframe.height = bodyHeight + "px";
-        iframe.frameborder = "0";
-        if (id) {
-            iframe.id = id;
+        // 如果已经存在
+        if (dom.length > 0) {
+            // 如果点击的新增或者编辑等按钮，就直接关闭后重新打开
+            if (hasParent) {
+                $(".tab-content li.iframe" + name, doc).find("b").click();
+                addFrame();
+            } else {
+                // 如果是点击的左侧菜单，就切换
+                $(".tab-content li.iframe" + name, doc).click();
+            }
         }
-        $(".main-content", par).append(iframe);
-        $("iframe.iframe" + name, par).show();
-        $(".tab-content", par).append(liHtml);
-        $(".tab-content li.iframe" + name, par).addClass("active");
+        // 如果iframe不存在
+        else {
+            addFrame();
+        }
+
+
     }
 
     /**
@@ -109,7 +130,6 @@ $(function () {
 
 
         // 刷新原Tab
-
         $("iframe.iframe" + originFrameId, parent.document).show();
         $($("iframe.iframe" + originFrameId, parent.document)[0].contentWindow.document).find(".refresh-btn").click();
         $(".tab-content li.iframe" + originFrameId, parent.document).addClass("active");
@@ -121,6 +141,12 @@ $(function () {
         $("iframe." + tabClass, parent.document).remove();
 
 
+    }
+
+    window.getSelectedTab = function() {
+        var iframeClassName = $('.tab-content li.active').attr("class").split(" ")[0];
+        var $frame = $(".main-content").find("iframe." + iframeClassName);
+        return $frame;
     }
 
     function handlerTabClose(event) {
@@ -153,6 +179,14 @@ $(function () {
 
     }
 
+    function handlerRefreshIframe() {
+        var $frame = getSelectedTab();
+        if($frame){
+            // 刷新
+            $frame.attr('src', $frame.attr('src'));
+        }
+    }
+
     getSize();
 
     $(window).on("resize", function () {
@@ -173,6 +207,10 @@ $(function () {
 
     $("body").on("click", ".tab-content li b", function (event) {
         handlerTabClose(event);
+    })
+
+    $("body").on("click", ".content-tabs .refresh-btn", function (event) {
+        handlerRefreshIframe();
     })
 
     $(window).on("changeMenu", function () {

@@ -41,7 +41,7 @@ define(function (require, exports, module) {
                             var str = "";
 
                             if ($.inArray("/role-put", resourceData)) {
-                                str += "<button data-id='" + row.id + "' class='btn btn-primary edit-btn btn-xs margin-right-5'>编辑</button>"
+                                str += "<button data-text='编辑角色'  data-id='addRole' data-link='../addRole/addRole.html?id=" + row.id + "' class='btn btn-primary edit-btn btn-xs margin-right-5'>编辑</button>"
                             }
 
                             if ($.inArray("/role/grant-post", resourceData)) {
@@ -60,9 +60,8 @@ define(function (require, exports, module) {
         },
 
         handlerEdit: function (event) {
-            var target = $(event.currentTarget);
-            var id = target.data("id");
-            window.location.href = "../addRole/addRole.html?id=" + id;
+
+            addTab(event, true);
         },
 
         handlerDelete: function (event) {

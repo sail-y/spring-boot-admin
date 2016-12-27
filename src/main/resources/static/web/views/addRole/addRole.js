@@ -65,22 +65,25 @@ define(function (require, exports, module) {
         },
 
         handlerAdd: function (postData) {
+            var _this = this;
+
             utils.getPOST("/role", postData, function (res) {
                 utils.showTip("添加成功");
                 setTimeout(function () {
-                    window.location.href = "../roleList/roleList.html";
+                    _this.refreshData();
                 }, 1000);
 
             })
         },
 
         handlerEdit: function (postData) {
+            var _this = this;
             postData["id"] = id;
             utils.getPUT("/role", postData, function (res) {
                 utils.showTip("修改成功");
 
                 setTimeout(function () {
-                    window.location.href = "../roleList/roleList.html";
+                    _this.refreshData();
                 }, 1000);
 
             })
@@ -143,7 +146,12 @@ define(function (require, exports, module) {
 
         handlerShow: function () {
             $("#tree").toggle();
+        },
+
+        refreshData: function () {
+            closeTab(frameElement);
         }
+
 
 
     });

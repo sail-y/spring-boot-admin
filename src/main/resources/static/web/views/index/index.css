@@ -120,13 +120,29 @@ body .page {
     box-sizing: border-box;
 }
 
-.tab-content {
-    height: 40px;
-    border-bottom: solid 2px #293846;
-    box-sizing: border-box;
-    background-color: #f2f2f2;
-    overflow: hidden;
+.content-tabs {
+    position: relative;
+    height: 42px;
+    background: #fafafa;
+    line-height: 40px;
 }
+
+.content-tabs .refresh-btn {
+    right: 0;
+    position: absolute;
+    width: 40px;
+    height: 38px;
+    text-align: center;
+    background-color: #1ab394;
+    border-color: #1ab394;
+    color: #FFFFFF;
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-size: 14px;
+    z-index: 2;
+    top: 0;
+}
+
 
 .tab-content li {
     float: left;

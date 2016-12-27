@@ -67,13 +67,11 @@ define(function (require, exports, module) {
         },
 
         handlerEdit: function (event) {
-            var id = $(".item-ul li.active", parent.document).data("id");
-            addTab(event, true, id);
+            addTab(event, true);
         },
 
         handlerPwd: function (event) {
-            var id = $(".item-ul li.active", parent.document).data("id");
-            addTab(event, true, id);
+            addTab(event, true);
         },
 
         handlerDelete: function (event) {
