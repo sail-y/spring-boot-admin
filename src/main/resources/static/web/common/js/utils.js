@@ -16,7 +16,6 @@ window.utils = {
 
 	showTip:function(message){
 		var $tips = $('#tips');
-		console.log($tips);
 		$tips.show(200).text(message);
 		setTimeout(function() {
 			$tips.hide(200);

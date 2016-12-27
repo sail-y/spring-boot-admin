@@ -1,95 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>贝斯系统</title>
-	<link rel="stylesheet" type="text/css" href="../../common/css/common.css">	
-	<link rel="stylesheet" type="text/css" href="./addmenu.css">	
-   <link rel="stylesheet" href="../../common/ztree/css/tree.css" type="text/css">
-  <link rel="stylesheet" href="../../common/ztree/css/metroStyle/metroStyle.css" type="text/css">
+    <title>贝斯系统</title>
+    <link rel="stylesheet" type="text/css" href="../../common/css/common.css">
+    <link rel="stylesheet" type="text/css" href="./addmenu.css">
+    <link rel="stylesheet" href="../../common/ztree/css/tree.css" type="text/css">
+    <link rel="stylesheet" href="../../common/ztree/css/metroStyle/metroStyle.css" type="text/css">
 </head>
 <body>
-  <div class="loading" id="loading">
+<div class="loading" id="loading">
     <div class="spinner">
-      <div class="double-bounce1"></div>
-      <div class="double-bounce2"></div>
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
     </div>
-  </div>
-  <div id="tips"></div>
-  <!-- modal end -->
-  <div class="page">
-       <div class="main-box">
-           <div class="line top-line">
-               <span class="line-name">类型:</span>
-               <select class="sel type-sel">
-                   <option value="0">菜单</option>
-                   <option value="1">功能</option>
-               </select>
-           </div>
+</div>
+<div id="tips"></div>
+<!-- modal end -->
+<div class="page">
+    <div class="main-box">
+        <div class="line top-line">
+            <span class="line-name">类型:</span>
+            <select class="sel type-sel">
+                <option value="0">菜单</option>
+                <option value="1">功能</option>
+            </select>
+        </div>
 
-           <div class="line relative">
-               <span class="line-name">上级菜单:</span>
-               <input class="inp inp-tree" readonly="readonly" placeholder="请选择上级菜单"></input>
-               <ul id="tree" class="ztree"></ul>
-           </div>
-
-
-           <div class="line">
-               <span class="line-name">方法:</span>
-               <select class="sel way-sel">
-                   <option value="">无</option>
-                   <option value="GET">GET</option>
-                   <option value="POST">POST</option>
-                   <option value="PUT">PUT</option>
-                   <option value="DELETE">PDELETEUT</option>
-               </select>
-           </div>
-
-           <div class="line">
-               <span class="line-name">资源名:</span>
-               <input class="inp name" placeholder="请输入资源名"></input>
-           </div>
-
-           <div class="line">
-               <span class="line-name">资源地址:</span>
-               <input class="inp url" placeholder="请输入资源地址"></input>
-           </div>
-
-           <div class="line">
-               <span class="line-name">排序:</span>
-               <input class="inp seq" placeholder="请输入排序"></input>
-           </div>
-
-            <div class="line">
-               <span class="line-name">备注:</span>
-               <input class="inp remark" placeholder="请输入备注"></input>
-           </div>
-           <div class="line">
-               <span class="line-name"></span>
-               <button class="btn sure-btn de-btn btn-default">添加</button>
-           </div>
-       </div>
-  </div>
+        <div class="line relative">
+            <span class="line-name">上级菜单:</span>
+            <input class="inp inp-tree" readonly="readonly" placeholder="请选择上级菜单"></input>
+            <ul id="tree" class="ztree"></ul>
+        </div>
 
 
-  <script type="text/template" id="oneTemplate">
-       <option value="无">无</option>
-       <%for(var i = 0; i < onelist.length; i ++){%>
-          <option value="<%=onelist[i].id%>"><%=onelist[i].text%></option>
-       <%}%>
-  </script>
+        <div class="line">
+            <span class="line-name">方法:</span>
+            <select class="sel way-sel">
+                <option value="">无</option>
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="DELETE">PDELETEUT</option>
+            </select>
+        </div>
 
-  <script type="text/template" id="twoTemplate">
-        <option value="无">无</option>
-       <%for(var i = 0; i < list.length; i ++){%>
-          <option value="<%=list[i].id%>"><%=list[i].text%></option>
-       <%}%>
-  </script>
+        <div class="line">
+            <span class="line-name">资源名:</span>
+            <input class="inp name" placeholder="请输入资源名"></input>
+        </div>
 
-  <script src="../../common/js/base.min.js"></script>
-  <script type="text/javascript" src="../../common/js/sea.js"></script>
-  <script type="text/javascript" src="../../common/ztree/js/jquery.ztree.core.js"></script>
-  <script type="text/javascript" src="../../common/js/utils.js"></script>
-  <script type="text/javascript" src="../../common/js/common.js"></script>
-  <script seajs type="text/javascript" src="./addmenu.js"></script>
+        <div class="line">
+            <span class="line-name">资源地址:</span>
+            <input class="inp url" placeholder="请输入资源地址"></input>
+        </div>
+
+        <div class="line">
+            <span class="line-name">排序:</span>
+            <input class="inp seq" placeholder="请输入排序"></input>
+        </div>
+
+        <div class="line">
+            <span class="line-name">备注:</span>
+            <input class="inp remark" placeholder="请输入备注"></input>
+        </div>
+        <div class="line">
+            <span class="line-name"></span>
+            <button class="btn sure-btn de-btn btn-default">添加</button>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/template" id="oneTemplate">
+    <option value="无">无</option>
+    <%for(var i = 0; i < onelist.length; i ++){%>
+    <option value="<%=onelist[i].id%>"><%=onelist[i].text%></option>
+    <%}%>
+</script>
+
+<script type="text/template" id="twoTemplate">
+    <option value="无">无</option>
+    <%for(var i = 0; i < list.length; i ++){%>
+    <option value="<%=list[i].id%>"><%=list[i].text%></option>
+    <%}%>
+</script>
+
+<script src="../../common/js/base.min.js"></script>
+<script type="text/javascript" src="../../common/js/sea.js"></script>
+<script type="text/javascript" src="../../common/ztree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="../../common/js/utils.js"></script>
+<script type="text/javascript" src="../../common/js/common.js"></script>
+<script seajs type="text/javascript" src="./addmenu.js"></script>
 </body>
 </html>

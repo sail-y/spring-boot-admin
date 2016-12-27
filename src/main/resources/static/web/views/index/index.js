@@ -1,60 +1,59 @@
-define(function(require, exports, module){
-		
-	var Home = Backbone.View.extend({
+define(function (require, exports, module) {
 
-		el:document.getElementsByTagName('body')[0],
+    var Home = Backbone.View.extend({
 
-		events:{
-			"click .menu-ul>li" : "handlerShowLi",
-			"click .logout-btn" : "handlerLogout"
-		},
+        el: document.getElementsByTagName('body')[0],
 
-		menuTemplate:_.template($('#menuTemplate').html()),
+        events: {
+            "click .menu-ul>li": "handlerShowLi",
+            "click .logout-btn": "handlerLogout"
+        },
 
-		initialize:function(){
-			this.model = new Backbone.Model();
-			this.getMenu();
-			
-			$("#content").attr("src","../roleList/roleList.html");
-			
-		},
+        menuTemplate: _.template($('#menuTemplate').html()),
 
-		menuRender:function() {
-			$(".menu-ul").empty().append(this.menuTemplate(this.model.toJSON()));
-		},
+        initialize: function () {
+            this.model = new Backbone.Model();
+            this.getMenu();
 
-		getMenu:function() {
-			utils.getPOST("/resource/menus",{},function(res) {
-				this.model.set("list",res);
-				this.menuRender();
+            $("#content").attr("src", "../roleList/roleList.html");
 
-			}.bind(this));
-			
-		},
+        },
 
-		handlerShowLi:function(event) {
-			var target = $(event.currentTarget);
-			var status = target.hasClass("active");
-			target.find(".item-ul").toggle();
-			target.addClass("active");
-			if (status) {
-				target.removeClass("active");
-			}else{
-				target.addClass("active");
-			}
+        menuRender: function () {
+            $(".menu-ul").empty().append(this.menuTemplate(this.model.toJSON()));
+        },
 
-		},
+        getMenu: function () {
+            utils.getPOST("/resource/menus", {}, function (res) {
+                this.model.set("list", res);
+                this.menuRender();
 
-		handlerLogout:function() {
-			localStorage.removeItem("token");
-			window.location.href = "../login/login.html";
-		}
+            }.bind(this));
+
+        },
+
+        handlerShowLi: function (event) {
+            var target = $(event.currentTarget);
+            var status = target.hasClass("active");
+            target.find(".item-ul").toggle();
+            target.addClass("active");
+            if (status) {
+                target.removeClass("active");
+            } else {
+                target.addClass("active");
+            }
+
+        },
+
+        handlerLogout: function () {
+            localStorage.removeItem("token");
+            window.location.href = "../login/login.html";
+        }
 
 
+    });
 
-	});
-
-	var home = new Home();
+    var home = new Home();
 
 });
 

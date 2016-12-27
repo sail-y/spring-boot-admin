@@ -1,60 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>贝斯系统</title>
-	<link rel="stylesheet" type="text/css" href="../../common/css/common.css">	
-  <link href="../../common/ui/css/admin/bootstrap.min.css" rel="stylesheet" type="text/css" />
-  <link href="../../common/ui/css/css3/animate.css" rel="stylesheet" type="text/css" />
-  <link href="../../common/ui/css/fonts.css" rel="stylesheet" type="text/css" />
-  <link href="../../common/ui/css/icons.css" rel="stylesheet" type="text/css" />
-  <link href="../../common/ui/css/admin/style.css" rel="stylesheet" type="text/css" />
-  <link href="../../common/ui/css/admin/jquery.dataTables.css" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="../../common/ztree/css/tree.css" type="text/css">
-  <link rel="stylesheet" href="../../common/ztree/css/metroStyle/metroStyle.css" type="text/css">
-	<link rel="stylesheet" type="text/css" href="./roleList.css">	
+    <title>贝斯系统</title>
+    <link rel="stylesheet" type="text/css" href="../../common/css/common.css">
+    <link href="../../common/ui/css/admin/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../common/ui/css/css3/animate.css" rel="stylesheet" type="text/css"/>
+    <link href="../../common/ui/css/fonts.css" rel="stylesheet" type="text/css"/>
+    <link href="../../common/ui/css/icons.css" rel="stylesheet" type="text/css"/>
+    <link href="../../common/ui/css/admin/style.css" rel="stylesheet" type="text/css"/>
+    <link href="../../common/ui/css/admin/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="../../common/ztree/css/tree.css" type="text/css">
+    <link rel="stylesheet" href="../../common/ztree/css/metroStyle/metroStyle.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="./roleList.css">
 </head>
 <body>
-  <div class="loading" id="loading">
+<div class="loading" id="loading">
     <div class="spinner">
-      <div class="double-bounce1"></div>
-      <div class="double-bounce2"></div>
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
     </div>
-  </div>
-  <div id="tips"></div>
-  <div class="role-view">
-     <div class="role-box">
-         <span class="close-btn">x</span>
-         <ul id="role" class="ztree"></ul>
-         <button class="btn btn-primary btn-xs auth-sure">确定</button>
-     </div>
-  </div>
-  <div class="page">
+</div>
+<div id="tips"></div>
+<div class="role-view">
+    <div class="role-box">
+        <span class="close-btn">x</span>
+        <ul id="role" class="ztree"></ul>
+        <button class="btn btn-primary btn-xs auth-sure">确定</button>
+    </div>
+</div>
+<div class="page">
     <div>
-       <button class="add-btn btn btn-primary btn-xs" data-text="添加角色" data-id="addRole" data-link="../addRole/addRole.html">添加</button>
+        <button class="add-btn btn btn-primary btn-xs" data-text="添加角色" data-id="addRole"
+                data-link="../addRole/addRole.html">添加
+        </button>
+        <button class="refresh-btn btn btn-primary btn-xs">刷新</button>
     </div>
     <table id="table" class="table table-striped">
         <thead>
-          <tr>
+        <tr>
             <th>角色名</th>
             <th>备注</th>
             <th>排序</th>
             <th>操作</th>
-          </tr>
+        </tr>
         </thead>
     </table>
-  </div>
+</div>
 
-  <script src="../../common/js/base.min.js"></script>
-  <script type="text/javascript" src="../../common/js/sea.js"></script>
-  <script type="text/javascript" src="../../common/ui/js/admin/bootstrap.min.js"></script>
-  <script type="text/javascript" src="../../common/ui/js/admin/jquery.dataTables.js"></script>
-  <script type="text/javascript" src="../../common/ui/js/admin/dataTables.bootstrap.js"></script>
-  <script type="text/javascript" src="../../common/ui/js/admin/colResizable-1.5.min.js"></script>
-  <script type="text/javascript" src="../../common/ztree/js/jquery.ztree.core.js"></script>
-  <script type="text/javascript" src="../../common/ztree/js/jquery.ztree.excheck.js"></script>
-  <script type="text/javascript" src="../../common/js/ext.datatable.js"></script>
-  <script type="text/javascript" src="../../common/js/utils.js"></script>
-  <script type="text/javascript" src="../../common/js/common.js"></script>
-  <script seajs type="text/javascript" src="./roleList.js"></script>
+<script src="../../common/js/base.min.js"></script>
+<script type="text/javascript" src="../../common/js/sea.js"></script>
+<script type="text/javascript" src="../../common/ui/js/admin/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../common/ui/js/admin/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../../common/ui/js/admin/dataTables.bootstrap.js"></script>
+<script type="text/javascript" src="../../common/ui/js/admin/colResizable-1.5.min.js"></script>
+<script type="text/javascript" src="../../common/ztree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="../../common/ztree/js/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="../../common/js/ext.datatable.js"></script>
+<script type="text/javascript" src="../../common/js/utils.js"></script>
+<script type="text/javascript" src="../../common/js/common.js"></script>
+<script seajs type="text/javascript" src="./roleList.js"></script>
 </body>
 </html>

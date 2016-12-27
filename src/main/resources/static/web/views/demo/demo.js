@@ -1,22 +1,20 @@
-define(function(require, exports, module){
-		
-	var Home = Backbone.View.extend({
+define(function (require, exports, module) {
 
-		el:document.getElementsByTagName('body')[0],
+    var Home = Backbone.View.extend({
 
-		events:{
-		},
+        el: document.getElementsByTagName('body')[0],
 
-		initialize:function(){
-			this.model = new Backbone.Model();
-			
-		},
+        events: {},
 
+        initialize: function () {
+            this.model = new Backbone.Model();
+
+        },
 
 
-	});
+    });
 
-	var home = new Home();
+    var home = new Home();
 
 });
 

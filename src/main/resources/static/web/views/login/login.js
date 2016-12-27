@@ -1,51 +1,50 @@
-define(function(require, exports, module){
-	console.log(utils);
-		
-	var Home = Backbone.View.extend({
+define(function (require, exports, module) {
+    console.log(utils);
 
-		el:document.getElementsByTagName('body')[0],
+    var Home = Backbone.View.extend({
 
-		events:{
-			"focus .pwd" : "hanlderPwd",
-			"blur .pwd" : "hanlderMove",
-			"click .login-btn" : "hanlderSubmit"
-		},
+        el: document.getElementsByTagName('body')[0],
 
-		initialize:function(){
-			this.model = new Backbone.Model();
-		},
+        events: {
+            "focus .pwd": "hanlderPwd",
+            "blur .pwd": "hanlderMove",
+            "click .login-btn": "hanlderSubmit"
+        },
 
-		hanlderPwd:function() {
-			$(".hand").addClass("active");
-		},
+        initialize: function () {
+            this.model = new Backbone.Model();
+        },
 
-		hanlderMove:function() {
-			$(".hand").removeClass("active");
-		},
+        hanlderPwd: function () {
+            $(".hand").addClass("active");
+        },
 
-		hanlderSubmit:function() {
-			var name = $(".user-name").val();
-			var password = $(".pwd").val();
+        hanlderMove: function () {
+            $(".hand").removeClass("active");
+        },
 
-			utils.getLogin("/user/login",{
-				"username" : name,
-				"password" : password
-			},function(res) {
-				var token = res.token;
-				var resourceList = JSON.stringify(res.resourceList);
-				console.log(JSON.stringify(res));
-				localStorage.setItem("token",token);
-				localStorage.setItem("resourceList",resourceList);
+        hanlderSubmit: function () {
+            var name = $(".user-name").val();
+            var password = $(".pwd").val();
 
-				window.location.href = "../index/index.html";
-			})
-		}
+            utils.getLogin("/user/login", {
+                "username": name,
+                "password": password
+            }, function (res) {
+                var token = res.token;
+                var resourceList = JSON.stringify(res.resourceList);
+                console.log(JSON.stringify(res));
+                localStorage.setItem("token", token);
+                localStorage.setItem("resourceList", resourceList);
+
+                window.location.href = "../index/index.html";
+            })
+        }
 
 
+    });
 
-	});
-
-	var home = new Home();
+    var home = new Home();
 
 });
 

@@ -1,59 +1,70 @@
 
-#table_wrapper .current{
-	font-size: 14px;
+#table_wrapper .current {
+    font-size: 14px;
 }
-#table_paginate{
-	margin-right: 10px;
+
+#table_paginate {
+    margin-right: 10px;
 }
-body .row{
-	margin:0;
+
+body .row {
+    margin: 0;
 }
-.margin-right-5{
-	margin-right: 5px;
+
+.margin-right-5 {
+    margin-right: 5px;
 }
-.add-btn{
-	margin:10px;
-	float: left;
+
+.add-btn {
+    margin: 10px;
+    float: left;
 }
-.role-view{
-	width: 100%;
-	height: 100%;
-	position: fixed;
-	z-index: 999;
-	background-color: rgba(0,0,0,0);
-	top: 0;
-	left: 0;
-	display: none;
+
+.refresh-btn {
+    margin-top: 10px;
 }
-.role-box{
-	width: 400px;
-	height: auto;
-	padding-bottom: 20px;
-	background-color: #efeeee;
-	border-radius: 5px;
-	margin:0 auto;
-	margin-top: 20px;
-	padding-top: 20px;
-	position: relative;
-	border: solid 1px #ccc;
+
+.role-view {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0);
+    top: 0;
+    left: 0;
+    display: none;
 }
-#role{
-   width: 240px;
-   height: auto;
-   margin:0 auto;
-   background-color: #fff;
-   min-height: 240px;
-   margin-top: 20px;
+
+.role-box {
+    width: 400px;
+    height: auto;
+    padding-bottom: 20px;
+    background-color: #efeeee;
+    border-radius: 5px;
+    margin: 20px auto 0;
+    padding-top: 20px;
+    position: relative;
+    border: solid 1px #ccc;
 }
-.auth-sure{
-	margin-top: 10px;
-	margin-left: 283px;
+
+#role {
+    width: 240px;
+    height: auto;
+    background-color: #fff;
+    min-height: 240px;
+    margin: 20px auto 0;
 }
-.close-btn{
-	color: #333;
-	font-size: 16px;
-	position: absolute;
-	top: 5px;
-	right: 10px;
-	cursor: pointer;
+
+.auth-sure {
+    margin-top: 10px;
+    margin-left: 283px;
+}
+
+.close-btn {
+    color: #333;
+    font-size: 16px;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
 }

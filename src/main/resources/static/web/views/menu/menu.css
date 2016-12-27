@@ -1,28 +1,34 @@
-.header-name{
-	font-size: 20px;
-	padding:10px;
+.header-name {
+    font-size: 20px;
+    padding: 10px;
 }
-body table.treetable thead tr th{
-	border:none;
-	height: 35px;
-	line-height: 35px;
-	background-color: #eee;
+
+body table.treetable thead tr th {
+    border: none;
+    height: 35px;
+    line-height: 35px;
+    background-color: #eee;
 }
-body table.treetable{
-   margin:0;
-   border: none;
+
+body table.treetable {
+    margin: 0;
+    border: none;
 }
-body table.treetable tr{
-	height: 30px;
-	line-height: 30px;
+
+body table.treetable tr {
+    height: 30px;
+    line-height: 30px;
 }
-.edit-btn{
-	margin-right: 10px;
+
+.edit-btn {
+    margin-right: 10px;
 }
-.pointer{
-	cursor: pointer;
+
+.pointer {
+    cursor: pointer;
 }
-.add-btn{
-	margin:10px;
-	float: left;
+
+.add-btn {
+    margin: 10px;
+    float: left;
 }
