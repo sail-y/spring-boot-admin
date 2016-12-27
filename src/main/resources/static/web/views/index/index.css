@@ -127,22 +127,6 @@ body .page {
     line-height: 40px;
 }
 
-.content-tabs .refresh-btn {
-    right: 0;
-    position: absolute;
-    width: 40px;
-    height: 38px;
-    text-align: center;
-    background-color: #1ab394;
-    border-color: #1ab394;
-    color: #FFFFFF;
-    border-radius: 3px;
-    padding: 1px 5px;
-    font-size: 14px;
-    z-index: 2;
-    top: 0;
-}
-
 
 .tab-content li {
     float: left;
@@ -181,7 +165,7 @@ body .page {
     vertical-align: middle;
 }
 
-.logout-btn,.refresh-btn {
+.logout-btn,.refresh-btn,.pwdchange-btn {
     float: right;
     margin-right: 10px;
     margin-top: 15px;
@@ -194,7 +178,16 @@ body .page {
     line-height: 1.5;
 }
 
-.alert-view {
+.pwd-edit{
+   background-color: #1ab394;
+    border-color: #1ab394;
+    color: #FFFFFF;
+    border-radius: 3px;
+    padding: 7px 15px; 
+    margin-top: 10px;
+}
+
+.alert-view,.pwd-view {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -243,6 +236,25 @@ body .page {
 
 .alert-ul li:nth-child(1) {
     border-right: solid 1px #eee;
+}
+.pwd-box{
+    width: 420px;
+    position: relative;
+    margin:0 auto;
+    margin-top: 10%;
+    background-color: #fff;
+    padding: 30px;
+    border:solid 1px #ccc;
+    border-radius: 5px;
+}
+.close-btn{
+    color: #333;
+    font-size: 16px;
+    padding:10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
 }
 
 

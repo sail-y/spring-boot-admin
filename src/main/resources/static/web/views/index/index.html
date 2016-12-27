@@ -23,17 +23,36 @@
         </ul>
     </div>
 </div>
+
+<div class="pwd-view">
+      <div class="pwd-box">
+           <span class="close-btn">x</span>
+           <div class="line">
+                <span class="line-name">旧密码:</span>
+                <input type="password" class="inp old-pwd" placeholder="请输入旧密码"></input>
+            </div>
+            <div class="line">
+                <span class="line-name">新密码:</span>
+                <input type="password" class="inp new-pwd" placeholder="请输入新密码"></input>
+            </div>
+            <div class="line">
+                <span class="line-name">重复密码:</span>
+                <input type="password" class="inp re-pwd" placeholder="请再次输入新密码"></input>
+            </div>
+            <div class="text-center">
+                 <button class="btn-primary btn btn-xs pwd-edit">修改</button>
+            </div>
+      </div>
+</div>
 <!-- 弹框end -->
 <div class="page">
     <!-- nav start -->
     <div class="nav">
         <div class="nav-top wid-100">
             <img src="../../images/profile.png" class="head-img">
-            <span class="user-name">嘟嘟</span>
+            <span class="user-name"></span>
         </div>
-        <ul class="wid-100 menu-ul">
-
-        </ul>
+        <ul class="wid-100 menu-ul"></ul>
     </div>
     <!-- nav end -->
 
@@ -42,6 +61,7 @@
         <div class="top-content">
             <button class="btn-primary btn btn-xs logout-btn">退出</button>
             <button class="btn-primary btn btn-xs refresh-btn">刷新</button>
+            <button class="btn-primary btn btn-xs pwdchange-btn">修改密码</button>
         </div>
         <ul class="tab-content">
             <li class="iframehome active">首页</li>
