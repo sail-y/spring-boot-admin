@@ -1,0 +1,36 @@
+
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://192.168.81.222:3306/bbd_app?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+    driver-class-name: com.mysql.jdbc.Driver
+    username: app
+    password: 123456
+    filters: stat
+    max-active: 80
+    max-idle: 8
+    min-idle: 8
+    initial-size: 5
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+
+
+
+logging:
+  level:
+    ROOT: INFO
+    org.springframework: INFO
+    org.springframework.data.mongodb: DEBUG
+    java.sql.Connection: DEBUG
+    java.sql.Statement: DEBUG
+    org.apache: INFO
+    org.mongodb.driver: INFO
+    com.dmc: DEBUG

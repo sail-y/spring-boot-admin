@@ -21,19 +21,26 @@ define(function (require, exports, module) {
             "click .auth-btn": "handlerShow",
             "click .refresh-btn" : "handlerRefresh"
         },
-
+        template: _.template($('#buttonTemplate').html()),
         initialize: function () {
             this.model = new Backbone.Model();
+            this.model.set("resourceData", resourceData);
             this.initData();
+            this.render();
             this.hideView();
             this.getData();
 
         },
 
+        render: function () {
+            $("#toolBox").empty().append(this.template(this.model.toJSON()));
+        },
+
         initData: function () {
+            console.log(baseUrl)
             table = $('#table').DataTable({
                 "ajax": {
-                    url: "/role/tables"
+                    url: baseUrl + "/role/tables"
                 },
                 "columns": [
                     {"data": "name"},
@@ -43,15 +50,15 @@ define(function (require, exports, module) {
                         render: function (data, type, row, meta) {
                             var str = "";
 
-                            if ($.inArray("/role-put", resourceData)) {
-                                str += "<button data-text='编辑角色'  data-id='addRole' data-link='../addRole/addRole.html?id=" + row.id + "' class='btn btn-primary edit-btn btn-xs margin-right-5'>编辑</button>"
+                            if ($.inArray("/role-put", resourceData) > -1) {
+                                str += "<button data-text='编辑角色'  data-id='addRole' data-link='../addRole/addRole.html?id=" + row.id + "' class='btn btn-primary edit-btn btn-xs margin-right-5'><i class='fa fa-pencil' aria-hidden='true'></i> 编辑</button>"
                             }
 
-                            if ($.inArray("/role/grant-post", resourceData)) {
-                                str += "<button data-id='" + row.id + "' class='btn btn-primary auth-btn btn-xs margin-right-5'>授权</button>"
+                            if ($.inArray("/role/grant-post", resourceData) > -1) {
+                                str += "<button data-id='" + row.id + "' class='btn btn-primary auth-btn btn-xs margin-right-5'><i class='fa fa-unlock-alt' aria-hidden='true'></i> 授权</button>"
                             }
-                            if ($.inArray("/role/*-delete", resourceData)) {
-                                str += "<button data-id='" + row.id + "' class='btn btn-danger del-btn btn-xs '>删除</button>";
+                            if ($.inArray("/role/*-delete", resourceData) > -1) {
+                                str += "<button data-id='" + row.id + "' class='btn btn-danger del-btn btn-xs '><i class='fa fa-trash-o' aria-hidden='true'></i> 删除</button>";
                             }
 
 
@@ -86,10 +93,10 @@ define(function (require, exports, module) {
 
         handlerSureDel: function () {
             var _this = this;
-            utils.getDelect("/role/" + resourceId, {}, function (res) {
+            utils.getDelete("/role/" + resourceId, {}, function (res) {
                 utils.showTip("删除成功");
                 setTimeout(function () {
-                    table.ajax.reload();
+                    table.ajax.reload(null, false);
                 }, 1000);
             })
         },
@@ -169,7 +176,7 @@ define(function (require, exports, module) {
                 utils.showTip("配置成功");
                 setTimeout(function () {
                     $(".role-view").hide();
-                    table.ajax.reload();
+                    table.ajax.reload(null, false);
                 }, 1000);
 
             })
@@ -204,7 +211,7 @@ define(function (require, exports, module) {
         },
 
         handlerRefresh: function () {
-            table.ajax.reload();
+            table.ajax.reload(null, false);
         }
 
 

@@ -12,7 +12,7 @@ import java.util.Map;
  * 用户操作Mapper
  */
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends tk.mybatis.mapper.common.Mapper<User>{
 
     /**
      * 登录

@@ -1,4 +1,6 @@
-
+.box .line{
+    padding-left: 0;
+}
 .line1 {
     height: 1px;
 }

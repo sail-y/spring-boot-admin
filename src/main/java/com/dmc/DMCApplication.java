@@ -26,8 +26,4 @@ public class DMCApplication extends WebMvcConfigurerAdapter {
                 .allowedOrigins("*");
     }
 
-    @Bean
-    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
-        return new MappingJackson2HttpMessageConverter(JsonUtil.getObjectMapper());
-    }
 }

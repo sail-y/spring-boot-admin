@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>贝斯系统</title>
+    <meta charset="utf-8" />
+<title>后台管理系统</title>
     <link rel="stylesheet" type="text/css" href="../../common/css/common.css">
     <link href="../../common/ui/css/admin/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../common/ui/css/css3/animate.css" rel="stylesheet" type="text/css"/>
@@ -29,11 +30,8 @@
     </div>
 </div>
 <div class="page">
-    <div>
-        <button class="add-btn btn btn-primary btn-xs" data-text="添加用户" data-id="addUser"
-                data-link="../addUser/addUser.html">添加
-        </button>
-        <button class="refresh-btn btn btn-primary btn-xs">刷新</button>
+    <div id="toolBox">
+
     </div>
     <table id="table" class="table table-striped">
         <thead>
@@ -46,7 +44,15 @@
         </thead>
     </table>
 </div>
-
+<script type="text/template" id="buttonTemplate">
+    <%
+    if($.inArray("/user-post",resourceData) > -1){%>
+    <button class="add-btn btn btn-primary btn-xs" data-text="添加用户" data-id="addUser"
+            data-link="../addUser/addUser.html"><i class="fa fa-plus" aria-hidden="true"></i> 添加
+    </button>
+    <%}%>
+    <button class="refresh-btn btn btn-primary btn-xs"><i class="fa fa-refresh" aria-hidden="true"></i> 刷新</button>
+</script>
 <script src="../../common/js/base.min.js"></script>
 <script type="text/javascript" src="../../common/js/sea.js"></script>
 <script type="text/javascript" src="../../common/ui/js/admin/bootstrap.min.js"></script>

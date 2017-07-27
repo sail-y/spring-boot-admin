@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>贝斯系统</title>
+    <meta charset="utf-8" />
+<title>后台管理系统</title>
     <link rel="stylesheet" type="text/css" href="../../common/css/common.css">
     <link href="../../common/ui/css/admin/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../common/ui/css/admin/style.css" rel="stylesheet" type="text/css"/>
@@ -18,19 +19,25 @@
 </div>
 <div id="tips"></div>
 <div class="page">
-    <div>
-        <button class="add-btn btn btn-primary btn-xs">添加</button>
+    <div id="toolBox">
     </div>
     <table id="tree-basic">
     </table>
 </div>
 
+<script type="text/template" id="buttonTemplate">
+    <%if($.inArray("/resource-post",resourceData) > -1){%>
+    <button class="add-btn btn btn-primary btn-xs"><i class="fa fa-plus" aria-hidden="true"></i> 添加</button>
+    <%}%>
+</script>
 <script type="text/template" id="treeTemplate">
     <thead>
     <tr>
         <th>资源名称</th>
         <th>URL</th>
         <th>METHOD</th>
+        <th>类型</th>
+        <th>排序</th>
         <th>操作</th>
     </tr>
     </thead>
@@ -41,11 +48,15 @@
     <td><%=list[i].name%></td>
     <td><%=list[i].url%></td>
     <td><%=list[i].method%></td>
+    <td><%=list[i].type=="1"?"功能":"菜单"%></td>
+    <td><%=list[i].sort%></td>
     <td>
         <%if($.inArray("/resource-put",resourceData) > -1){%><a data-id="<%=list[i].id%>"
-                                                                class="edit-btn btn btn-xs btn-primary pointer">编辑</a><%}%>
+                                                                class="edit-btn btn btn-xs btn-primary pointer"><i
+            class='fa fa-pencil' aria-hidden='true'></i> 编辑</a><%}%>
         <%if($.inArray("/resource/*-delete",resourceData) > -1){%><a data-id="<%=list[i].id%>"
-                                                                     class="del-btn btn btn-xs btn-danger pointer">删除</a><%}%>
+                                                                     class="del-btn btn btn-xs btn-danger pointer"><i
+            class='fa fa-trash-o' aria-hidden='true'></i> 删除</a><%}%>
     </td>
     </tr>
     <%}%>

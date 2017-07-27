@@ -13,6 +13,7 @@ define(function (require, exports, module) {
 
         initialize: function () {
             this.model = new Backbone.Model();
+            this.handlerKeyup();
         },
 
         hanlderPwd: function () {
@@ -27,6 +28,15 @@ define(function (require, exports, module) {
             var name = $(".user-name").val();
             var password = $(".pwd").val();
 
+            if(name == "") {
+                utils.showTip("用户名不能为空");
+                return;
+            }
+            if(password == "") {
+                utils.showTip("密码不能为空");
+                return;
+            }
+ 
             utils.getLogin("/user/login", {
                 "username": name,
                 "password": password
@@ -40,6 +50,15 @@ define(function (require, exports, module) {
 
                 window.location.href = "../index/index.html";
             })
+        },
+
+        handlerKeyup:function(event) {
+            $(document).keydown(function(event){
+                if(event.keyCode == 13) {
+                    this.hanlderSubmit();
+                }
+            }.bind(this));
+
         }
 
 

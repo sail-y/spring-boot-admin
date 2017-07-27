@@ -12,7 +12,7 @@ import java.util.Map;
  * 角色管理
  */
 @Mapper
-public interface RoleMapper {
+public interface RoleMapper extends tk.mybatis.mapper.common.Mapper<Role>{
     /**
      * 保存角色
      * @param role 角色

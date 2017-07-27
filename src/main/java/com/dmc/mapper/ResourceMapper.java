@@ -11,7 +11,7 @@ import java.util.Map;
  * 资源操作Mapper
  */
 @Mapper
-public interface ResourceMapper {
+public interface ResourceMapper extends tk.mybatis.mapper.common.Mapper<Resource>{
 
     /**
      * 获取资源列表

@@ -4,7 +4,6 @@
  */
 package com.dmc.security;
 
-import com.dmc.exception.WrongPathException;
 import com.dmc.model.Resource;
 import com.dmc.model.Role;
 import com.dmc.service.ResourceService;

@@ -125,7 +125,7 @@ window.utils = {
 	   });
     },
 
-    getDelect:function(url,param,callback){
+    getDelete:function(url,param,callback){
 	   $.ajax({
 	      url: baseUrl + url,
 	      type: 'DELETE',

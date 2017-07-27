@@ -13,6 +13,7 @@ define(function (require, exports, module) {
         },
 
         template: _.template($('#treeTemplate').html()),
+        bTemplate: _.template($('#buttonTemplate').html()),
 
         initialize: function () {
             this.model = new Backbone.Model();
@@ -24,6 +25,7 @@ define(function (require, exports, module) {
 
         render: function () {
             $("#tree-basic").empty().append(this.template(this.model.toJSON()));
+            $("#toolBox").empty().append(this.bTemplate(this.model.toJSON()));
         },
 
         getTree: function () {
@@ -59,7 +61,7 @@ define(function (require, exports, module) {
 
         handlerSureDel: function () {
             var _this = this;
-            utils.getDelect("/resource/" + resourceId, {}, function (res) {
+            utils.getDelete("/resource/" + resourceId, {}, function (res) {
                 utils.showTip("删除成功");
                 $(window).trigger("changeMenu");
                 setTimeout(function () {

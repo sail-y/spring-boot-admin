@@ -1,36 +1,31 @@
 server:
-  port: 9003
+  port: 10000
 
-
-spring:
-  datasource:
-    url: jdbc:mysql://121.41.119.158:3306/dmc?useUnicode=true&useSSL=false
-    username: dmc
-    password: dmc123456
-
-mybatis:
-  mapper-locations: classpath:mapper/**/*.xml
-  config-location: classpath:mybatis-configuration.xml
-
-
----
 spring:
   profiles:
-    active: dev # For deployment in dev
+    active: dev
+  jackson:
+        default-property-inclusion: non_null
+        date-format: "yyyy-MM-dd HH:mm:ss"
+        time-zone: Asia/Shanghai
 
-logging:
-  level:
-    ROOT: INFO
-    org.springframework: INFO
-    org.springframework.data.mongodb: DEBUG
-    java.sql.Connection: DEBUG
-    java.sql.Statement: DEBUG
+mybatis:
+  mapper-locations: classpath*:mapper/**/*.xml
 
+  configuration:
+    map-underscore-to-camel-case: true
+    default-fetch-size: 100
+    default-statement-timeout: 30
+  type-handlers-package: com.wodel.handler
 
-    org.apache: INFO
-    org.mongodb.driver: INFO
-    com.dmc: DEBUG
+mapper:
+    mappers:
+        - tk.mybatis.mapper.common.Mapper
+    not-empty: false
+    identity: mysql
 
----
-spring:
-  profiles: test # For deployment in test
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql

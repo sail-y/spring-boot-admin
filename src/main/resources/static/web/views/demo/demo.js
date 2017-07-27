@@ -18,4 +18,4 @@ define(function (require, exports, module) {
 
 });
 
-seajs.use('./demo.js');
+seajs.use('./tag.js');
