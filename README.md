@@ -23,3 +23,6 @@
 执行`mysql -uroot -p 数据库 < dmc.sql`导入数据库脚本。
 
 直接Run`DMCApplication`启动后访问：http://localhost:10000/web/views/index/index.html
+
+帐号：admin            
+密码：111111
