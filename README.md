@@ -26,3 +26,12 @@
 
 帐号：admin            
 密码：111111
+
+
+
+
+## 页面展示
+
+![](img/login.png)
+![](img/page1.png)
+![](img/page2.png)
