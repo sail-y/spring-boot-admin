@@ -26,6 +26,7 @@ public class WebSecurityConfig extends JsonWebTokenSecurityConfig {
                 .antMatchers("/user/login").permitAll()
                 .antMatchers("/swagger/**").permitAll()
                 .antMatchers("/web/**").permitAll()
+                .antMatchers("/").permitAll()
 
 
                 // authenticate all other requests
