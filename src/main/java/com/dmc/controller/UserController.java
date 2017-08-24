@@ -75,8 +75,6 @@ public class UserController {
     }
 
 
-
-
     /**
      * 添加用户
      *
@@ -91,7 +89,6 @@ public class UserController {
 
     /**
      * 修改用户
-     *
      */
     @RequestMapping(method = RequestMethod.PUT)
     public User edit(@RequestBody User user) {
@@ -107,6 +104,7 @@ public class UserController {
 
     /**
      * 用户详情
+     *
      * @param userId
      * @return
      */
@@ -127,7 +125,7 @@ public class UserController {
     public RestResp delete(@PathVariable("userId") Long userId) {
         Long currUid = SessionUtil.getCurrUid();
         if (Objects.equals(userId, currUid)) {// 不能删除自己
-            return RestResp.error(RestResp.ERROR,"不能删除自己");
+            return RestResp.error(RestResp.ERROR, "不能删除自己");
         }
 
         userService.delete(userId);
@@ -195,6 +193,4 @@ public class UserController {
 
         return RestResp.ok("修改成功");
     }
-
-
 }
