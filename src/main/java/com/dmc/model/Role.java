@@ -1,8 +1,8 @@
 package com.dmc.model;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import lombok.Data;
 
-import javax.persistence.Transient;
 import java.util.List;
 
 @Data
@@ -15,9 +15,9 @@ public class Role implements java.io.Serializable {
     private String remark;
     private Integer seq;
 
-    @Transient
+    @TableField(exist = false)
     private List<Long> resourceIds;
-    @Transient
+    @TableField(exist = false)
     private List<String> resourceNames;
 
 

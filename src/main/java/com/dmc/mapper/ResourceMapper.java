@@ -1,5 +1,6 @@
 package com.dmc.mapper;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.dmc.model.Resource;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,7 +12,7 @@ import java.util.Map;
  * 资源操作Mapper
  */
 @Mapper
-public interface ResourceMapper extends tk.mybatis.mapper.common.Mapper<Resource>{
+public interface ResourceMapper extends BaseMapper<Resource> {
 
     /**
      * 获取资源列表

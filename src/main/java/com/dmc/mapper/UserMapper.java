@@ -1,5 +1,6 @@
 package com.dmc.mapper;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.dmc.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -12,7 +13,7 @@ import java.util.Map;
  * 用户操作Mapper
  */
 @Mapper
-public interface UserMapper extends tk.mybatis.mapper.common.Mapper<User>{
+public interface UserMapper extends BaseMapper<User> {
 
     /**
      * 登录

@@ -1,5 +1,6 @@
 package com.dmc.mapper;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.dmc.model.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -12,7 +13,7 @@ import java.util.Map;
  * 角色管理
  */
 @Mapper
-public interface RoleMapper extends tk.mybatis.mapper.common.Mapper<Role>{
+public interface RoleMapper extends BaseMapper<Role> {
     /**
      * 保存角色
      * @param role 角色

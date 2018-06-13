@@ -1,8 +1,8 @@
 package com.dmc.model;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import lombok.Data;
 
-import javax.persistence.Transient;
 import java.util.Date;
 import java.util.List;
 
@@ -15,9 +15,9 @@ public class User implements java.io.Serializable {
     private String password;
     private Date createTime;
     private Date modifyTime;
-    @Transient
+    @TableField(exist = false)
     private List<Long> roleIds;
-    @Transient
+    @TableField(exist = false)
     private List<String> roleNames;
 
     private String oldPassword;
