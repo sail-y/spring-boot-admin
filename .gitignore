@@ -22,3 +22,4 @@ rebel.xml
 .DS_Store
 node_modules/
 bower_components/
+target

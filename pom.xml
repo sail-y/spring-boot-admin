@@ -2,10 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.bbd</groupId>
-		<artifactId>xloan-parent</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.10.RELEASE</version>
 	</parent>
+
 	<artifactId>spring-boot-admin</artifactId>
 	<packaging>jar</packaging>
 
@@ -27,6 +28,20 @@
 
 	<dependencies>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
@@ -168,11 +183,6 @@
 	</build>
 
     <repositories>
-        <repository>
-            <id>xloan</id>
-            <name>xloan</name>
-            <url>http://192.168.81.222:8088/nexus/content/groups/public/</url>
-        </repository>
         <repository>
             <id>aliyun</id>
             <name>aliyun</name>
